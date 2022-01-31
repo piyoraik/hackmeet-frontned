@@ -4,9 +4,9 @@ import { NextPage } from "next";
 const SearchBox: NextPage = () => {
   return (
     <Input
-      w="30%"
+      w="100%"
       type="text"
-      placeholder="Search"
+      placeholder="Keyword..."
       color="blue.800"
       backgroundColor="blue.50"
       rounded="2xl"
