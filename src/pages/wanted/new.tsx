@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Heading,
   Icon,
@@ -19,6 +20,8 @@ import { VscDebugStart } from "react-icons/vsc";
 import MarkdownIt from "markdown-it";
 import style from "../../styles/github.module.scss";
 import Prism from "prismjs";
+import { MdCall, MdSend } from "react-icons/md";
+import {RiDraftLine} from 'react-icons/ri'
 // import style from "@/style/github.scss";
 
 const NewWanted: NextPage = () => {
@@ -95,7 +98,9 @@ const NewWanted: NextPage = () => {
                 <TabPanel>
                   <Textarea
                     resize="vertical"
-                    height="calc(100vh - 50px)"
+                    height="700px"
+                    maxHeight="calc(100vh - 100px)"
+                    backgroundColor="gray.50"
                     p="10"
                     _focus={{ outline: "none" }}
                     onChange={(e) => changeHandler(e)}
@@ -104,10 +109,33 @@ const NewWanted: NextPage = () => {
                 <TabPanel>
                   <Box
                     className={`${style.main} prose`}
+                    minHeight="700px"
+                    p="8"
+                    border="2px"
+                    borderRadius="md"
+                    borderColor="gray.200"
                     dangerouslySetInnerHTML={{ __html: text }}
                   />
                 </TabPanel>
               </TabPanels>
+              <Flex px="8" py="4" justifyContent="space-around">
+                <Button
+                  rightIcon={<RiDraftLine />}
+                  colorScheme="blue"
+                  variant="outline"
+                  width="45%"
+                >
+                  Draft
+                </Button>
+                <Button
+                  rightIcon={<MdSend />}
+                  colorScheme="blue"
+                  variant="outline"
+                  width="45%"
+                >
+                  Send
+                </Button>
+              </Flex>
             </Tabs>
           </Flex>
         </Flex>
