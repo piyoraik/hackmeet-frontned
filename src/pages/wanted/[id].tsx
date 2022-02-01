@@ -1,7 +1,5 @@
-import { Flex, Center, Divider, Spacer, Box } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { FaBell } from "react-icons/fa";
-import SearchBox from "../../components/modules/SearchBox";
 import UserCard from "../../components/modules/UserCard";
 import ContentDetail from "../../components/organisms/ContentDetail";
 import Footer from "../../components/organisms/Footer";

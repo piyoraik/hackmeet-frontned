@@ -1,21 +1,16 @@
-import { Box, Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { FaBell } from "react-icons/fa";
-import SearchBox from "../modules/SearchBox";
+import { useRouter } from "next/router";
+import HeaderContent from "../modules/HeaderContent";
 import Title from "../modules/Title";
 
 const Header: NextPage = () => {
+  const router = useRouter()
+
   return (
     <Flex direction="row" justify="space-between" width="93%" mx="auto">
       <Title />
-      <Flex direction="row" justify="space-between" my="10" align="center">
-        <Box mr='12'>
-          <SearchBox />
-        </Box>
-        <Box>
-          <FaBell size="2rem" color="#FCBA03" />
-        </Box>
-      </Flex>
+      <HeaderContent />
     </Flex>
   );
 };

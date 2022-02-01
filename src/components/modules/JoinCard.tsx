@@ -14,7 +14,6 @@ const JoinCard: NextPage = () => {
     >
       <Heading mt="2" mb="5" fontSize="xl">
         Wanted Join!!
-        
       </Heading>
       <Center>
         <Button colorScheme="blue" width='80%'>Join</Button>

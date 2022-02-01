@@ -1,8 +1,9 @@
-import { Flex, List, ListItem, ListIcon, Text } from "@chakra-ui/react";
+import { Flex, List, ListItem, ListIcon, Text, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { ReactNode } from "react";
-import { CgProfile } from "react-icons/cg";
-import { MdCheckCircle } from "react-icons/md";
+import { BsCheck } from "react-icons/bs";
+import { FaAngular, FaVuejs } from "react-icons/fa";
+import { GrReactjs } from "react-icons/gr";
 
 interface Props {
   title: string;
@@ -22,21 +23,20 @@ const SearchSection: NextPage<Props> = (props) => {
         m="-3"
         rounded="full"
       >
-        {/* <CgProfile color="ping" /> */}
         {icon}
         <Text ml="3">{title}</Text>
       </Flex>
       <List spacing={3} pl="5" fontSize="xl" mt="3">
         <ListItem>
-          <ListIcon as={MdCheckCircle} color="green.500" />
+          <ListIcon as={GrReactjs} color="blue.300" />
           React
         </ListItem>
         <ListItem>
-          <ListIcon as={MdCheckCircle} color="green.500" />
+          <ListIcon as={FaVuejs} color="green.300" />
           Vue
         </ListItem>
         <ListItem>
-          <ListIcon as={MdCheckCircle} color="green.500" />
+          <ListIcon as={FaAngular} color="red.300" />
           Angular
         </ListItem>
       </List>
