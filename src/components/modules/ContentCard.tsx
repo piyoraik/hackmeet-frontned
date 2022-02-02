@@ -20,7 +20,7 @@ interface Props {
 const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
-  console.log(recruit.thumbnail)
+  console.log(recruit.thumbnail);
   return (
     <Flex
       py="6"
@@ -28,10 +28,24 @@ const ContentCard: NextPage<Props> = ({ recruit }) => {
       maxW="350px"
       onClick={() => router.push(`/wanted/${recruit.id}`)}
     >
-      <Box bg="white" boxShadow="xl" rounded="xl" p="6" overflow="hidden">
-        <Box mt="-6" mx="-6" mb="5" pos="relative">
+      <Flex
+        direction="column"
+        bg="white"
+        boxShadow="xl"
+        rounded="xl"
+        p="6"
+        overflow="hidden"
+      >
+        <Flex
+          justify="center"
+          p="6"
+          my="4"
+          border="1px"
+          rounded="md"
+          borderColor="gray.200"
+        >
           <Emoji emoji={recruit.thumbnail} size={52} />
-        </Box>
+        </Flex>
         <Stack>
           <Heading color="gray.700" fontSize="lg" fontFamily="body">
             {recruit.title}
@@ -52,7 +66,7 @@ const ContentCard: NextPage<Props> = ({ recruit }) => {
             <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
           </Stack>
         </Stack>
-      </Box>
+      </Flex>
     </Flex>
   );
 };

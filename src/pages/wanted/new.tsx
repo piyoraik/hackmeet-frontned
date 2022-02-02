@@ -29,7 +29,8 @@ import {
 } from "../../graphql/wanted.graphql";
 import { markdownIt } from "../../lib/markdownIt";
 import { useRouter } from "next/router";
-import Thumbnail from "../../components/modules/thumbnail";
+import ThumbnailCard from "../../components/modules/ThumbnailCard";
+import LanguageCard from "../../components/modules/LanguageCard";
 
 const NewWanted: NextPage = () => {
   const router = useRouter();
@@ -78,15 +79,11 @@ const NewWanted: NextPage = () => {
         </Heading>
         <Flex>
           <Flex w="33%" direction="column" align="center">
+            <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
             <Card title="Tag">
               <Box>aaaa</Box>
             </Card>
-            <Card title="Thumbnail">
-              <Thumbnail name={thumbnailName} setFn={setThumbnailName} />
-            </Card>
-            <Card title="Language">
-              <Box>aaaa</Box>
-            </Card>
+           <LanguageCard /> 
             <Card title="Framework">
               <Box>aaaa</Box>
             </Card>

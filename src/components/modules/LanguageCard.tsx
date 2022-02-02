@@ -1,30 +1,13 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { NextPage } from "next";
+import { Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { Emoji, Picker } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
-import { Dispatch, SetStateAction } from "react";
+import { NextPage } from "next"
+import Card from "../atoms/Card";
 
-interface Props {
-  name: string;
-  setFn: Dispatch<SetStateAction<string>>;
-}
-
-const Thumbnail: NextPage<Props> = ({ name, setFn }) => {
+const LanguageCard: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <>
+    <Card title="Language">
       <Flex direction="column" width="100%">
         <Flex
           width="80%"
@@ -37,21 +20,19 @@ const Thumbnail: NextPage<Props> = ({ name, setFn }) => {
           justifyItems="center"
           p="3"
         >
-          <Emoji emoji={name} size={52} />
         </Flex>
         <Flex width="80%" mx="auto" mt="4">
           <Button width="100%" onClick={onOpen}>
-            Select Thumbnail
+            Select Language
           </Button>
         </Flex>
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Select Thumbnail</ModalHeader>
+          <ModalHeader>Select Language</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Picker onClick={(emoji) => setFn(emoji.id)} />
           </ModalBody>
 
           <ModalFooter>
@@ -62,8 +43,8 @@ const Thumbnail: NextPage<Props> = ({ name, setFn }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Card>
   );
-};
+}
 
-export default Thumbnail;
+export default LanguageCard

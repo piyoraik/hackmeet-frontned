@@ -11,7 +11,6 @@ import {
   FINDONE_WANTED,
 } from "../../graphql/wanted.graphql";
 import { initialRecruit, Recruit } from "../../types/wanted.type";
-import style from "../../styles/github.module.scss";
 import Prism from "prismjs";
 import { useEffect, useState } from "react";
 import { markdownIt } from "../../lib/markdownIt";
