@@ -39,6 +39,7 @@ const NewWanted: NextPage = () => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
+  const [languageList, setLanguageList] = useState<String[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -83,7 +84,7 @@ const NewWanted: NextPage = () => {
             <Card title="Tag">
               <Box>aaaa</Box>
             </Card>
-           <LanguageCard /> 
+            <LanguageCard languageList={languageList} setFn={setLanguageList} />
             <Card title="Framework">
               <Box>aaaa</Box>
             </Card>
