@@ -7,23 +7,30 @@ import {
   Heading,
   Image,
 } from "@chakra-ui/react";
+import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import sampleImg from "../../../public/350x200.png";
 import { Recruit } from "../../types/wanted.type";
 
 interface Props {
-  recruit: Recruit
+  recruit: Recruit;
 }
 
-const ContentCard: NextPage<Props> = ({recruit}) => {
+const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
+  console.log(recruit.thumbnail)
   return (
-    <Flex py="6" w="full" maxW="350px" onClick={() => router.push(`/wanted/${recruit.id}`)}>
+    <Flex
+      py="6"
+      w="full"
+      maxW="350px"
+      onClick={() => router.push(`/wanted/${recruit.id}`)}
+    >
       <Box bg="white" boxShadow="xl" rounded="xl" p="6" overflow="hidden">
         <Box mt="-6" mx="-6" mb="5" pos="relative">
-          <Image src="" fallbackSrc={sampleImg.src} layout="full" alt="" />
+          <Emoji emoji={recruit.thumbnail} size={52} />
         </Box>
         <Stack>
           <Heading color="gray.700" fontSize="lg" fontFamily="body">

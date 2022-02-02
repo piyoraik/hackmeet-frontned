@@ -29,6 +29,7 @@ import {
 } from "../../graphql/wanted.graphql";
 import { markdownIt } from "../../lib/markdownIt";
 import { useRouter } from "next/router";
+import Thumbnail from "../../components/modules/thumbnail";
 
 const NewWanted: NextPage = () => {
   const router = useRouter();
@@ -36,6 +37,7 @@ const NewWanted: NextPage = () => {
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
+  const [thumbnailName, setThumbnailName] = useState("partying_face");
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -50,6 +52,7 @@ const NewWanted: NextPage = () => {
         variables: {
           param: {
             title,
+            thumbnail: thumbnailName,
             content: contentMD,
           },
         },
@@ -79,7 +82,7 @@ const NewWanted: NextPage = () => {
               <Box>aaaa</Box>
             </Card>
             <Card title="Thumbnail">
-              <Box>aaaa</Box>
+              <Thumbnail name={thumbnailName} setFn={setThumbnailName} />
             </Card>
             <Card title="Language">
               <Box>aaaa</Box>
@@ -148,7 +151,7 @@ const NewWanted: NextPage = () => {
                   </TabPanel>
                   <TabPanel px="0">
                     <Box
-                      className={`${style.main} prose`}
+                      className={`${style.main} prose line-numbers`}
                       minHeight="700px"
                       p="8"
                       border="2px"

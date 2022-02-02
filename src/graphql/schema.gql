@@ -5,6 +5,7 @@
 type Recruit {
   id: ID!
   title: String!
+  thumbnail: String!
   content: String!
 }
 
@@ -19,5 +20,7 @@ type Mutation {
 }
 
 input CreateRecruitsDTO {
+  title: String!
+  thumbnail: String!
   content: String!
 }

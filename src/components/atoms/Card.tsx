@@ -1,6 +1,5 @@
 import { Box, Heading, Center, Button } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { AppProps } from "next/app";
 import { ReactNode } from "react";
 
 interface Props {

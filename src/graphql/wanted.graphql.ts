@@ -7,6 +7,7 @@ export const ALL_WANTED = gql`
     recruits {
       id
       title
+      thumbnail
       content
     }
   }
@@ -22,6 +23,7 @@ export const CREATE_WANTED = gql`
     createRecruit(createRecruit: $param) {
       id
       title
+      thumbnail
       content
     }
   }
@@ -37,6 +39,7 @@ export const FINDONE_WANTED = gql`
     findOneIdRecruit(id: $id) {
       id
       title
+      thumbnail
       content
     }
   }
@@ -46,6 +49,7 @@ export interface findOneIdRecruitType {
   findOneIdRecruit: {
     id: string;
     title: string;
-    content: string
-  }
+    thumbnail: string;
+    content: string;
+  };
 }

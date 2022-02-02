@@ -1,10 +1,10 @@
-{
-  "presets": ["next/babel"],
-  "plugins": [
+module.exports = {
+  presets: ["next/babel"],
+  plugins: [
     [
       "prismjs",
       {
-        "languages": [
+        languages: [
           "javascript",
           "css",
           "markup",
@@ -27,12 +27,12 @@
           "swift",
           "typescript",
           "vim",
-          "yaml"
+          "yaml",
         ],
-        "plugins": [],
-        "theme": "tomorrow",
-        "css": true
-      }
-    ]
-  ]
-}
+        plugins: ["line-numbers", "show-language"],
+        theme: "okaidia",
+        css: true,
+      },
+    ],
+  ],
+};
