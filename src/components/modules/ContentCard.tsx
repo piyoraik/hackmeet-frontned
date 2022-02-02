@@ -10,27 +10,24 @@ import {
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import sampleImg from "../../../public/350x200.png";
+import { Recruit } from "../../types/wanted.type";
 
-const ContentCard: NextPage = () => {
+interface Props {
+  recruit: Recruit
+}
+
+const ContentCard: NextPage<Props> = ({recruit}) => {
   const router = useRouter();
 
   return (
-    <Flex py="6" w="full" maxW="350px" onClick={() => router.push("/wanted/1")}>
+    <Flex py="6" w="full" maxW="350px" onClick={() => router.push(`/wanted/${recruit.id}`)}>
       <Box bg="white" boxShadow="xl" rounded="xl" p="6" overflow="hidden">
         <Box mt="-6" mx="-6" mb="5" pos="relative">
           <Image src="" fallbackSrc={sampleImg.src} layout="full" alt="" />
         </Box>
         <Stack>
-          <Text
-            color="blue.500"
-            fontWeight="800"
-            fontSize="xs"
-            letterSpacing="wide"
-          >
-            Blog
-          </Text>
           <Heading color="gray.700" fontSize="lg" fontFamily="body">
-            Next.js + ChakraUI Dashboard
+            {recruit.title}
           </Heading>
           <Text color="gray.500" fontSize="sm">
             Chakra UI is a simple, modular and accessible component library that

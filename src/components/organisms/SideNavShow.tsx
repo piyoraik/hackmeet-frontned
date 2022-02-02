@@ -1,12 +1,14 @@
-import { Flex } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
-import JoinCard from "../modules/JoinCard";
+import Card from "../atoms/Card";
 
 const SideNavShow: NextPage = () => {
   return (
     <>
       <Flex w="33%" direction="column" align="center">
-        <JoinCard />
+        <Card title="Wanted Join!">
+          <Button colorScheme="blue" width='80%'>Join</Button>
+        </Card>
       </Flex>
     </>
   );
