@@ -19,19 +19,24 @@ import {
 import { NextPage } from "next";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { MdCheckCircle, MdSettings } from "react-icons/md";
+import { Language } from "../../types/language.type";
 import Card from "../atoms/Card";
 
 interface Props {
-  languageList: String[];
+  useLanguageList: String[];
   setFn: Dispatch<SetStateAction<String[]>>;
+  languages: Language[];
 }
 
-const LanguageCard: NextPage<Props> = ({ languageList, setFn }) => {
+const LanguageCard: NextPage<Props> = ({
+  useLanguageList,
+  setFn,
+  languages,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-    setFn([...languageList, e.target.value]);
+    setFn([...useLanguageList, e.target.value]);
   };
 
   return (
@@ -62,7 +67,7 @@ const LanguageCard: NextPage<Props> = ({ languageList, setFn }) => {
           <ModalBody>
             <Box>
               <List spacing={3}>
-                {languageList.map((language, idx) => (
+                {useLanguageList.map((language, idx) => (
                   <ListItem key={idx}>
                     <ListIcon as={MdCheckCircle} color="green.500" />
                     {language}
@@ -75,9 +80,11 @@ const LanguageCard: NextPage<Props> = ({ languageList, setFn }) => {
               size="md"
               onChange={(e) => changeHandler(e)}
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+              {languages.map((language, idx) => (
+                <option value={language.id} key={idx}>
+                  {language.name}
+                </option>
+              ))}
             </Select>
           </ModalBody>
 

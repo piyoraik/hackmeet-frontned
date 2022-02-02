@@ -12,7 +12,7 @@ import {
   Tabs,
   Textarea,
 } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
 import Card from "../../components/atoms/Card";
@@ -31,15 +31,48 @@ import { markdownIt } from "../../lib/markdownIt";
 import { useRouter } from "next/router";
 import ThumbnailCard from "../../components/modules/ThumbnailCard";
 import LanguageCard from "../../components/modules/LanguageCard";
+import { ALL_LANGUAGE, Languages } from "../../graphql/language.graphql";
+import { Language } from "../../types/language.type";
 
-const NewWanted: NextPage = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const { data, error } = await client.query<Languages>({
+      query: ALL_LANGUAGE,
+      fetchPolicy: "cache-first",
+    });
+    return {
+      props: {
+        stats: "ok",
+        languages: data.languages,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        props: {
+          status: err.message,
+          languages: null,
+        },
+      };
+    }
+    throw err;
+  }
+};
+
+interface Props {
+  status: string;
+  languages: Language[];
+}
+
+const NewWanted: NextPage<Props> = ({ status, languages }) => {
+  console.log(languages);
   const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [languageList, setLanguageList] = useState<String[]>([]);
+  const [useLanguageList, setUseLanguageList] = useState<String[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -67,6 +100,8 @@ const NewWanted: NextPage = () => {
     }
   };
 
+  console.log(languages)
+
   useEffect(() => {
     Prism.highlightAll();
   });
@@ -84,7 +119,11 @@ const NewWanted: NextPage = () => {
             <Card title="Tag">
               <Box>aaaa</Box>
             </Card>
-            <LanguageCard languageList={languageList} setFn={setLanguageList} />
+            <LanguageCard
+              useLanguageList={useLanguageList}
+              setFn={setUseLanguageList}
+              languages={languages}
+            />
             <Card title="Framework">
               <Box>aaaa</Box>
             </Card>
