@@ -23,7 +23,10 @@ import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
 import { client } from "../../graphql/client";
-import { CreateRecruitsDTOType, CREATE_WANTED } from "../../graphql/wanted.graphql";
+import {
+  CreateRecruitsDTOType,
+  CREATE_WANTED,
+} from "../../graphql/wanted.graphql";
 import { markdownIt } from "../../lib/markdownIt";
 import { useRouter } from "next/router";
 
@@ -52,7 +55,7 @@ const NewWanted: NextPage = () => {
         },
       });
       if (res == undefined) throw Error("Error");
-      const resId = res.data?.createRecruit.id
+      const resId = res.data?.createRecruit.id;
       router.push(`/wanted/${resId}`);
     } catch (err) {
       console.error(err);
