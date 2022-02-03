@@ -18,13 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { MdCheckCircle, MdSettings } from "react-icons/md";
+import { MdCheckCircle } from "react-icons/md";
 import { Language } from "../../types/language.type";
 import Card from "../atoms/Card";
 
 interface Props {
-  useLanguageList: String[];
-  setFn: Dispatch<SetStateAction<String[]>>;
+  useLanguageList: Language[];
+  setFn: Dispatch<SetStateAction<Language[]>>;
   languages: Language[];
 }
 
@@ -36,7 +36,23 @@ const LanguageCard: NextPage<Props> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    setFn([...useLanguageList, e.target.value]);
+    try {
+      const languageValue = e.target.value;
+      const languageArray = languageValue.split(",");
+      if (useLanguageList.length >= 5) {
+        throw Error("登録できるのは最大5個までです。");
+      }
+      const isLanguage = useLanguageList.some((language) => language.id === languageArray[0])
+      if (languageValue === "" || isLanguage) {
+        throw Error("既に登録済みです。");
+      }
+      setFn([...useLanguageList, { id: languageArray[0], name: languageArray[1] }]);
+    } catch (err) {
+      if (err instanceof Error) {
+        return err.message;
+      }
+      throw err;
+    }
   };
 
   return (
@@ -52,7 +68,16 @@ const LanguageCard: NextPage<Props> = ({
           justify="center"
           justifyItems="center"
           p="3"
-        ></Flex>
+        >
+          <List spacing={3}>
+            {useLanguageList.map((language, idx) => (
+              <ListItem key={idx}>
+                <ListIcon as={MdCheckCircle} color="green.500" />
+                {language.name}
+              </ListItem>
+            ))}
+          </List>
+        </Flex>
         <Flex width="80%" mx="auto" mt="4">
           <Button width="100%" onClick={onOpen}>
             Select Language
@@ -70,7 +95,7 @@ const LanguageCard: NextPage<Props> = ({
                 {useLanguageList.map((language, idx) => (
                   <ListItem key={idx}>
                     <ListIcon as={MdCheckCircle} color="green.500" />
-                    {language}
+                    {language.name}
                   </ListItem>
                 ))}
               </List>
@@ -81,7 +106,7 @@ const LanguageCard: NextPage<Props> = ({
               onChange={(e) => changeHandler(e)}
             >
               {languages.map((language, idx) => (
-                <option value={language.id} key={idx}>
+                <option value={`${language.id},${language.name}`} key={idx}>
                   {language.name}
                 </option>
               ))}
@@ -92,9 +117,7 @@ const LanguageCard: NextPage<Props> = ({
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost" onClick={() => setFn()}>
-              Secondary Action
-            </Button>
+            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -72,7 +72,7 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [useLanguageList, setUseLanguageList] = useState<String[]>([]);
+  const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -99,8 +99,6 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
       console.error(err);
     }
   };
-
-  console.log(languages)
 
   useEffect(() => {
     Prism.highlightAll();
