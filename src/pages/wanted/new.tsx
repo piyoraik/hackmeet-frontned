@@ -33,17 +33,26 @@ import ThumbnailCard from "../../components/modules/ThumbnailCard";
 import LanguageCard from "../../components/modules/LanguageCard";
 import { ALL_LANGUAGE, Languages } from "../../graphql/language.graphql";
 import { Language } from "../../types/language.type";
+import { fetchGraphql } from "../../lib/graphqlFetch";
+import { ALL_FRAMEWORK, Frameworks } from "../../graphql/framework.graphql";
+import { Framework } from "../../types/framework.type";
+import FrameworkCard from "../../components/modules/FrameworkCard";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const { data, error } = await client.query<Languages>({
-      query: ALL_LANGUAGE,
-      fetchPolicy: "cache-first",
-    });
+    const languages = await fetchGraphql<Languages>(
+      ALL_LANGUAGE,
+      "cache-first"
+    );
+    const frameworks = await fetchGraphql<Frameworks>(
+      ALL_FRAMEWORK,
+      "cache-first"
+    );
     return {
       props: {
         stats: "ok",
-        languages: data.languages,
+        languages: languages.data.languages,
+        frameworks: frameworks.data.frameworks,
       },
     };
   } catch (err) {
@@ -52,6 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
           status: err.message,
           languages: null,
+          frameworks: null,
         },
       };
     }
@@ -62,9 +72,11 @@ export const getStaticProps: GetStaticProps = async () => {
 interface Props {
   status: string;
   languages: Language[];
+  frameworks: Framework[];
 }
 
-const NewWanted: NextPage<Props> = ({ status, languages }) => {
+const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
+  console.log(frameworks);
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -72,6 +84,7 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
   const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
+  const [useFrameworkList, setUseFrameworkList] = useState<Framework[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -84,6 +97,9 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
+      const frameworkIds = useFrameworkList.map((framework) => {
+        return framework.id
+      })
 
       const res = await client.mutate<CreateRecruitsDTOType>({
         mutation: CREATE_WANTED,
@@ -93,6 +109,7 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
             thumbnail: thumbnailName,
             content: contentMD,
             languages: languageIds,
+            frameworks: frameworkIds
           },
         },
       });
@@ -108,8 +125,6 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
     Prism.highlightAll();
   });
 
-  console.log(useLanguageList);
-
   return (
     <Box width="80%" mx="auto">
       <Header />
@@ -120,17 +135,17 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
         <Flex>
           <Flex w="33%" direction="column" align="center">
             <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
-            <Card title="Tag">
-              <Box>aaaa</Box>
-            </Card>
+
             <LanguageCard
               useLanguageList={useLanguageList}
               setFn={setUseLanguageList}
               languages={languages}
             />
-            <Card title="Framework">
-              <Box>aaaa</Box>
-            </Card>
+            <FrameworkCard
+              useFrameworkList={useFrameworkList}
+              setFn={setUseFrameworkList}
+              frameworks={frameworks}
+            />
             <Card title="Feature">
               <Box>aaaa</Box>
             </Card>
