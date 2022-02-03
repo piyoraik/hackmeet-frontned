@@ -1,43 +1,40 @@
-import { Flex, List, ListItem, ListIcon, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Box, Select, ModalFooter, useDisclosure } from "@chakra-ui/react";
+import {
+  Flex,
+  List,
+  ListItem,
+  ListIcon,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Box,
+  Select,
+  ModalFooter,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { NextPage } from "next";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { MdCheckCircle } from "react-icons/md";
+import { Frameworks } from "../../graphql/framework.graphql";
+import { changeHandler } from "../../lib/newSelect";
 import { Framework } from "../../types/framework.type";
 import Card from "../atoms/Card";
 
 interface Props {
-  useFrameworkList: Framework[]
-  setFn: Dispatch<SetStateAction<Framework[]>>
-  frameworks: Framework[]
+  useFrameworkList: Framework[];
+  setFn: Dispatch<SetStateAction<Framework[]>>;
+  frameworks: Framework[];
 }
 
-const FrameworkCard: NextPage<Props> = ({useFrameworkList, setFn, frameworks}) => {
-   const { isOpen, onOpen, onClose } = useDisclosure();
-
-   const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-     try {
-       const frameworkValue = e.target.value;
-       const frameworkArray = frameworkValue.split(",");
-       if (useFrameworkList.length >= 5) {
-         throw Error("登録できるのは最大5個までです。");
-       }
-       const framework = useFrameworkList.some(
-         (framework) => framework.id === frameworkArray[0]
-       );
-       if (frameworkValue === "" || framework) {
-         throw Error("既に登録済みです。");
-       }
-       setFn([
-         ...useFrameworkList,
-         { id: frameworkArray[0], name: frameworkArray[1] },
-       ]);
-     } catch (err) {
-       if (err instanceof Error) {
-         return err.message;
-       }
-       throw err;
-     }
-   };
+const FrameworkCard: NextPage<Props> = ({
+  useFrameworkList,
+  setFn,
+  frameworks,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Card title="framework">
@@ -87,7 +84,9 @@ const FrameworkCard: NextPage<Props> = ({useFrameworkList, setFn, frameworks}) =
             <Select
               placeholder="Select framework"
               size="md"
-              onChange={(e) => changeHandler(e)}
+              onChange={(e) =>
+                changeHandler<Framework[]>(e, useFrameworkList, setFn)
+              }
             >
               {frameworks.map((framework, idx) => (
                 <option value={`${framework.id},${framework.name}`} key={idx}>
@@ -107,6 +106,6 @@ const FrameworkCard: NextPage<Props> = ({useFrameworkList, setFn, frameworks}) =
       </Modal>
     </Card>
   );
-}
+};
 
-export default FrameworkCard
+export default FrameworkCard;

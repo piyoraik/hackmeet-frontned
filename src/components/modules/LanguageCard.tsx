@@ -17,8 +17,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { MdCheckCircle } from "react-icons/md";
+import { changeHandler } from "../../lib/newSelect";
 import { Language } from "../../types/language.type";
 import Card from "../atoms/Card";
 
@@ -34,26 +35,6 @@ const LanguageCard: NextPage<Props> = ({
   languages,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    try {
-      const languageValue = e.target.value;
-      const languageArray = languageValue.split(",");
-      if (useLanguageList.length >= 5) {
-        throw Error("登録できるのは最大5個までです。");
-      }
-      const isLanguage = useLanguageList.some((language) => language.id === languageArray[0])
-      if (languageValue === "" || isLanguage) {
-        throw Error("既に登録済みです。");
-      }
-      setFn([...useLanguageList, { id: languageArray[0], name: languageArray[1] }]);
-    } catch (err) {
-      if (err instanceof Error) {
-        return err.message;
-      }
-      throw err;
-    }
-  };
 
   return (
     <Card title="Language">
@@ -103,7 +84,9 @@ const LanguageCard: NextPage<Props> = ({
             <Select
               placeholder="Select Language"
               size="md"
-              onChange={(e) => changeHandler(e)}
+              onChange={(e) =>
+                changeHandler<Language[]>(e, useLanguageList, setFn)
+              }
             >
               {languages.map((language, idx) => (
                 <option value={`${language.id},${language.name}`} key={idx}>
