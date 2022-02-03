@@ -36,12 +36,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 interface Props {
   status: string;
-  recruits: Recruit[]
+  recruits: Recruit[];
 }
 
 const Home: NextPage<Props> = ({ status, recruits }) => {
   const router = useRouter();
-
   return (
     <>
       <Flex direction="row" justify="center">

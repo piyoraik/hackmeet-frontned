@@ -25,6 +25,10 @@ export const CREATE_WANTED = gql`
       title
       thumbnail
       content
+      languages {
+        id
+        name
+      }
     }
   }
 `;

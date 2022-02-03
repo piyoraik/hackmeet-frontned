@@ -65,7 +65,6 @@ interface Props {
 }
 
 const NewWanted: NextPage<Props> = ({ status, languages }) => {
-  console.log(languages);
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -82,6 +81,10 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
 
   const submitHandler = async () => {
     try {
+      const languageIds = useLanguageList.map((language) => {
+        return language.id;
+      });
+
       const res = await client.mutate<CreateRecruitsDTOType>({
         mutation: CREATE_WANTED,
         variables: {
@@ -89,6 +92,7 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
             title,
             thumbnail: thumbnailName,
             content: contentMD,
+            languages: languageIds,
           },
         },
       });
@@ -103,6 +107,8 @@ const NewWanted: NextPage<Props> = ({ status, languages }) => {
   useEffect(() => {
     Prism.highlightAll();
   });
+
+  console.log(useLanguageList);
 
   return (
     <Box width="80%" mx="auto">
