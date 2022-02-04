@@ -64,7 +64,11 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
     <Box width="80%" mx="auto">
       <Header />
       <Flex direction="row" justify="center">
-        <SideNavShow languages={data.languages} frameworks={data.frameworks} />
+        <SideNavShow
+          languages={data.languages}
+          frameworks={data.frameworks}
+          features={data.features}
+        />
         <Flex direction="column" w="60%">
           <UserCard />
           <ContentDetail data={recruit} />
