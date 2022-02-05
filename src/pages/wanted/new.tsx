@@ -21,7 +21,7 @@ import style from "../../styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
-import { client } from "../../graphql/client";
+import { client } from "../../lib/client";
 import {
   CreateRecruitsDTOType,
   CREATE_WANTED,
