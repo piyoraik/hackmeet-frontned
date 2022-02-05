@@ -15,7 +15,6 @@ import {
 import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
-import Card from "../../components/atoms/Card";
 import Header from "../../components/organisms/Header";
 import { VscDebugStart } from "react-icons/vsc";
 import style from "../../styles/github.module.scss";
@@ -37,6 +36,9 @@ import { fetchGraphql } from "../../lib/graphqlFetch";
 import { ALL_FRAMEWORK, Frameworks } from "../../graphql/framework.graphql";
 import { Framework } from "../../types/framework.type";
 import FrameworkCard from "../../components/modules/FrameworkCard";
+import { ALL_FEATURE, Features } from "../../graphql/feature.graphql";
+import { Feature } from "../../types/feature.type";
+import FeatureCard from "../../components/modules/FeatureCard";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
@@ -48,11 +50,13 @@ export const getStaticProps: GetStaticProps = async () => {
       ALL_FRAMEWORK,
       "cache-first"
     );
+    const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
     return {
       props: {
         stats: "ok",
         languages: languages.data.languages,
         frameworks: frameworks.data.frameworks,
+        features: features.data.features,
       },
     };
   } catch (err) {
@@ -62,6 +66,7 @@ export const getStaticProps: GetStaticProps = async () => {
           status: err.message,
           languages: null,
           frameworks: null,
+          features: null,
         },
       };
     }
@@ -73,10 +78,15 @@ interface Props {
   status: string;
   languages: Language[];
   frameworks: Framework[];
+  features: Feature[];
 }
 
-const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
-  console.log(frameworks);
+const NewWanted: NextPage<Props> = ({
+  status,
+  languages,
+  frameworks,
+  features,
+}) => {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -85,6 +95,7 @@ const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
   const [thumbnailName, setThumbnailName] = useState("partying_face");
   const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
   const [useFrameworkList, setUseFrameworkList] = useState<Framework[]>([]);
+  const [useFeatureList, setUseFeatureList] = useState<Feature[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -98,7 +109,10 @@ const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
         return language.id;
       });
       const frameworkIds = useFrameworkList.map((framework) => {
-        return framework.id
+        return framework.id;
+      });
+      const featureIds = useFeatureList.map((feature) => {
+        return feature.id
       })
 
       const res = await client.mutate<CreateRecruitsDTOType>({
@@ -109,7 +123,8 @@ const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
             thumbnail: thumbnailName,
             content: contentMD,
             languages: languageIds,
-            frameworks: frameworkIds
+            frameworks: frameworkIds,
+            features: featureIds,
           },
         },
       });
@@ -146,12 +161,11 @@ const NewWanted: NextPage<Props> = ({ status, languages, frameworks }) => {
               setFn={setUseFrameworkList}
               frameworks={frameworks}
             />
-            <Card title="Feature">
-              <Box>aaaa</Box>
-            </Card>
-            <Card title="Content">
-              <Box>aaaa</Box>
-            </Card>
+            <FeatureCard
+              useFeatureList={useFeatureList}
+              setFn={setUseFeatureList}
+              features={features}
+            />
           </Flex>
           <Flex
             direction="column"

@@ -35,6 +35,10 @@ export const CREATE_WANTED = gql`
         id
         name
       }
+      features {
+        id
+        name
+      }
     }
   }
 `;
@@ -56,6 +60,10 @@ export const FINDONE_WANTED = gql`
         name
       }
       frameworks {
+        id
+        name
+      }
+      features {
         id
         name
       }

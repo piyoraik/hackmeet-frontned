@@ -1,3 +1,4 @@
+import { Features } from "../graphql/feature.graphql";
 import { Framework } from "./framework.type";
 import { Language } from "./language.type";
 
@@ -8,6 +9,7 @@ export interface Recruit {
   content: string;
   languages: Language[];
   frameworks: Framework[];
+  features: Features[];
 }
 
 export const initialRecruit: Recruit = {
@@ -17,4 +19,5 @@ export const initialRecruit: Recruit = {
   content: "hoge",
   languages: [],
   frameworks: [],
+  features: [],
 };
