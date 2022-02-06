@@ -1,6 +1,6 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Flex } from "@chakra-ui/react";
 import type { GetServerSideProps, NextPage } from "next";
-import { useUser } from "@auth0/nextjs-auth0";
 import { Languages } from "prismjs";
 import HeaderContent from "../components/modules/HeaderContent";
 import ContentList from "../components/organisms/ContentList";
@@ -66,13 +66,21 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
-  const { user, error, isLoading } = useUser();
-  console.log(user);
-  console.log(error);
-  console.log(isLoading);
-
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  console.log(isAuthenticated);
   return (
     <>
+      {isAuthenticated && (
+        <div>
+          <p>{user?.name}でログイン中</p>
+          <button onClick={() => logout()}>ログアウト</button>
+        </div>
+      )}
+      {!isAuthenticated && (
+        <div>
+          <button onClick={() => loginWithRedirect()}>ログイン</button>
+        </div>
+      )}
       <Flex direction="row" justify="center">
         <SideNavIndex
           languages={languages}

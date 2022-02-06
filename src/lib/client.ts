@@ -6,6 +6,8 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND || "http://localhost:9000";
+
 // const httpLink = createHttpLink({
 //   uri: "http://localhost:9000/graphql",
 // });
@@ -23,9 +25,9 @@ import {
 //   return forward(operation);
 // });
 
-const token = localStorage.getItem("appSession");
+// const token = localStorage.getItem("appSession");
 const httpLink = createHttpLink({
-  uri: `/graphql`,
+  uri: `${BACKEND}/graphql`,
   // headers: {
   //   authorization: token
   //     ? `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
@@ -34,6 +36,6 @@ const httpLink = createHttpLink({
 });
 
 export const client = new ApolloClient({
-  link: httpLink,
+  uri: `${BACKEND}/graphql`,
   cache: new InMemoryCache(),
 });
