@@ -18,8 +18,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: hackmeet-frontend
-          registry: ${{ REPOSITORY:}}
+          registry: 933345684592.dkr.ecr.ap-northeast-1.amazonaws.com/hackmeet-frontent
         env:
-          REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
