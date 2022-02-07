@@ -18,7 +18,7 @@ export const httpHeader = (token?: string) => {
 };
 
 export const client = (link: ApolloLink) => {
-  new ApolloClient({
+  return new ApolloClient({
     link: link,
     cache: new InMemoryCache(),
   });
