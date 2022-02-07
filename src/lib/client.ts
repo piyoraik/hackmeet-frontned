@@ -6,10 +6,9 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND
 export const httpHeader = (token?: string) => {
   return createHttpLink({
-    uri: `${BACKEND}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
     headers: {
       authorization: token ? `Bearer ${token}` : null,
     },
