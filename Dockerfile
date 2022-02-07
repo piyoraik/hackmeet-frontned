@@ -1,32 +1,10 @@
 FROM node:16-alpine AS deps
 
-ARG NEXT_PUBLIC_IDENTIFIRE
-ARG NEXT_PUBLIC_AUTH0_DOMAIN
-ARG NEXT_PUBLIC_AUTH0_CLIENT_ID
-ARG NEXT_PUBLIC_BACKEND
-ARG NEXT_PUBLIC_BASE_URL
-
-ENV NEXT_PUBLIC_IDENTIFIRE $NEXT_PUBLIC_IDENTIFIRE
-ENV NEXT_PUBLIC_AUTH0_DOMAIN $NEXT_PUBLIC_AUTH0_DOMAIN
-ENV NEXT_PUBLIC_AUTH0_CLIENT_ID $NEXT_PUBLIC_AUTH0_CLIENT_ID
-ENV NEXT_PUBLIC_BACKEND $NEXT_PUBLIC_BACKEND
-ENV NEXT_PUBLIC_BASE_URL $NEXT_PUBLIC_BASE_URL
-
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 WORKDIR /app
 RUN apk add --no-cache libc6-compat
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-
-# development
-FROM deps AS dev
-RUN apk add bash git vim
-
-ENV NODE_ENV development
-
-COPY . .
-EXPOSE 3000
-ENV PORT 3000
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
