@@ -1,30 +1,52 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, chakra, Button } from "@chakra-ui/react";
 import { NextPage } from "next";
 import router from "next/router";
-import { BsPlusSquare } from "react-icons/bs";
-import { FaBell } from "react-icons/fa";
 import SearchBox from "./SearchBox";
+import { BsPlusSquare } from "react-icons/bs";
+import AccountMenu from "./AccountMenu";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FiLogIn } from "react-icons/fi";
 
 const HeaderContent: NextPage = () => {
-  return (
-    <Flex
-      direction="row"
-      justify="space-between"
-      my="10"
-      align="center"
-      width="30%"
-    >
-      <Box>
-        <SearchBox />
-      </Box>
-      <Box>
-        <BsPlusSquare size="2rem" onClick={() => router.push("/wanted/new")} />
-      </Box>
-      <Box>
-        <FaBell size="2rem" color="#FCBA03" />
-      </Box>
-    </Flex>
-  );
-}
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-export default HeaderContent
+  return (
+    <>
+      <Flex
+        direction="row"
+        justify="space-between"
+        my="10"
+        align="center"
+        width="30%"
+      >
+        <Box>
+          <SearchBox />
+        </Box>
+        {isAuthenticated && (
+          <>
+            <Box onClick={() => router.push("/wanted/new")}>
+              <chakra.button>
+                <BsPlusSquare size="2rem" />
+              </chakra.button>
+            </Box>
+            <AccountMenu />
+          </>
+        )}
+        {!isAuthenticated && (
+          <>
+            <Button
+              onClick={() => loginWithRedirect()}
+              leftIcon={<FiLogIn />}
+              colorScheme="blue"
+              variant="outline"
+            >
+              Login
+            </Button>
+          </>
+        )}
+      </Flex>
+    </>
+  );
+};
+
+export default HeaderContent;

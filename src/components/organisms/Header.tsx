@@ -5,8 +5,6 @@ import HeaderContent from "../modules/HeaderContent";
 import Title from "../modules/Title";
 
 const Header: NextPage = () => {
-  const router = useRouter()
-
   return (
     <Flex direction="row" justify="space-between" width="93%" mx="auto">
       <Title />

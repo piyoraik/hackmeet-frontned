@@ -12,6 +12,7 @@ export const httpHeader = (token?: string) => {
     headers: {
       authorization: token ? `Bearer ${token}` : null,
     },
+    
   });
 };
 

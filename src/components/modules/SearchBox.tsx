@@ -8,11 +8,10 @@ const SearchBox: NextPage = () => {
       type="text"
       placeholder="Keyword..."
       color="blue.800"
-      backgroundColor="blue.50"
+      backgroundColor="gray.50"
       rounded="2xl"
       border="0"
       _focus={{
-        backgroundColor: "blue.200",
         outline: "none",
       }}
     />
