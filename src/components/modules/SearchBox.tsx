@@ -10,7 +10,7 @@ const SearchBox: NextPage = () => {
       color="blue.800"
       backgroundColor="gray.50"
       rounded="2xl"
-      border="0"
+      border="1px"
       _focus={{
         outline: "none",
       }}
