@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  admin-frontend:
+    container_name: portfolio
+    build:
+      context: ./
+      target: runner
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.local

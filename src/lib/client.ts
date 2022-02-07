@@ -9,9 +9,9 @@ import {
 export const httpHeader = (token?: string) => {
   return createHttpLink({
     uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
-    // headers: {
-    //   authorization: token ? `Bearer ${token}` : null,
-    // },
+    headers: {
+      authorization: token ? `Bearer ${token}` : null,
+    },
   });
 };
 

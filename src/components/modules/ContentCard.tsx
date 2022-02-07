@@ -56,10 +56,7 @@ const ContentCard: NextPage<Props> = ({ recruit }) => {
           </Text>
         </Stack>
         <Stack mt="6" direction="row" spacing="4" align="center">
-          <Avatar
-            src="https://gravatar.com/avatar/456e6f4841d1935a5383bd73a77a5a16?s=400&d=robohash&r=x"
-            alt="Author"
-          />
+          <Avatar src="https://gravatar.com/avatar/456e6f4841d1935a5383bd73a77a5a16?s=400&d=robohash&r=x" />
           <Stack direction="column" spacing="0" fontSize="sm">
             <Text fontWeight="bold">Daisuke</Text>
             <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
