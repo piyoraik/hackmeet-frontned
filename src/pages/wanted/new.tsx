@@ -21,7 +21,7 @@ import style from "../../styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
-import { client } from "../../lib/client";
+import { client, httpHeader } from "../../lib/client";
 import {
   CreateRecruitsDTOType,
   CREATE_WANTED,
@@ -39,6 +39,7 @@ import FrameworkCard from "../../components/modules/FrameworkCard";
 import { ALL_FEATURE, Features } from "../../graphql/feature.graphql";
 import { Feature } from "../../types/feature.type";
 import FeatureCard from "../../components/modules/FeatureCard";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
@@ -81,13 +82,10 @@ interface Props {
   features: Feature[];
 }
 
-const NewWanted: NextPage<Props> = ({
-  status,
-  languages,
-  frameworks,
-  features,
-}) => {
+const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
+  const { getAccessTokenSilently, user } = useAuth0();
+  const [userMetadata, setUserMetadata] = useState(null);
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
@@ -105,6 +103,9 @@ const NewWanted: NextPage<Props> = ({
 
   const submitHandler = async () => {
     try {
+      const accessToken = await getAccessTokenSilently();
+      const link = httpHeader(accessToken);
+      console.log(link);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
@@ -112,10 +113,10 @@ const NewWanted: NextPage<Props> = ({
         return framework.id;
       });
       const featureIds = useFeatureList.map((feature) => {
-        return feature.id
-      })
+        return feature.id;
+      });
 
-      const res = await client.mutate<CreateRecruitsDTOType>({
+      const res = await client(link).mutate<CreateRecruitsDTOType>({
         mutation: CREATE_WANTED,
         variables: {
           param: {

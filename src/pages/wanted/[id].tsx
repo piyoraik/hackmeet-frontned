@@ -5,7 +5,7 @@ import ContentDetail from "../../components/organisms/ContentDetail";
 import Footer from "../../components/organisms/Footer";
 import Header from "../../components/organisms/Header";
 import SideNavShow from "../../components/organisms/SideNavShow";
-import { client } from "../../lib/client";
+import { client, httpHeader } from "../../lib/client";
 import {
   findOneIdRecruitType,
   FINDONE_WANTED,
@@ -19,7 +19,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const id = params?.id;
     if (id === undefined) throw new Error("Not Found");
-    const { data, error } = await client.query<findOneIdRecruitType>({
+    const link = httpHeader();
+    const { data, error } = await client(link).query<findOneIdRecruitType>({
       query: FINDONE_WANTED,
       variables: {
         id: id,

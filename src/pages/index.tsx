@@ -67,7 +67,6 @@ const Home: NextPage<Props> = ({
   features,
 }) => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-  console.log(isAuthenticated);
   return (
     <>
       {isAuthenticated && (

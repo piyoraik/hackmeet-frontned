@@ -1,9 +1,13 @@
 import { FetchPolicy } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import { client } from "./client";
+import { client, httpHeader } from "./client";
 
-export const fetchGraphql = async <T>(query: DocumentNode, fetchPolicy: FetchPolicy) => {
-  const { data, error, loading } = await client.query<T>({
+export const fetchGraphql = async <T>(
+  query: DocumentNode,
+  fetchPolicy: FetchPolicy
+) => {
+  const link = httpHeader();
+  const { data, error, loading } = await client(link).query<T>({
     query,
     fetchPolicy,
   });
@@ -11,6 +15,6 @@ export const fetchGraphql = async <T>(query: DocumentNode, fetchPolicy: FetchPol
   return {
     data,
     error,
-    loading
+    loading,
   };
 };

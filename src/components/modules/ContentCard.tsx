@@ -20,7 +20,6 @@ interface Props {
 const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
-  console.log(recruit.thumbnail);
   return (
     <Flex
       py="6"
