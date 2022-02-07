@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     );
     const frameworks = await fetchGraphql<Frameworks>(
       ALL_FRAMEWORK,
-      "cache-first"
+      "network-only"
     );
     const features = await fetchGraphql<Features>(ALL_FEATURE, "network-only");
 

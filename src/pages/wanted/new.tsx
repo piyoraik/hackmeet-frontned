@@ -12,7 +12,7 @@ import {
   Tabs,
   Textarea,
 } from "@chakra-ui/react";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
 import Header from "../../components/organisms/Header";
@@ -41,15 +41,15 @@ import { Feature } from "../../types/feature.type";
 import FeatureCard from "../../components/modules/FeatureCard";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     const languages = await fetchGraphql<Languages>(
       ALL_LANGUAGE,
-      "cache-first"
+      "network-only"
     );
     const frameworks = await fetchGraphql<Frameworks>(
       ALL_FRAMEWORK,
-      "cache-first"
+      "network-only"
     );
     const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
     return {
