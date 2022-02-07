@@ -5,7 +5,6 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND || "http://localhost:9000";
 
@@ -18,8 +17,9 @@ export const httpHeader = (token?: string) => {
   });
 };
 
-export const client = (link: ApolloLink) =>
+export const client = (link: ApolloLink) => {
   new ApolloClient({
     link: link,
     cache: new InMemoryCache(),
   });
+};

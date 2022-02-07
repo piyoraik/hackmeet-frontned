@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { Feature } from "../types/feature.type";
 import { Framework } from "../types/framework.type";
 import { Language } from "../types/language.type";
 import { Recruit } from "../types/wanted.type";
@@ -79,5 +80,6 @@ export interface findOneIdRecruitType {
     content: string;
     languages: Language[];
     frameworks: Framework[]
+    features: Feature[]
   };
 }
