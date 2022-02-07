@@ -6,34 +6,18 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 
-// const httpLink = createHttpLink({
-//   uri: "http://localhost:9000/graphql",
-// });
+export const httpHeader = (token?: string) => {
+  return createHttpLink({
+    uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
+    headers: {
+      authorization: token ? `Bearer ${token}` : null,
+    },
+  });
+};
 
-// const authMiddleware = new ApolloLink((operation, forward) => {
-//   // add the authorization to the headers
-//   const token = localStorage.getItem("token");
-//   operation.setContext(({ headers = {} }) => ({
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : "",
-//     },
-//   }));
-
-//   return forward(operation);
-// });
-
-const token = localStorage.getItem("appSession");
-const httpLink = createHttpLink({
-  uri: `${process.env.BACKEND}/graphql`,
-  // headers: {
-  //   authorization: token
-  //     ? `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
-  //     : null,
-  // },
-});
-
-export const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
+export const client = (link: ApolloLink) => {
+  return new ApolloClient({
+    link: link,
+    cache: new InMemoryCache(),
+  });
+};

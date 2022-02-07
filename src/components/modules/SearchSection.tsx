@@ -8,10 +8,10 @@ import { GrReactjs } from "react-icons/gr";
 interface Props {
   title: string;
   icon: ReactNode;
+  children: ReactNode
 }
 
-const SearchSection: NextPage<Props> = (props) => {
-  const { title, icon } = props;
+const SearchSection: NextPage<Props> = ({title, icon , children}) => {
   return (
     <Flex direction="column" mb="8">
       <Flex
@@ -26,7 +26,8 @@ const SearchSection: NextPage<Props> = (props) => {
         {icon}
         <Text ml="3">{title}</Text>
       </Flex>
-      <List spacing={3} pl="5" fontSize="xl" mt="3">
+      {children}
+      {/* <List spacing={3} pl="5" fontSize="xl" mt="3">
         <ListItem>
           <ListIcon as={GrReactjs} color="blue.300" />
           React
@@ -39,7 +40,7 @@ const SearchSection: NextPage<Props> = (props) => {
           <ListIcon as={FaAngular} color="red.300" />
           Angular
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 };
