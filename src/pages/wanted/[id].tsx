@@ -1,19 +1,19 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
-import UserCard from "../../components/modules/UserCard";
-import ContentDetail from "../../components/organisms/ContentDetail";
-import Footer from "../../components/organisms/Footer";
-import Header from "../../components/organisms/Header";
-import SideNavShow from "../../components/organisms/SideNavShow";
-import { client, httpHeader } from "../../lib/client";
+import UserCard from "@/components/modules/card/UserCard";
+import ContentDetail from "@/components/organisms/ContentDetail";
+import { Footer } from "@/components/organisms/Footer";
+import { Header } from "@/components/organisms/Header";
+import { SideNavShow } from "@/components/organisms/SideNavShow";
+import { client, httpHeader } from "@/lib/client";
 import {
   findOneIdRecruitType,
   FINDONE_WANTED,
-} from "../../graphql/wanted.graphql";
-import { initialRecruit, Recruit } from "../../types/wanted.type";
+} from "@/graphql/wanted.graphql";
+import { initialRecruit, Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
 import { useEffect, useState } from "react";
-import { markdownIt } from "../../lib/markdownIt";
+import { markdownIt } from "@/lib/markdownIt";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {

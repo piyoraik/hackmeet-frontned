@@ -2,8 +2,8 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { RecoilRoot } from 'recoil'
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

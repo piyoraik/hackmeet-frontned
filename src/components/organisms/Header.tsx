@@ -1,10 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import HeaderContent from "../modules/HeaderContent";
-import Title from "../modules/Title";
+import { HeaderContent } from '@/components/modules/HeaderContent'
+import { Title } from '@/components/modules/Title'
 
-const Header: NextPage = () => {
+export const Header: NextPage = () => {
   return (
     <Flex direction="row" justify="space-between" width="93%" mx="auto">
       <Title />
@@ -12,5 +11,3 @@ const Header: NextPage = () => {
     </Flex>
   );
 };
-
-export default Header;
