@@ -16,16 +16,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { MdCheckCircle } from "react-icons/md";
-import { Frameworks } from "../../graphql/framework.graphql";
-import { changeHandler } from "../../lib/newSelect";
-import { Framework } from "../../types/framework.type";
-import Card from "../atoms/Card";
+import { changeHandler } from "@/lib/newSelect";
+import { Framework } from "@/types/framework.type";
+import { Card } from "@/components/atoms/Card";
+import { InputSelectType } from "@/types/addWanted.type";
 
 interface Props {
-  useFrameworkList: Framework[];
-  setFn: Dispatch<SetStateAction<Framework[]>>;
+  useFrameworkList: InputSelectType[];
+  setFn: Dispatch<SetStateAction<InputSelectType[]>>;
   frameworks: Framework[];
 }
 
@@ -85,7 +85,7 @@ const FrameworkCard: NextPage<Props> = ({
               placeholder="Select framework"
               size="md"
               onChange={(e) =>
-                changeHandler<Framework[]>(e, useFrameworkList, setFn)
+                changeHandler(e, useFrameworkList, setFn)
               }
             >
               {frameworks.map((framework, idx) => (

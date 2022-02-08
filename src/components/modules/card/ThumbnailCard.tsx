@@ -14,7 +14,7 @@ import { NextPage } from "next";
 import { Emoji, Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import { Dispatch, SetStateAction } from "react";
-import Card from "../atoms/Card";
+import { Card } from "@/components/atoms/Card";
 
 interface Props {
   name: string;
@@ -23,7 +23,7 @@ interface Props {
 
 const ThumbnailCard: NextPage<Props> = ({ name, setFn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <Card title="Thumbnail">
       <Flex direction="column" width="100%">

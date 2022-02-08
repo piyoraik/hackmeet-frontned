@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { Recruit } from "../../types/wanted.type";
-import style from "../../styles/github.module.scss";
+import {Recruit} from "@/types/wanted.type"
+import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import { Emoji } from "emoji-mart";

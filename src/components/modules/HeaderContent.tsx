@@ -1,13 +1,13 @@
 import { Flex, Box, chakra, Button } from "@chakra-ui/react";
 import { NextPage } from "next";
 import router from "next/router";
-import SearchBox from "./SearchBox";
+import { SearchBox } from "@/components/modules/SearchBox";
 import { BsPlusSquare } from "react-icons/bs";
-import AccountMenu from "./AccountMenu";
+import { AccountMenu } from "@/components/modules/AccountMenu";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FiLogIn } from "react-icons/fi";
 
-const HeaderContent: NextPage = () => {
+export const HeaderContent: NextPage = () => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   return (
@@ -48,5 +48,3 @@ const HeaderContent: NextPage = () => {
     </>
   );
 };
-
-export default HeaderContent;

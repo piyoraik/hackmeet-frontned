@@ -1,19 +1,23 @@
 import { Button, Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { MdCheckCircle } from "react-icons/md";
-import { Feature } from "../../types/feature.type";
-import { Framework } from "../../types/framework.type";
-import { Language } from "../../types/language.type";
-import Card from "../atoms/Card";
-import CardDetail from "../modules/CardDetail";
+import { Feature } from "@/types/feature.type";
+import { Framework } from "@/types/framework.type";
+import { Language } from "@/types/language.type";
+import { Card } from "@/components/atoms/Card";
+import { CardDetail } from "@/components/modules/CardDetail";
 
 interface Props {
   languages: Language[];
   frameworks: Framework[];
-  features: Feature[]
+  features: Feature[];
 }
 
-const SideNavShow: NextPage<Props> = ({ languages, frameworks, features }) => {
+export const SideNavShow: NextPage<Props> = ({
+  languages,
+  frameworks,
+  features,
+}) => {
   return (
     <>
       <Flex w="33%" direction="column" align="center">
@@ -56,5 +60,3 @@ const SideNavShow: NextPage<Props> = ({ languages, frameworks, features }) => {
     </>
   );
 };
-
-export default SideNavShow;

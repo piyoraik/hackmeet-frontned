@@ -6,6 +6,8 @@ export const ALL_LANGUAGE = gql`
     languages {
       id
       name
+      icon
+      color
     }
   }
 `;

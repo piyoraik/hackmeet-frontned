@@ -1,7 +1,6 @@
 import { Input } from "@chakra-ui/react";
-import { NextPage } from "next";
 
-const SearchBox: NextPage = () => {
+export const SearchBox: React.VFC = () => {
   return (
     <Input
       w="100%"
@@ -10,12 +9,10 @@ const SearchBox: NextPage = () => {
       color="blue.800"
       backgroundColor="gray.50"
       rounded="2xl"
-      border="0"
+      border="1px"
       _focus={{
         outline: "none",
       }}
     />
   );
 };
-
-export default SearchBox;

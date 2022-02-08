@@ -1,9 +1,6 @@
-import { Flex, List, ListItem, ListIcon, Text, Box } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { ReactNode } from "react";
-import { BsCheck } from "react-icons/bs";
-import { FaAngular, FaVuejs } from "react-icons/fa";
-import { GrReactjs } from "react-icons/gr";
 
 interface Props {
   title: string;
@@ -11,7 +8,7 @@ interface Props {
   children: ReactNode
 }
 
-const SearchSection: NextPage<Props> = ({title, icon , children}) => {
+export const SearchSection: NextPage<Props> = ({title, icon , children}) => {
   return (
     <Flex direction="column" mb="8">
       <Flex
@@ -44,5 +41,3 @@ const SearchSection: NextPage<Props> = ({title, icon , children}) => {
     </Flex>
   );
 };
-
-export default SearchSection;

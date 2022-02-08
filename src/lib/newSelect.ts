@@ -1,17 +1,15 @@
+import { InputSelectType } from "@/types/addWanted.type";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-interface GeneralPurpose {
-  id: string;
-  name: string;
-}
-
-export const changeHandler = <T extends GeneralPurpose[]>(
+export const changeHandler = (
   e: ChangeEvent<HTMLSelectElement>,
-  lists: T,
-  setFn: Dispatch<SetStateAction<GeneralPurpose[]>>
+  lists: InputSelectType[],
+  setFn: Dispatch<SetStateAction<InputSelectType[]>>
 ) => {
   try {
+    // uuid, value
     const targetValue = e.target.value;
+    // [ [uuid, value] ... ]
     const targetValueArray = targetValue.split(",");
     if (lists.length >= 5) {
       throw Error("登録できるのは最大5個までです。");
