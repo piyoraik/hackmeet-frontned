@@ -17,6 +17,7 @@ import { Language } from "@/types/language.type";
 import { GrReactjs } from "react-icons/gr";
 import { LanguageSection } from "../modules/section/LanguageSection";
 import { FrameworkSection } from "../modules/section/FrameworkSection";
+import { FeatureSection } from "../modules/section/FeatureSection";
 
 interface Props {
   languages: Language[];
@@ -37,19 +38,7 @@ export const SideNavIndex: NextPage<Props> = ({
           <Flex direction="column" justify="space-evenly">
             <LanguageSection languages={languages} />
             <FrameworkSection frameworks={frameworks} />
-            <SearchSection
-              title="Features"
-              icon={<Icon as={MdOutlineFeaturedPlayList} color="purple.400" />}
-            >
-              <List spacing={3} pl="5" fontSize="xl" mt="3">
-                {features.map((feature, idx) => (
-                  <ListItem key={idx}>
-                    <ListIcon as={GrReactjs} color="blue.300" />
-                    {feature.name}
-                  </ListItem>
-                ))}
-              </List>
-            </SearchSection>
+            <FeatureSection features={features} />
           </Flex>
         </Flex>
       </Flex>
