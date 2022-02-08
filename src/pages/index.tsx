@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Languages } from "prismjs";
@@ -60,7 +60,7 @@ const Home: NextPage<Props> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     const recruits = await fetchGraphql<Recruits>(ALL_WANTED, "network-only");
     const languages = await fetchGraphql<Languages>(
