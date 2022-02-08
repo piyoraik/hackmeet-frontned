@@ -15,17 +15,14 @@ import {
 import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
-import {Header} from "@/components/organisms/Header";
+import { Header } from "@/components/organisms/Header";
 import { VscDebugStart } from "react-icons/vsc";
 import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
 import { client, httpHeader } from "@/lib/client";
-import {
-  CreateRecruitsDTOType,
-  CREATE_WANTED,
-} from "@/graphql/wanted.graphql";
+import { CreateRecruitsDTOType, CREATE_WANTED } from "@/graphql/wanted.graphql";
 import { markdownIt } from "@/lib/markdownIt";
 import { useRouter } from "next/router";
 import ThumbnailCard from "@/components/modules/card/ThumbnailCard";
@@ -38,8 +35,10 @@ import { Framework } from "@/types/framework.type";
 import FrameworkCard from "@/components/modules/card/FrameworkCard";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
-import FeatureCard from "../../components/modules/card/FeatureCard";
+import FeatureCard from "@/components/modules/card/FeatureCard";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Footer } from "@/components/organisms/Footer";
+import { InputSelectType } from "@/types/addWanted.type";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
@@ -91,9 +90,11 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
-  const [useFrameworkList, setUseFrameworkList] = useState<Framework[]>([]);
-  const [useFeatureList, setUseFeatureList] = useState<Feature[]>([]);
+  const [useLanguageList, setUseLanguageList] = useState<InputSelectType[]>([]);
+  const [useFrameworkList, setUseFrameworkList] = useState<InputSelectType[]>(
+    []
+  );
+  const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -105,7 +106,6 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
     try {
       const accessToken = await getAccessTokenSilently();
       const link = httpHeader(accessToken);
-      console.log(link);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
@@ -255,6 +255,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
             </Box>
           </Flex>
         </Flex>
+        <Footer />
       </Flex>
     </Box>
   );

@@ -10,13 +10,13 @@ import {
 import { NextPage } from "next";
 import { Title } from "@/components/modules/Title";
 import { SearchSection } from "@/components/modules/SearchSection";
-import { FaAngular, FaCode, FaVuejs } from "react-icons/fa";
-import { MdContentPaste, MdOutlineFeaturedPlayList } from "react-icons/md";
-import { GiPositionMarker } from "react-icons/gi";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { GrReactjs } from "react-icons/gr";
+import { LanguageSection } from "../modules/section/LanguageSection";
+import { FrameworkSection } from "../modules/section/FrameworkSection";
 
 interface Props {
   languages: Language[];
@@ -24,58 +24,19 @@ interface Props {
   features: Feature[];
 }
 
-export const SideNavIndex: NextPage<Props> = ({ languages, frameworks, features }) => {
+export const SideNavIndex: NextPage<Props> = ({
+  languages,
+  frameworks,
+  features,
+}) => {
   return (
     <>
       <Flex w="18%" direction="column" align="center">
         <Title />
         <Flex direction="column" justify="space-between">
           <Flex direction="column" justify="space-evenly">
-            <SearchSection
-              title="Position"
-              icon={<Icon as={GiPositionMarker} color="red.400" />}
-            >
-              <List spacing={3} pl="5" fontSize="xl" mt="3">
-                <ListItem>
-                  <ListIcon as={GrReactjs} color="blue.300" />
-                  React
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaVuejs} color="green.300" />
-                  Vue
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaAngular} color="red.300" />
-                  Angular
-                </ListItem>
-              </List>
-            </SearchSection>
-            <SearchSection
-              title="Language"
-              icon={<Icon as={FaCode} color="green.400" />}
-            >
-              <List spacing={3} pl="5" fontSize="xl" mt="3">
-                {languages.map((language, idx) => (
-                  <ListItem key={idx}>
-                    <ListIcon as={GrReactjs} color="blue.300" />
-                    {language.name}
-                  </ListItem>
-                ))}
-              </List>
-            </SearchSection>
-            <SearchSection
-              title="Framework"
-              icon={<Icon as={MdContentPaste} color="orange.400" />}
-            >
-              <List spacing={3} pl="5" fontSize="xl" mt="3">
-                {frameworks.map((framework, idx) => (
-                  <ListItem key={idx}>
-                    <ListIcon as={GrReactjs} color="blue.300" />
-                    {framework.name}
-                  </ListItem>
-                ))}
-              </List>
-            </SearchSection>
+            <LanguageSection languages={languages} />
+            <FrameworkSection frameworks={frameworks} />
             <SearchSection
               title="Features"
               icon={<Icon as={MdOutlineFeaturedPlayList} color="purple.400" />}

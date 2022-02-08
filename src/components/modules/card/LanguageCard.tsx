@@ -21,10 +21,11 @@ import { MdCheckCircle } from "react-icons/md";
 import { changeHandler } from "@/lib/newSelect";
 import { Language } from "@/types/language.type";
 import { Card } from "@/components/atoms/Card";
+import { InputSelectType } from "@/types/addWanted.type";
 
 interface Props {
-  useLanguageList: Language[];
-  setFn: Dispatch<SetStateAction<Language[]>>;
+  useLanguageList: InputSelectType[];
+  setFn: Dispatch<SetStateAction<InputSelectType[]>>;
   languages: Language[];
 }
 
@@ -84,7 +85,7 @@ const LanguageCard: NextPage<Props> = ({
               placeholder="Select Language"
               size="md"
               onChange={(e) =>
-                changeHandler<Language[]>(e, useLanguageList, setFn)
+                changeHandler(e, useLanguageList, setFn)
               }
             >
               {languages.map((language, idx) => (

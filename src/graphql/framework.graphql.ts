@@ -6,6 +6,8 @@ export const ALL_FRAMEWORK = gql`
     frameworks {
       id
       name
+      icon
+      color
     }
   }
 `;

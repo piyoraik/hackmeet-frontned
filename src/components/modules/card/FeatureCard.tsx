@@ -21,10 +21,11 @@ import { MdCheckCircle } from "react-icons/md";
 import { changeHandler } from "@/lib/newSelect";
 import { Feature } from "@/types/feature.type";
 import { Card } from "@/components/atoms/Card";
+import { InputSelectType } from "@/types/addWanted.type";
 
 interface Props {
-  useFeatureList: Feature[];
-  setFn: Dispatch<SetStateAction<Feature[]>>;
+  useFeatureList: InputSelectType[];
+  setFn: Dispatch<SetStateAction<InputSelectType[]>>;
   features: Feature[];
 }
 
@@ -79,7 +80,7 @@ const FeatureCard: NextPage<Props> = ({ useFeatureList, setFn, features }) => {
               placeholder="Select Feature"
               size="md"
               onChange={(e) =>
-                changeHandler<Feature[]>(e, useFeatureList, setFn)
+                changeHandler(e, useFeatureList, setFn)
               }
             >
               {features.map((feature, idx) => (
