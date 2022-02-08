@@ -1,9 +1,9 @@
 import { Grid, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { Recruits } from "../../graphql/wanted.graphql";
-import ContentCard from "../modules/ContentCard";
+import { Recruits } from "@/graphql/wanted.graphql";
+import { ContentCard } from "@/components/modules/card/ContentCard";
 
-const ContentList: NextPage<Recruits> = ({ recruits }) => {
+export const ContentList: NextPage<Recruits> = ({ recruits }) => {
   return (
     <>
       <Heading mt="2" mb="5" fontSize="2xl">
@@ -17,5 +17,3 @@ const ContentList: NextPage<Recruits> = ({ recruits }) => {
     </>
   );
 };
-
-export default ContentList;

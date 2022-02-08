@@ -10,7 +10,7 @@ import { NextPage } from "next";
 import { FaUser } from "react-icons/fa";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
-const AccountMenu: NextPage = () => {
+export const AccountMenu: NextPage = () => {
   const { logout } = useAuth0();
 
   return (
@@ -29,5 +29,3 @@ const AccountMenu: NextPage = () => {
     </Menu>
   );
 };
-
-export default AccountMenu;

@@ -1,23 +1,14 @@
-import {
-  Stack,
-  Flex,
-  Text,
-  Avatar,
-  Box,
-  Heading,
-  Image,
-} from "@chakra-ui/react";
+import { Stack, Flex, Text, Avatar, Heading } from "@chakra-ui/react";
 import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import sampleImg from "../../../public/350x200.png";
-import { Recruit } from "../../types/wanted.type";
+import { Recruit } from "@/types/wanted.type";
 
 interface Props {
   recruit: Recruit;
 }
 
-const ContentCard: NextPage<Props> = ({ recruit }) => {
+export const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
   return (
@@ -66,5 +57,3 @@ const ContentCard: NextPage<Props> = ({ recruit }) => {
     </Flex>
   );
 };
-
-export default ContentCard;

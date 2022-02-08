@@ -18,9 +18,9 @@ import {
 import { NextPage } from "next";
 import { Dispatch, SetStateAction } from "react";
 import { MdCheckCircle } from "react-icons/md";
-import { changeHandler } from "../../lib/newSelect";
-import { Feature } from "../../types/feature.type";
-import Card from "../atoms/Card";
+import { changeHandler } from "@/lib/newSelect";
+import { Feature } from "@/types/feature.type";
+import { Card } from "@/components/atoms/Card";
 
 interface Props {
   useFeatureList: Feature[];

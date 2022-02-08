@@ -2,7 +2,7 @@ import { Flex, Heading, Icon, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { DiReact } from "react-icons/di";
 
-const Title: React.VFC = () => {
+export const Title: React.VFC = () => {
   const router = useRouter();
 
   return (
@@ -16,5 +16,3 @@ const Title: React.VFC = () => {
     </Flex>
   );
 };
-
-export default Title;

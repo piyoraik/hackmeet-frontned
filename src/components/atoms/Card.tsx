@@ -7,7 +7,7 @@ interface Props {
   title: string;
 }
 
-const Card: NextPage<Props> = ({ children, title }) => {
+export const Card: NextPage<Props> = ({ children, title }) => {
   return (
     <Box
       w="80%"
@@ -25,5 +25,3 @@ const Card: NextPage<Props> = ({ children, title }) => {
     </Box>
   );
 };
-
-export default Card;

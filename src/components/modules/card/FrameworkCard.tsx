@@ -16,12 +16,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { MdCheckCircle } from "react-icons/md";
-import { Frameworks } from "../../graphql/framework.graphql";
-import { changeHandler } from "../../lib/newSelect";
-import { Framework } from "../../types/framework.type";
-import Card from "../atoms/Card";
+import { changeHandler } from "@/lib/newSelect";
+import { Framework } from "@/types/framework.type";
+import { Card } from "@/components/atoms/Card";
 
 interface Props {
   useFrameworkList: Framework[];

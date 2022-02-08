@@ -15,30 +15,30 @@ import {
 import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
-import Header from "../../components/organisms/Header";
+import {Header} from "@/components/organisms/Header";
 import { VscDebugStart } from "react-icons/vsc";
-import style from "../../styles/github.module.scss";
+import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
-import { client, httpHeader } from "../../lib/client";
+import { client, httpHeader } from "@/lib/client";
 import {
   CreateRecruitsDTOType,
   CREATE_WANTED,
-} from "../../graphql/wanted.graphql";
-import { markdownIt } from "../../lib/markdownIt";
+} from "@/graphql/wanted.graphql";
+import { markdownIt } from "@/lib/markdownIt";
 import { useRouter } from "next/router";
-import ThumbnailCard from "../../components/modules/ThumbnailCard";
-import LanguageCard from "../../components/modules/LanguageCard";
-import { ALL_LANGUAGE, Languages } from "../../graphql/language.graphql";
-import { Language } from "../../types/language.type";
-import { fetchGraphql } from "../../lib/graphqlFetch";
-import { ALL_FRAMEWORK, Frameworks } from "../../graphql/framework.graphql";
-import { Framework } from "../../types/framework.type";
-import FrameworkCard from "../../components/modules/FrameworkCard";
-import { ALL_FEATURE, Features } from "../../graphql/feature.graphql";
-import { Feature } from "../../types/feature.type";
-import FeatureCard from "../../components/modules/FeatureCard";
+import ThumbnailCard from "@/components/modules/card/ThumbnailCard";
+import LanguageCard from "@/components/modules/card/LanguageCard";
+import { ALL_LANGUAGE, Languages } from "@/graphql/language.graphql";
+import { Language } from "@/types/language.type";
+import { fetchGraphql } from "@/lib/graphqlFetch";
+import { ALL_FRAMEWORK, Frameworks } from "@/graphql/framework.graphql";
+import { Framework } from "@/types/framework.type";
+import FrameworkCard from "@/components/modules/card/FrameworkCard";
+import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
+import { Feature } from "@/types/feature.type";
+import FeatureCard from "../../components/modules/card/FeatureCard";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export const getStaticProps: GetStaticProps = async () => {

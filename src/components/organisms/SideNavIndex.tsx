@@ -8,14 +8,14 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import Title from "../modules/Title";
-import SearchSection from "../modules/SearchSection";
+import { Title } from "@/components/modules/Title";
+import { SearchSection } from "@/components/modules/SearchSection";
 import { FaAngular, FaCode, FaVuejs } from "react-icons/fa";
 import { MdContentPaste, MdOutlineFeaturedPlayList } from "react-icons/md";
 import { GiPositionMarker } from "react-icons/gi";
-import { Feature } from "../../types/feature.type";
-import { Framework } from "../../types/framework.type";
-import { Language } from "../../types/language.type";
+import { Feature } from "@/types/feature.type";
+import { Framework } from "@/types/framework.type";
+import { Language } from "@/types/language.type";
 import { GrReactjs } from "react-icons/gr";
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
   features: Feature[];
 }
 
-const SideNavIndex: NextPage<Props> = ({ languages, frameworks, features }) => {
+export const SideNavIndex: NextPage<Props> = ({ languages, frameworks, features }) => {
   return (
     <>
       <Flex w="18%" direction="column" align="center">
@@ -98,5 +98,3 @@ const SideNavIndex: NextPage<Props> = ({ languages, frameworks, features }) => {
     </>
   );
 };
-
-export default SideNavIndex;
