@@ -1,5 +1,4 @@
-import { Flex, Avatar, Box, Heading, Text } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { Flex, Image, Box, Heading, Text } from "@chakra-ui/react";
 import { FaMapPin } from "react-icons/fa";
 import {
   BsBuilding,
@@ -7,8 +6,13 @@ import {
   BsPencil,
   BsPeopleFill,
 } from "react-icons/bs";
+import { User } from "@/types/user.type";
 
-const UserCard: NextPage = () => {
+interface Props {
+  user: User;
+}
+
+const UserCard: React.VFC<Props> = ({ user }) => {
   return (
     <Flex
       w="full"
@@ -18,8 +22,13 @@ const UserCard: NextPage = () => {
       boxShadow="md"
       mb="2"
     >
-      <Flex align="center" w="20%">
-        <Avatar size="xl" mx="auto" src="https://bit.ly/kent-c-dodds" />
+      <Flex align="center" justifyContent="center" w="20%">
+        <Image
+          borderRadius="full"
+          boxSize="80px"
+          src={user.picture}
+          alt={user.nickname}
+        />
       </Flex>
       <Box
         w="70%"
@@ -30,7 +39,7 @@ const UserCard: NextPage = () => {
       >
         <Flex align="center" my="5">
           <Heading pr="4" fontSize="2xl" color="gray.600">
-            Syun Tanaka
+            {user.nickname}
           </Heading>
           <BsPencil color="#4D4D4D" />
         </Flex>

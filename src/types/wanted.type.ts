@@ -1,6 +1,7 @@
 import { Feature } from "./feature.type";
 import { Framework } from "./framework.type";
 import { Language } from "./language.type";
+import { User } from "./user.type";
 
 export interface Recruit {
   id: string;
@@ -10,6 +11,7 @@ export interface Recruit {
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];
+  user: User;
 }
 
 export const initialRecruit: Recruit = {
@@ -20,4 +22,15 @@ export const initialRecruit: Recruit = {
   languages: [],
   frameworks: [],
   features: [],
+  user: {
+    id: "hoge",
+    name: "hoge",
+    nickname: "hoge",
+    description: "hoge",
+    userId: "hoge",
+    picture: "string",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: new Date(),
+  },
 };

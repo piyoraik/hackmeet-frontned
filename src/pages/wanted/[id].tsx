@@ -6,10 +6,7 @@ import { Footer } from "@/components/organisms/Footer";
 import { Header } from "@/components/organisms/Header";
 import { SideNavShow } from "@/components/organisms/SideNavShow";
 import { client, httpHeader } from "@/lib/client";
-import {
-  findOneIdRecruitType,
-  FINDONE_WANTED,
-} from "@/graphql/wanted.graphql";
+import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/wanted.graphql";
 import { initialRecruit, Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
 import { useEffect, useState } from "react";
@@ -71,7 +68,7 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
           features={data.features}
         />
         <Flex direction="column" w="60%">
-          <UserCard />
+          <UserCard user={data.user} />
           <ContentDetail data={recruit} />
         </Flex>
       </Flex>

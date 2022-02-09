@@ -12,6 +12,11 @@ export const ALL_WANTED = gql`
       title
       thumbnail
       content
+      user {
+        id
+        nickname
+        picture
+      }
     }
   }
 `;
@@ -39,6 +44,11 @@ export const CREATE_WANTED = gql`
       features {
         id
         name
+      }
+      user {
+        id
+        nickname
+        picture
       }
     }
   }
@@ -68,6 +78,11 @@ export const FINDONE_WANTED = gql`
         id
         name
       }
+      user {
+        id
+        nickname
+        picture
+      }
     }
   }
 `;
@@ -79,7 +94,7 @@ export interface findOneIdRecruitType {
     thumbnail: string;
     content: string;
     languages: Language[];
-    frameworks: Framework[]
-    features: Feature[]
+    frameworks: Framework[];
+    features: Feature[];
   };
 }
