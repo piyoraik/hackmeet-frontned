@@ -1,3 +1,5 @@
+import { ALL_LANGUAGE } from "@/graphql/language.graphql";
+import { Language } from "@/types/language.type";
 import { FetchPolicy } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import { client, httpHeader } from "./client";

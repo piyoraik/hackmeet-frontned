@@ -1,6 +1,5 @@
 import { Icon, List, ListItem, ListIcon } from "@chakra-ui/react";
 import { FaCode } from "react-icons/fa";
-import { GrReactjs } from "react-icons/gr";
 import { Language } from "@/types/language.type"
 import { SearchSection } from "@/components/modules/SearchSection";
 import { TechIcon } from "@/components/atoms/TechIcon";

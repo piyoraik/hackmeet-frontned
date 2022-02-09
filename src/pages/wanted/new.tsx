@@ -40,40 +40,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 
-export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const languages = await fetchGraphql<Languages>(
-      ALL_LANGUAGE,
-      "network-only"
-    );
-    const frameworks = await fetchGraphql<Frameworks>(
-      ALL_FRAMEWORK,
-      "network-only"
-    );
-    const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
-    return {
-      props: {
-        stats: "ok",
-        languages: languages.data.languages,
-        frameworks: frameworks.data.frameworks,
-        features: features.data.features,
-      },
-    };
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        props: {
-          status: err.message,
-          languages: null,
-          frameworks: null,
-          features: null,
-        },
-      };
-    }
-    throw err;
-  }
-};
-
 interface Props {
   status: string;
   languages: Language[];
@@ -83,8 +49,7 @@ interface Props {
 
 const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
-  const { getAccessTokenSilently, user } = useAuth0();
-  const [userMetadata, setUserMetadata] = useState(null);
+  const { getAccessTokenSilently } = useAuth0();
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
@@ -259,6 +224,40 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
       </Flex>
     </Box>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const languages = await fetchGraphql<Languages>(
+      ALL_LANGUAGE,
+      "network-only"
+    );
+    const frameworks = await fetchGraphql<Frameworks>(
+      ALL_FRAMEWORK,
+      "network-only"
+    );
+    const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
+    return {
+      props: {
+        stats: "ok",
+        languages: languages.data.languages,
+        frameworks: frameworks.data.frameworks,
+        features: features.data.features,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        props: {
+          status: err.message,
+          languages: null,
+          frameworks: null,
+          features: null,
+        },
+      };
+    }
+    throw err;
+  }
 };
 
 export default NewWanted;

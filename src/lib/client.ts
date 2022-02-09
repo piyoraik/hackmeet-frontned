@@ -1,7 +1,6 @@
 import {
   ApolloClient,
   ApolloLink,
-  concat,
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
@@ -12,7 +11,6 @@ export const httpHeader = (token?: string) => {
     headers: {
       authorization: token ? `Bearer ${token}` : null,
     },
-    
   });
 };
 

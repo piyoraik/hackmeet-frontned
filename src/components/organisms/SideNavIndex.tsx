@@ -1,20 +1,9 @@
-import {
-  Center,
-  Divider,
-  Flex,
-  Icon,
-  List,
-  ListIcon,
-  ListItem,
-} from "@chakra-ui/react";
+import { Center, Divider, Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { Title } from "@/components/modules/Title";
-import { SearchSection } from "@/components/modules/SearchSection";
-import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { GrReactjs } from "react-icons/gr";
 import { LanguageSection } from "../modules/section/LanguageSection";
 import { FrameworkSection } from "../modules/section/FrameworkSection";
 import { FeatureSection } from "../modules/section/FeatureSection";
