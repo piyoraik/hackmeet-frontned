@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -18,6 +18,7 @@ import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 
 interface Props {
   status: string;
@@ -33,12 +34,44 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
-  const [userDetail, setStore] = useRecoilState(userStateSelector);
-  const { isAuthenticated, user } = useAuth0();
+  const [loinUser, setLoginUser] = useRecoilState(userStateSelector);
+  const [token, setToken] = useState("");
+  const { getAccessTokenSilently, user } = useAuth0();
 
   useEffect(() => {
-    if (user && isAuthenticated) setStore(user);
-  }, [isAuthenticated, setStore, user]);
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({});
+        setToken(accessToken);
+      } catch (err) {
+        console.error("ログインが必要です。");
+      }
+    };
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (user === undefined || token === "") return;
+
+    const fetchUser = async () => {
+      const res = await fetchGraphql<FIND_USER>(
+        FIND_USERID,
+        "network-only",
+        {
+          id: user.sub,
+        },
+        token
+      )
+        .then((res) => {
+          setLoginUser(res.data.findUserId);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return res;
+    };
+    fetchUser();
+  }, [setLoginUser, token, user]);
 
   return (
     <>

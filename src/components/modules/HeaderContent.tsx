@@ -1,20 +1,18 @@
-import { Flex, Box, chakra, Button } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
-import router from "next/router";
 import { SearchBox } from "@/components/modules/SearchBox";
-import { BsPlusSquare } from "react-icons/bs";
-import { AccountMenu } from "@/components/modules/AccountMenu";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FiLogIn } from "react-icons/fi";
+import { ThreeDots } from "@agney/react-loading";
+import { HeaderMenu } from "./HeaderMenu";
 
 export const HeaderContent: NextPage = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isLoading } = useAuth0();
 
   return (
     <>
       <Flex
         direction="row"
-        justify="space-between"
+        justify="space-around"
         my="10"
         align="center"
         width="30%"
@@ -22,27 +20,12 @@ export const HeaderContent: NextPage = () => {
         <Box>
           <SearchBox />
         </Box>
-        {isAuthenticated && (
-          <>
-            <Box onClick={() => router.push("/wanted/new")}>
-              <chakra.button>
-                <BsPlusSquare size="2rem" />
-              </chakra.button>
-            </Box>
-            <AccountMenu />
-          </>
-        )}
-        {!isAuthenticated && (
-          <>
-            <Button
-              onClick={() => loginWithRedirect()}
-              leftIcon={<FiLogIn />}
-              colorScheme="blue"
-              variant="outline"
-            >
-              Login
-            </Button>
-          </>
+        {isLoading ? (
+          <Box>
+            <ThreeDots width="50" color="#3984c6" />
+          </Box>
+        ) : (
+          <HeaderMenu />
         )}
       </Flex>
     </>

@@ -1,8 +1,8 @@
+import { User } from "@/types/user.type";
 import { selector } from "recoil";
-import { User } from "@auth0/auth0-react";
 import { userStateAtom } from "../atom/userState.atom";
 
-export const userStateSelector = selector<User>({
+export const userStateSelector = selector<User | null>({
   key: "user/userSelector",
   get: ({ get }) => {
     const user = get(userStateAtom);

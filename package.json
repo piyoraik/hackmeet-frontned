@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@agney/react-loading": "^0.1.2",
     "@apollo/client": "^3.5.8",
     "@auth0/auth0-react": "^1.9.0",
     "@chakra-ui/icons": "^1.1.5",

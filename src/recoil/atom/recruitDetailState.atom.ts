@@ -14,12 +14,7 @@ export const recruitDetailStateAtom = atom<Recruit>({
     user: {
       id: "hoge",
       nickname: "hoge",
-      description: "hoge",
-      userId: "hoge",
-      picture: "string",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt: new Date(),
+      picture: "hoge",
     },
   },
 });
