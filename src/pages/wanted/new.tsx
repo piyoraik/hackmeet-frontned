@@ -39,6 +39,8 @@ import FeatureCard from "@/components/modules/card/FeatureCard";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
+import { useRecoilState } from "recoil";
+import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
   status: string;
@@ -50,6 +52,7 @@ interface Props {
 const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
   const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useRecoilState(tokenStateSelector);
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
@@ -61,6 +64,14 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   );
   const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
 
+  useEffect(() => {
+    const fetchToken = async () => {
+      const accessToken = await getAccessTokenSilently();
+      setToken(accessToken);
+    };
+    fetchToken();
+  }, []);
+
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
     setContentMD(targetValue);
@@ -69,8 +80,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
 
   const submitHandler = async () => {
     try {
-      const accessToken = await getAccessTokenSilently();
-      const link = httpHeader(accessToken);
+      const link = httpHeader(token);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
