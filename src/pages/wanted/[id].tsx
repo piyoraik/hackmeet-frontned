@@ -7,9 +7,9 @@ import { Header } from "@/components/organisms/Header";
 import { SideNavShow } from "@/components/organisms/SideNavShow";
 import { client, httpHeader } from "@/lib/client";
 import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/wanted.graphql";
-import { initialRecruit, Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { markdownIt } from "@/lib/markdownIt";
 import { useAuth0 } from "@auth0/auth0-react";
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
@@ -17,6 +17,7 @@ import { useRecoilState } from "recoil";
 import { CreateJoinType, CREATE_JOIN } from "@/graphql/join.graphql";
 import { useRouter } from "next/router";
 import { fetchGraphql } from "@/lib/graphqlFetch";
+import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 
 interface Props {
   status: string;
@@ -27,7 +28,7 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [recruit, setRecruit] = useState<Recruit>(initialRecruit);
+  const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useRecoilState(tokenStateSelector);
 
@@ -42,7 +43,7 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
       setToken(accessToken);
     };
     fetchToken();
-  }, [data, getAccessTokenSilently, setToken]);
+  }, [data, getAccessTokenSilently, setRecruit, setToken]);
 
   const joinHandler = async () => {
     console.log(id);
@@ -66,12 +67,7 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
     <Box width="80%" mx="auto">
       <Header />
       <Flex direction="row" justify="center">
-        <SideNavShow
-          languages={data.languages}
-          frameworks={data.frameworks}
-          features={data.features}
-          joinHandler={joinHandler}
-        />
+        <SideNavShow joinHandler={joinHandler} />
         <Flex direction="column" w="60%">
           <UserCard user={data.user} />
           <ContentDetail data={recruit} />
