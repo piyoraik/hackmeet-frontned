@@ -50,6 +50,13 @@ export const CREATE_WANTED = gql`
         nickname
         picture
       }
+      joins {
+        user {
+          id
+          nickname
+          picture
+        }
+      }
     }
   }
 `;
@@ -82,6 +89,13 @@ export const FINDONE_WANTED = gql`
         id
         nickname
         picture
+      }
+      joins {
+        user {
+          id
+          nickname
+          picture
+        }
       }
     }
   }

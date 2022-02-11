@@ -11,18 +11,20 @@ interface Props {
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];
+  joinHandler: () => Promise<void>;
 }
 
 export const SideNavShow: NextPage<Props> = ({
   languages,
   frameworks,
   features,
+  joinHandler,
 }) => {
   return (
     <>
       <Flex w="33%" direction="column" align="center">
         <Card title="Wanted Join!">
-          <Button colorScheme="blue" width="80%">
+          <Button colorScheme="blue" width="80%" onClick={() => joinHandler()}>
             Join
           </Button>
         </Card>

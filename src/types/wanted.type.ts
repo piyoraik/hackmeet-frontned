@@ -24,7 +24,6 @@ export const initialRecruit: Recruit = {
   features: [],
   user: {
     id: "hoge",
-    name: "hoge",
     nickname: "hoge",
     description: "hoge",
     userId: "hoge",
