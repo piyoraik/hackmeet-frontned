@@ -1,5 +1,6 @@
 import { Feature } from "./feature.type";
 import { Framework } from "./framework.type";
+import { Join } from "./join.type";
 import { Language } from "./language.type";
 import { User } from "./user.type";
 
@@ -12,4 +13,5 @@ export interface Recruit {
   frameworks: Framework[];
   features: Feature[];
   user: User;
+  joins: Join[];
 }

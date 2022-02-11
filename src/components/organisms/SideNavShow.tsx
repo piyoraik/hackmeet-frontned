@@ -5,22 +5,15 @@ import { Card } from "@/components/atoms/Card";
 import { CardDetail } from "@/components/modules/CardDetail";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { useRecoilState } from "recoil";
+import { JoinCard } from "../modules/card/JoinCard";
 
-interface Props {
-  joinHandler: () => Promise<void>;
-}
-
-export const SideNavShow: NextPage<Props> = ({ joinHandler }) => {
+export const SideNavShow: NextPage = () => {
   const [recruit] = useRecoilState(recruitDetailStateSelector);
 
   return (
     <>
       <Flex w="33%" direction="column" align="center">
-        <Card title="Wanted Join!">
-          <Button colorScheme="blue" width="80%" onClick={() => joinHandler()}>
-            Join
-          </Button>
-        </Card>
+        <JoinCard />
         <CardDetail title="Language">
           <List spacing={3}>
             {recruit.languages.map((language, idx) => (

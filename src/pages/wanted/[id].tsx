@@ -5,19 +5,16 @@ import ContentDetail from "@/components/organisms/ContentDetail";
 import { Footer } from "@/components/organisms/Footer";
 import { Header } from "@/components/organisms/Header";
 import { SideNavShow } from "@/components/organisms/SideNavShow";
-import { client, httpHeader } from "@/lib/client";
 import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/wanted.graphql";
 import { Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { markdownIt } from "@/lib/markdownIt";
 import { useAuth0 } from "@auth0/auth0-react";
-import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 import { useRecoilState } from "recoil";
-import { CreateJoinType, CREATE_JOIN } from "@/graphql/join.graphql";
-import { useRouter } from "next/router";
 import { fetchGraphql } from "@/lib/graphqlFetch";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
+import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
   status: string;
@@ -25,12 +22,21 @@ interface Props {
 }
 
 const Wanted: NextPage<Props> = ({ status, data }) => {
-  const router = useRouter();
-  const { id } = router.query;
-
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useRecoilState(tokenStateSelector);
+
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({});
+        setToken(accessToken);
+      } catch (err) {
+        console.error("ログインが必要です。");
+      }
+    };
+    getToken();
+  }, []);
 
   useEffect(() => {
     setRecruit({
@@ -38,36 +44,13 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
       content: markdownIt.render(data.content),
     });
     Prism.highlightAll();
-    const fetchToken = async () => {
-      const accessToken = await getAccessTokenSilently();
-      setToken(accessToken);
-    };
-    fetchToken();
-  }, [data, getAccessTokenSilently, setRecruit, setToken]);
-
-  const joinHandler = async () => {
-    console.log(id);
-    try {
-      const link = httpHeader(token);
-      const res = await client(link).mutate<CreateJoinType>({
-        mutation: CREATE_JOIN,
-        variables: {
-          param: {
-            recruit: id,
-          },
-        },
-      });
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [data]);
 
   return (
     <Box width="80%" mx="auto">
       <Header />
       <Flex direction="row" justify="center">
-        <SideNavShow joinHandler={joinHandler} />
+        <SideNavShow />
         <Flex direction="column" w="60%">
           <UserCard user={data.user} />
           <ContentDetail data={recruit} />

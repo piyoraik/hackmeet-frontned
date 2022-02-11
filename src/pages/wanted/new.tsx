@@ -40,7 +40,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { useRecoilState } from "recoil";
-import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
   status: string;
@@ -52,7 +51,7 @@ interface Props {
 const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
   const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useRecoilState(tokenStateSelector);
+  const [token, setToken] = useState("");
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");

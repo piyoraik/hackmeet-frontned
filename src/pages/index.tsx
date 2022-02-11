@@ -19,6 +19,7 @@ import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
+import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
   status: string;
@@ -35,7 +36,7 @@ const Home: NextPage<Props> = ({
   features,
 }) => {
   const [loinUser, setLoginUser] = useRecoilState(userStateSelector);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useRecoilState(tokenStateSelector); 
   const { getAccessTokenSilently, user } = useAuth0();
 
   useEffect(() => {
