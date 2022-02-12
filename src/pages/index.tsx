@@ -17,7 +17,6 @@ import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
-import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
@@ -34,8 +33,8 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
-  const [setToken] = useRecoilState(tokenStateSelector); 
-  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useRecoilState(tokenStateSelector); 
+  const { getAccessTokenSilently, user } = useAuth0();
 
   useEffect(() => {
     const getToken = async () => {
