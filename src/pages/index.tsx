@@ -18,7 +18,6 @@ import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
-import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
@@ -35,9 +34,8 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
-  const [loinUser, setLoginUser] = useRecoilState(userStateSelector);
-  const [token, setToken] = useRecoilState(tokenStateSelector); 
-  const { getAccessTokenSilently, user } = useAuth0();
+  const [setToken] = useRecoilState(tokenStateSelector); 
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     const getToken = async () => {
@@ -51,28 +49,6 @@ const Home: NextPage<Props> = ({
     getToken();
   }, []);
 
-  useEffect(() => {
-    if (user === undefined || token === "") return;
-
-    const fetchUser = async () => {
-      const res = await fetchGraphql<FIND_USER>(
-        FIND_USERID,
-        "network-only",
-        {
-          id: user.sub,
-        },
-        token
-      )
-        .then((res) => {
-          setLoginUser(res.data.findUserId);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      return res;
-    };
-    fetchUser();
-  }, [setLoginUser, token, user]);
 
   return (
     <>

@@ -1,3 +1,5 @@
+import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
+import { fetchGraphql } from "@/lib/graphqlFetch";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -11,20 +13,40 @@ import {
   MenuItem,
   MenuList,
   Image,
+  useQuery,
 } from "@chakra-ui/react";
+import token from "markdown-it/lib/token";
 import router from "next/router";
+import { useEffect } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useRecoilState } from "recoil";
 
 export const HeaderMenu = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  const [loinUser] = useRecoilState(userStateSelector);
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  useEffect(() => {
+    if (user === undefined) return;
+    const fetchUser = async () => {
+      const res = await fetchGraphql<FIND_USER>(FIND_USERID, "network-only", {
+        id: user.sub,
+      })
+        .then((res) => {
+          setLoginUser(res.data.findUserId);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return res;
+    };
+    fetchUser();
+  }, [user]);
 
   return (
     <>
-      {isAuthenticated && loinUser !== null ? (
+      {isAuthenticated && !!loginUser ? (
         <>
           <Box boxSize="40px" onClick={() => router.push("/wanted/new")}>
             <chakra.button>
@@ -38,8 +60,8 @@ export const HeaderMenu = () => {
               icon={
                 <Image
                   boxSize="40px"
-                  src={loinUser.picture}
-                  alt={loinUser.nickname}
+                  src={loginUser.picture}
+                  alt={loginUser.nickname}
                   border="1px"
                   borderRadius="md"
                   borderColor="gray.600"
