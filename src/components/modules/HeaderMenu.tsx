@@ -1,7 +1,7 @@
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { fetchGraphql } from "@/lib/graphqlFetch";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useUser } from "@auth0/nextjs-auth0";
 import {
   Box,
   chakra,
@@ -13,6 +13,7 @@ import {
   MenuItem,
   MenuList,
   Image,
+  Link as CLink,
 } from "@chakra-ui/react";
 import router from "next/router";
 import { memo, useEffect } from "react";
@@ -25,7 +26,7 @@ import Link from "next/link";
 
 // eslint-disable-next-line react/display-name
 export const HeaderMenu = memo(() => {
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const { user, error, isLoading } = useUser();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export const HeaderMenu = memo(() => {
 
   return (
     <>
-      {isAuthenticated && !!loginUser ? (
+      {user && !!loginUser ? (
         <>
           <Box boxSize="40px" onClick={() => router.push("/wanted/new")}>
             <chakra.button>
@@ -74,22 +75,19 @@ export const HeaderMenu = memo(() => {
               <Link href={`/user/${loginUser.id}/edit`} passHref>
                 <MenuItem icon={<GrUpdate />}>Update</MenuItem>
               </Link>
-              <MenuItem onClick={() => logout()} icon={<RiLogoutBoxRLine />}>
-                Log out
-              </MenuItem>
+              <CLink href="/api/auth/logout">
+                <MenuItem icon={<RiLogoutBoxRLine />}>Log out</MenuItem>
+              </CLink>
             </MenuList>
           </Menu>
         </>
       ) : (
         <>
-          <Button
-            onClick={() => loginWithRedirect()}
-            leftIcon={<FiLogIn />}
-            colorScheme="blue"
-            variant="outline"
-          >
-            Login
-          </Button>
+          <CLink href="/api/auth/login">
+            <Button leftIcon={<FiLogIn />} colorScheme="blue" variant="outline">
+              Login
+            </Button>
+          </CLink>
         </>
       )}
     </>

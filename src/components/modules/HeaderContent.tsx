@@ -1,12 +1,12 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { SearchBox } from "@/components/modules/SearchBox";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useUser } from "@auth0/nextjs-auth0";
 import { ThreeDots } from "@agney/react-loading";
 import { HeaderMenu } from "./HeaderMenu";
 
 export const HeaderContent: NextPage = () => {
-  const { isLoading } = useAuth0();
+  const { user, error, isLoading } = useUser();
 
   return (
     <>

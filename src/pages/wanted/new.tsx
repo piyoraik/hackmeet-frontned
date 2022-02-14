@@ -12,7 +12,7 @@ import {
   Tabs,
   Textarea,
 } from "@chakra-ui/react";
-import { GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
 import { Header } from "@/components/organisms/Header";
@@ -36,23 +36,26 @@ import FrameworkCard from "@/components/modules/card/FrameworkCard";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
 import FeatureCard from "@/components/modules/card/FeatureCard";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
-import { useRecoilState } from "recoil";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
+import { getAccessToken } from "@auth0/nextjs-auth0";
 
 interface Props {
   status: string;
+  token: string;
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];
 }
 
-const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
+const NewWanted: NextPage<Props> = ({
+  token,
+  languages,
+  frameworks,
+  features,
+}) => {
   const router = useRouter();
-  const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState("");
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
@@ -64,14 +67,6 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   );
   const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
   const [peoples, setPeoples] = useState("");
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      const accessToken = await getAccessTokenSilently();
-      setToken(accessToken);
-    };
-    fetchToken();
-  }, []);
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const targetValue = event.target.value;
@@ -116,7 +111,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
 
   useEffect(() => {
     Prism.highlightAll();
-  });
+  }, []);
 
   return (
     <Box width="80%" mx="auto">
@@ -238,8 +233,10 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
+    const accessToken = await getAccessToken(req, res);
+
     const languages = await fetchGraphql<Languages>(
       ALL_LANGUAGE,
       "network-only"
@@ -252,6 +249,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       props: {
         stats: "ok",
+        token: accessToken.accessToken,
         languages: languages.data.languages,
         frameworks: frameworks.data.frameworks,
         features: features.data.features,
@@ -262,6 +260,7 @@ export const getStaticProps: GetStaticProps = async () => {
       return {
         props: {
           status: err.message,
+          token: null,
           languages: null,
           frameworks: null,
           features: null,

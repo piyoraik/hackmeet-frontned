@@ -5,18 +5,18 @@ import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useRecoilState } from "recoil";
 
 export const JoinCard: React.VFC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [token] = useRecoilState(tokenStateSelector);
+  const [loginToken, setLoginToken] = useRecoilState(tokenStateSelector);
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
 
-  const joinHandler = useMemo(async () => {
+  const joinHandler = async () => {
     try {
-      const link = httpHeader(token);
+      const link = httpHeader(loginToken);
       const res = await client(link).mutate<CreateJoinType>({
         mutation: CREATE_JOIN,
         variables: {
@@ -34,7 +34,7 @@ export const JoinCard: React.VFC = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  };
 
   return (
     <Card title="Wanted Join!">

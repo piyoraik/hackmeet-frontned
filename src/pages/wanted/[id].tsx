@@ -10,32 +10,24 @@ import { Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import { markdownIt } from "@/lib/markdownIt";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useRecoilState } from "recoil";
 import { fetchGraphql } from "@/lib/graphqlFetch";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
+import { getAccessToken } from "@auth0/nextjs-auth0";
 
 interface Props {
   status: string;
+  token: string;
   data: Recruit;
 }
 
-const Wanted: NextPage<Props> = ({ status, data }) => {
+const Wanted: NextPage<Props> = ({ status, token, data }) => {
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
-  const { getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useRecoilState(tokenStateSelector);
+  const [loginToken, setLoginToken] = useRecoilState(tokenStateSelector);
 
   useEffect(() => {
-    const getToken = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently({});
-        setToken(accessToken);
-      } catch (err) {
-        console.error("ログインが必要です。");
-      }
-    };
-    getToken();
+    setLoginToken(token);
   }, []);
 
   useEffect(() => {
@@ -61,10 +53,15 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+  res,
+}) => {
   try {
     const id = params?.id;
     if (id === undefined) throw new Error("Not Found");
+    const accessToken = await getAccessToken(req, res);
 
     const recruit = await fetchGraphql<findOneIdRecruitType>(
       FINDONE_WANTED,
@@ -77,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return {
       props: {
         stats: "ok",
+        token: accessToken.accessToken,
         data: recruit.data.findOneIdRecruit,
       },
     };
@@ -85,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return {
         props: {
           status: err.message,
+          token: null,
           data: null,
         },
       };

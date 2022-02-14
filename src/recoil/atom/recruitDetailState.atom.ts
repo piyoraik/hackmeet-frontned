@@ -15,6 +15,7 @@ export const recruitDetailStateAtom = atom<Recruit>({
       id: "hoge",
       nickname: "hoge",
       picture: "hoge",
+      userId: "hoge",
     },
     joins: [],
   },

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
-import { useRecoilState } from "recoil";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Languages } from "prismjs";
 import { Flex } from "@chakra-ui/react";
 import { fetchGraphql } from "@/lib/graphqlFetch";
@@ -17,7 +15,6 @@ import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
-import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 
 interface Props {
   status: string;
@@ -33,22 +30,6 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
-  const [token, setToken] = useRecoilState(tokenStateSelector); 
-  const { getAccessTokenSilently, user } = useAuth0();
-
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently({});
-        setToken(accessToken);
-      } catch (err) {
-        console.error("ログインが必要です。");
-      }
-    };
-    getToken();
-  }, []);
-
-
   return (
     <>
       <Flex direction="row" justify="center">
