@@ -13,17 +13,18 @@ import {
   MenuItem,
   MenuList,
   Image,
-  useQuery,
 } from "@chakra-ui/react";
-import token from "markdown-it/lib/token";
 import router from "next/router";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { GrUpdate } from "react-icons/gr";
 import { useRecoilState } from "recoil";
+import Link from "next/link";
 
-export const HeaderMenu = () => {
+// eslint-disable-next-line react/display-name
+export const HeaderMenu = memo(() => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
 
@@ -70,6 +71,9 @@ export const HeaderMenu = () => {
               variant="outline"
             />
             <MenuList>
+              <Link href={`/user/${loginUser.id}/edit`} passHref>
+                <MenuItem icon={<GrUpdate />}>Update</MenuItem>
+              </Link>
               <MenuItem onClick={() => logout()} icon={<RiLogoutBoxRLine />}>
                 Log out
               </MenuItem>
@@ -90,4 +94,4 @@ export const HeaderMenu = () => {
       )}
     </>
   );
-};
+});

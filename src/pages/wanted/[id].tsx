@@ -8,7 +8,7 @@ import { SideNavShow } from "@/components/organisms/SideNavShow";
 import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/wanted.graphql";
 import { Recruit } from "@/types/wanted.type";
 import Prism from "prismjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { markdownIt } from "@/lib/markdownIt";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRecoilState } from "recoil";
@@ -44,7 +44,7 @@ const Wanted: NextPage<Props> = ({ status, data }) => {
       content: markdownIt.render(data.content),
     });
     Prism.highlightAll();
-  }, [data]);
+  }, []);
 
   return (
     <Box width="80%" mx="auto">

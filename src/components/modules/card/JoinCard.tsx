@@ -5,15 +5,16 @@ import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState
 import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 
 export const JoinCard: React.VFC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [token] = useRecoilState(tokenStateSelector);
-  const [recruit] = useRecoilState(recruitDetailStateSelector);
+  const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
 
-  const joinHandler = async () => {
+  const joinHandler = useMemo(async () => {
     try {
       const link = httpHeader(token);
       const res = await client(link).mutate<CreateJoinType>({
@@ -24,16 +25,21 @@ export const JoinCard: React.VFC = () => {
           },
         },
       });
-      console.log(res);
+      // if (res.data?.createJ1oin)
+      if (res !== undefined) {
+        const { joins, ...r } = recruit;
+        const joinMember = res.data?.createJoin.recruit.joins!;
+        setRecruit({ ...r, joins: joinMember });
+      }
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
   return (
     <Card title="Wanted Join!">
       <Flex direction="column" alignItems="center" w="100%">
-        <Box m='4'>
+        <Box m="4">
           <Text fontSize="xl">{recruit.joins.length}人 / ◯人</Text>
         </Box>
         <Button colorScheme="blue" width="80%" onClick={() => joinHandler()}>

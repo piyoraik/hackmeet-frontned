@@ -40,6 +40,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { useRecoilState } from "recoil";
+import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
 
 interface Props {
   status: string;
@@ -62,6 +63,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
     []
   );
   const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
+  const [peoples, setPeoples] = useState("");
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -100,6 +102,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
             languages: languageIds,
             frameworks: frameworkIds,
             features: featureIds,
+            peoples: +peoples,
           },
         },
       });
@@ -125,7 +128,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
         <Flex>
           <Flex w="33%" direction="column" align="center">
             <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
-
+            <PeoplesCard peoples={peoples} setFn={setPeoples} />
             <LanguageCard
               useLanguageList={useLanguageList}
               setFn={setUseLanguageList}

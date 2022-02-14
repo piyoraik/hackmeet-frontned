@@ -1,4 +1,5 @@
 import { Join } from "@/types/join.type";
+import { Recruit } from "@/types/wanted.type";
 import { gql } from "@apollo/client";
 
 export const ALL_JOIN = gql`
@@ -29,16 +30,22 @@ export const CREATE_JOIN = gql`
       recruit {
         id
         title
-      }
-      user {
-        id
-        nickname
-        picture
+        joins {
+          id
+          user {
+            id
+            nickname
+            picture
+          }
+        }
       }
     }
   }
 `;
 
 export interface CreateJoinType {
-  createJoin: Join;
+  createJoin: {
+    id: string;
+    recruit: Recruit
+  }
 }

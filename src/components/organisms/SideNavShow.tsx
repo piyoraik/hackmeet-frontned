@@ -1,13 +1,13 @@
-import { Button, Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
 import { MdCheckCircle } from "react-icons/md";
-import { Card } from "@/components/atoms/Card";
 import { CardDetail } from "@/components/modules/CardDetail";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { useRecoilState } from "recoil";
 import { JoinCard } from "../modules/card/JoinCard";
+import { memo } from "react";
 
-export const SideNavShow: NextPage = () => {
+// eslint-disable-next-line react/display-name
+export const SideNavShow: React.VFC = memo(() => {
   const [recruit] = useRecoilState(recruitDetailStateSelector);
 
   return (
@@ -47,4 +47,4 @@ export const SideNavShow: NextPage = () => {
       </Flex>
     </>
   );
-};
+});
