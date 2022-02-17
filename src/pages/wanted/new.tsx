@@ -21,7 +21,6 @@ import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
-import { client, httpHeader } from "@/lib/client";
 import { CreateRecruitsDTOType, CREATE_WANTED } from "@/graphql/wanted.graphql";
 import { markdownIt } from "@/lib/markdownIt";
 import { useRouter } from "next/router";
@@ -29,7 +28,7 @@ import ThumbnailCard from "@/components/modules/card/ThumbnailCard";
 import LanguageCard from "@/components/modules/card/LanguageCard";
 import { ALL_LANGUAGE, Languages } from "@/graphql/language.graphql";
 import { Language } from "@/types/language.type";
-import { fetchGraphql } from "@/lib/graphqlFetch";
+import { fetchGraphql, mutationGraphql } from "@/lib/graphql";
 import { ALL_FRAMEWORK, Frameworks } from "@/graphql/framework.graphql";
 import { Framework } from "@/types/framework.type";
 import FrameworkCard from "@/components/modules/card/FrameworkCard";
@@ -70,8 +69,6 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
 
   const submitHandler = async () => {
     try {
-      const accessToken = await getAccessTokenSilently({});
-      const link = httpHeader(accessToken);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
@@ -82,22 +79,25 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
         return feature.id;
       });
 
-      const res = await client(link).mutate<CreateRecruitsDTOType>({
-        mutation: CREATE_WANTED,
-        variables: {
-          param: {
-            title,
-            thumbnail: thumbnailName,
-            content: contentMD,
-            languages: languageIds,
-            frameworks: frameworkIds,
-            features: featureIds,
-            peoples: +peoples,
-          },
+      const accessToken = await getAccessTokenSilently({});
+      const params = {
+        param: {
+          title,
+          thumbnail: thumbnailName,
+          content: contentMD,
+          languages: languageIds,
+          frameworks: frameworkIds,
+          features: featureIds,
+          peoples: +peoples,
         },
-      });
-      if (res == undefined) throw Error("Error");
-      const resId = res.data?.createRecruit.id;
+      };
+      const res = await mutationGraphql<CreateRecruitsDTOType>(
+        CREATE_WANTED,
+        params,
+        accessToken
+      );
+
+      const resId = res?.createRecruit.id;
       router.push(`/wanted/${resId}`);
     } catch (err) {
       console.error(err);

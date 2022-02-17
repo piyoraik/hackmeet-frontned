@@ -11,7 +11,7 @@ import Prism from "prismjs";
 import { useEffect } from "react";
 import { markdownIt } from "@/lib/markdownIt";
 import { useRecoilState } from "recoil";
-import { fetchGraphql } from "@/lib/graphqlFetch";
+import { fetchGraphql } from "@/lib/graphql";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 
 interface Props {

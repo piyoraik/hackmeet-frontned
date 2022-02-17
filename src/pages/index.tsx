@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Languages } from "prismjs";
 import { Flex } from "@chakra-ui/react";
-import { fetchGraphql } from "@/lib/graphqlFetch";
+import { fetchGraphql } from "@/lib/graphql";
 import { HeaderContent } from "@/components/modules/HeaderContent";
 import { ContentList } from "@/components/organisms/ContentList";
 import { Footer } from "@/components/organisms/Footer";

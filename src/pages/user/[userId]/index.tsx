@@ -1,7 +1,7 @@
 import UserCard from "@/components/modules/card/UserCard";
 import { Header } from "@/components/organisms/Header";
 import { FIND_USER_PRIMAERY, FIND_USER_PRIMARY } from "@/graphql/user.grpahql";
-import { fetchGraphql } from "@/lib/graphqlFetch";
+import { fetchGraphql } from "@/lib/graphql";
 import { User } from "@/types/user.type";
 import { Box } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
