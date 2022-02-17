@@ -73,17 +73,24 @@ export const FINDONE_WANTED = gql`
       title
       thumbnail
       content
+      peoples
       languages {
         id
         name
+        icon
+        color
       }
       frameworks {
         id
         name
+        icon
+        color
       }
       features {
         id
         name
+        icon
+        color
       }
       user {
         id

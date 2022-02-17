@@ -8,7 +8,7 @@ interface Props {
   frameworks: Framework[];
 }
 
-export const FrameworkSection: React.FC<Props> = ({ frameworks }) => {
+export const IndexFrameworkSection: React.FC<Props> = ({ frameworks }) => {
   return (
     <SearchSection
       title="Framework"

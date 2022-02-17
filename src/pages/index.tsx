@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { Languages } from "prismjs";
 import { Flex } from "@chakra-ui/react";
@@ -65,7 +64,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     return {
       props: {
-        stats: "ok",
         recruits: recruits.data.recruits,
         languages: languages.data.languages,
         frameworks: frameworks.data.frameworks,

@@ -84,9 +84,7 @@ const LanguageCard: NextPage<Props> = ({
             <Select
               placeholder="Select Language"
               size="md"
-              onChange={(e) =>
-                changeHandler(e, useLanguageList, setFn)
-              }
+              onChange={(e) => changeHandler(e, useLanguageList, setFn)}
             >
               {languages.map((language, idx) => (
                 <option value={`${language.id},${language.name}`} key={idx}>

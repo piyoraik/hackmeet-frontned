@@ -12,7 +12,7 @@ import {
   Tabs,
   Textarea,
 } from "@chakra-ui/react";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
 import { Header } from "@/components/organisms/Header";
@@ -39,22 +39,16 @@ import FeatureCard from "@/components/modules/card/FeatureCard";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
-import { getAccessToken } from "@auth0/nextjs-auth0";
+import { getAccessToken, Session } from "@auth0/nextjs-auth0";
+import { GetSession } from "@/lib/getSession";
 
 interface Props {
-  status: string;
-  token: string;
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];
 }
 
-const NewWanted: NextPage<Props> = ({
-  token,
-  languages,
-  frameworks,
-  features,
-}) => {
+const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -76,7 +70,8 @@ const NewWanted: NextPage<Props> = ({
 
   const submitHandler = async () => {
     try {
-      const link = httpHeader(token);
+      const getSession = await GetSession();
+      const link = httpHeader(getSession.session.accessToken);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });
@@ -111,7 +106,7 @@ const NewWanted: NextPage<Props> = ({
 
   useEffect(() => {
     Prism.highlightAll();
-  }, []);
+  }, [contentMD]);
 
   return (
     <Box width="80%" mx="auto">
@@ -233,42 +228,20 @@ const NewWanted: NextPage<Props> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  try {
-    const accessToken = await getAccessToken(req, res);
-
-    const languages = await fetchGraphql<Languages>(
-      ALL_LANGUAGE,
-      "network-only"
-    );
-    const frameworks = await fetchGraphql<Frameworks>(
-      ALL_FRAMEWORK,
-      "network-only"
-    );
-    const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
-    return {
-      props: {
-        stats: "ok",
-        token: accessToken.accessToken,
-        languages: languages.data.languages,
-        frameworks: frameworks.data.frameworks,
-        features: features.data.features,
-      },
-    };
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        props: {
-          status: err.message,
-          token: null,
-          languages: null,
-          frameworks: null,
-          features: null,
-        },
-      };
-    }
-    throw err;
-  }
+export const getStaticProps: GetStaticProps = async () => {
+  const languages = await fetchGraphql<Languages>(ALL_LANGUAGE, "network-only");
+  const frameworks = await fetchGraphql<Frameworks>(
+    ALL_FRAMEWORK,
+    "network-only"
+  );
+  const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
+  return {
+    props: {
+      languages: languages.data.languages,
+      frameworks: frameworks.data.frameworks,
+      features: features.data.features,
+    },
+  };
 };
 
 export default NewWanted;

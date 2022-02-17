@@ -33,7 +33,7 @@ export const HeaderMenu = memo(() => {
     if (user === undefined) return;
     const fetchUser = async () => {
       const res = await fetchGraphql<FIND_USER>(FIND_USERID, "network-only", {
-        id: user.sub,
+        userId: user.sub,
       })
         .then((res) => {
           setLoginUser(res.data.findUserId);
@@ -72,7 +72,10 @@ export const HeaderMenu = memo(() => {
               variant="outline"
             />
             <MenuList>
-              <Link href={`/user/${loginUser.id}/edit`} passHref>
+              <Link href={`/user/${loginUser.id}`} passHref>
+                <MenuItem>{loginUser.nickname}</MenuItem>
+              </Link>
+              <Link href={`/user/edit`} passHref>
                 <MenuItem icon={<GrUpdate />}>Update</MenuItem>
               </Link>
               <CLink href="/api/auth/logout">

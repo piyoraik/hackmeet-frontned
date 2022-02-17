@@ -4,9 +4,9 @@ import { Title } from "@/components/modules/Title";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { LanguageSection } from "../modules/section/LanguageSection";
-import { FrameworkSection } from "../modules/section/FrameworkSection";
-import { FeatureSection } from "../modules/section/FeatureSection";
+import { IndexLanguageSection } from "../modules/section/IndexLanguageSection";
+import { IndexFrameworkSection } from "../modules/section/IndexFrameworkSection";
+import { IndexFeatureSection } from "../modules/section/IndexFeatureSection";
 
 interface Props {
   languages: Language[];
@@ -25,9 +25,9 @@ export const SideNavIndex: NextPage<Props> = ({
         <Title />
         <Flex direction="column" justify="space-between">
           <Flex direction="column" justify="space-evenly">
-            <LanguageSection languages={languages} />
-            <FrameworkSection frameworks={frameworks} />
-            <FeatureSection features={features} />
+            <IndexLanguageSection languages={languages} />
+            <IndexFrameworkSection frameworks={frameworks} />
+            <IndexFeatureSection features={features} />
           </Flex>
         </Flex>
       </Flex>

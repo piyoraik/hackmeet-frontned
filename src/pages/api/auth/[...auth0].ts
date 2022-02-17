@@ -1,7 +1,6 @@
 import auth0 from "@/lib/auth0";
 
-export default auth0.handleAuth({
-  async login(req, res) {
+export default auth0.handleAuth({ async login(req, res) {
     try {
       await auth0.handleLogin(req, res, {
         authorizationParams: {

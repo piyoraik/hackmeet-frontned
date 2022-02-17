@@ -5,6 +5,7 @@ import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState
 import { useRecoilState } from "recoil";
 import { JoinCard } from "../modules/card/JoinCard";
 import { memo } from "react";
+import { TechIcon } from "../atoms/TechIcon";
 
 // eslint-disable-next-line react/display-name
 export const SideNavShow: React.VFC = memo(() => {
@@ -18,7 +19,7 @@ export const SideNavShow: React.VFC = memo(() => {
           <List spacing={3}>
             {recruit.languages.map((language, idx) => (
               <ListItem key={idx}>
-                <ListIcon as={MdCheckCircle} color="green.500" />
+                <TechIcon svg={language.icon} setColor={language.color} />
                 {language.name}
               </ListItem>
             ))}
@@ -28,7 +29,7 @@ export const SideNavShow: React.VFC = memo(() => {
           <List spacing={3}>
             {recruit.frameworks.map((framework, idx) => (
               <ListItem key={idx}>
-                <ListIcon as={MdCheckCircle} color="green.500" />
+                <TechIcon svg={framework.icon} setColor={framework.color} />
                 {framework.name}
               </ListItem>
             ))}
@@ -38,7 +39,7 @@ export const SideNavShow: React.VFC = memo(() => {
           <List spacing={3}>
             {recruit.features.map((feature, idx) => (
               <ListItem key={idx}>
-                <ListIcon as={MdCheckCircle} color="green.500" />
+                <TechIcon svg={feature.icon} setColor={feature.color} />
                 {feature.name}
               </ListItem>
             ))}

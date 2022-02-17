@@ -18,7 +18,7 @@ export const changeHandler = (
     if (targetValue === "" || isValue) {
       throw Error("既に登録済みです。");
     }
-    setFn([...lists, { id: targetValueArray[0], name: targetValueArray[1] }]);
+    setFn([...lists, { id: targetValueArray[0], name: targetValueArray[1], }]);
   } catch (err) {
     if (err instanceof Error) {
       return err.message;

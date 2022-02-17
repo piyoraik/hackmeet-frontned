@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { ReactNode } from "react";
-import {Card} from "@/components/atoms/Card";
+import { Card } from "@/components/atoms/Card";
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface Props {
 
 export const CardDetail: NextPage<Props> = ({ title, children }) => {
   return (
-    <Card title="Framework">
+    <Card title={title}>
       <Flex
         width="80%"
         mx="auto"

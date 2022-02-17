@@ -9,6 +9,7 @@ export interface Recruit {
   title: string;
   thumbnail: string;
   content: string;
+  peoples: number;
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];

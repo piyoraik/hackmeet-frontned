@@ -7,7 +7,7 @@ import { TechIcon } from "@/components/atoms/TechIcon";
 interface Props {
   features: Feature[];
 }
-export const FeatureSection: React.FC<Props> = ({ features }) => {
+export const IndexFeatureSection: React.FC<Props> = ({ features }) => {
   return (
     <SearchSection
       title="Features"

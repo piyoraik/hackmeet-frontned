@@ -8,7 +8,7 @@ interface Props {
   languages: Language[]
 }
 
-export const LanguageSection: React.FC<Props> = ({languages}) => {
+export const IndexLanguageSection: React.FC<Props> = ({languages}) => {
   return (
     <SearchSection
       title="Language"

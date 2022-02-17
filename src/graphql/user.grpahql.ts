@@ -2,8 +2,8 @@ import { User } from "@/types/user.type";
 import { gql } from "@apollo/client";
 
 export const FIND_USERID = gql`
-  query($id: String!) {
-    findUserId(id: $id) {
+  query ($userId: String!) {
+    findUserId(userId: $userId) {
       id
       nickname
       picture
@@ -12,7 +12,7 @@ export const FIND_USERID = gql`
 `;
 
 export interface FIND_USER {
-  findUserId: User
+  findUserId: User;
 }
 
 export const FIND_USER_PRIMAERY = gql`
@@ -21,10 +21,26 @@ export const FIND_USER_PRIMAERY = gql`
       id
       nickname
       userId
+      picture
     }
   }
 `;
 
 export interface FIND_USER_PRIMARY {
-  findUserPrimaryId: User
+  findUserPrimaryId: User;
+}
+
+export const UPDATE_USER = gql`
+  mutation ($param: UpdateUserDTO!) {
+    updateUser(updateUser: $param) {
+      id
+      userId
+      nickname
+      picture
+    }
+  }
+`;
+
+export interface UPDATE_USER_TYPE {
+  updateUser: User;
 }

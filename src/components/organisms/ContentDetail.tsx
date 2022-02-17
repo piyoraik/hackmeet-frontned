@@ -30,7 +30,7 @@ const ContentDetail: NextPage<Props> = ({ data }) => {
         {data.title}
       </Heading>
       <Flex
-        my='8'
+        my="8"
         boxShadow="xs"
         rounded="xl"
         border="1px"
@@ -42,7 +42,7 @@ const ContentDetail: NextPage<Props> = ({ data }) => {
         <Emoji emoji={data.thumbnail} size={52} />
       </Flex>
       <Box
-        className={`${style.main} prose`}
+        className={`${style.main} prose line-numbers`}
         dangerouslySetInnerHTML={{ __html: data.content }}
       />
     </Box>

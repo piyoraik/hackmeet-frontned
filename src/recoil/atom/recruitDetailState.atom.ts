@@ -8,6 +8,7 @@ export const recruitDetailStateAtom = atom<Recruit>({
     title: "hoge",
     thumbnail: "partying_face",
     content: "hoge",
+    peoples: 1,
     languages: [],
     frameworks: [],
     features: [],
