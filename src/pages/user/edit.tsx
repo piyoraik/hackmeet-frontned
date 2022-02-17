@@ -1,7 +1,5 @@
-import { GetServerSideProps, NextPage } from "next";
-import { getSession } from "@auth0/nextjs-auth0";
+import { NextPage } from "next";
 import { FIND_USER, FIND_USERID, UPDATE_USER } from "@/graphql/user.grpahql";
-import { fetchGraphql } from "@/lib/graphqlFetch";
 import { User } from "@/types/user.type";
 import { Header } from "@/components/organisms/Header";
 import {
@@ -18,17 +16,21 @@ import {
 import { S3Upload } from "@/lib/s3Upload";
 import { httpHeader, client } from "@/lib/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { useRecoilState } from "recoil";
 
 interface Props {
-  token: string;
   user: User;
 }
 
-const UserEdit: NextPage<Props> = ({ token, user }) => {
+const UserEdit: NextPage<Props> = () => {
   const router = useRouter();
 
-  const [nickName, setNickName] = useState(user.nickname);
+  const { getAccessTokenSilently } = useAuth0();
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+  const [nickName, setNickName] = useState(loginUser?.nickname);
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState("");
 
@@ -50,11 +52,12 @@ const UserEdit: NextPage<Props> = ({ token, user }) => {
           .toISOString()
           .replace(/[^\d]/g, "")
           .slice(0, 14);
-        fileName = `${user.userId}-${today}.${fileType}`;
+        fileName = `${loginUser?.userId}-${today}.${fileType}`;
         await S3Upload(image, fileName);
       }
 
-      const link = httpHeader(token);
+      const accessToken = await getAccessTokenSilently({});
+      const link = httpHeader(accessToken);
       const res = await client(link).mutate({
         mutation: UPDATE_USER,
         variables: {
@@ -63,7 +66,7 @@ const UserEdit: NextPage<Props> = ({ token, user }) => {
             picture:
               fileName !== ""
                 ? `${process.env.NEXT_PUBLIC_S3_URL}${fileName}`
-                : user.picture,
+                : loginUser?.picture,
           },
         },
       });
@@ -79,7 +82,7 @@ const UserEdit: NextPage<Props> = ({ token, user }) => {
       <Header />
       <Flex direction="column">
         <Heading mt="2" mb="5" mx="3" fontSize="2xl">
-          {user.nickname} is Update
+          {loginUser?.nickname} is Update
         </Heading>
         <form onSubmit={submitHandler}>
           <Stack spacing={4}>
@@ -99,7 +102,11 @@ const UserEdit: NextPage<Props> = ({ token, user }) => {
                   {preview ? (
                     <Image src={preview} alt="プレビュー" boxSize="80px" />
                   ) : (
-                    <Image src={user.picture} alt="プレビュー" boxSize="80px" />
+                    <Image
+                      src={loginUser?.picture}
+                      alt="プレビュー"
+                      boxSize="80px"
+                    />
                   )}
                 </Box>
                 <Box>
@@ -121,25 +128,4 @@ const UserEdit: NextPage<Props> = ({ token, user }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = getSession(req, res);
-  if (!session) throw Error("No Session");
-  const userId = session.user.sub;
-
-  const { data, loading, error } = await fetchGraphql<FIND_USER>(
-    FIND_USERID,
-    "network-only",
-    {
-      userId,
-    }
-  );
-
-  if (!!error) throw Error("GraphQL Error");
-  return {
-    props: {
-      token: session.accessToken,
-      user: data.findUserId,
-    },
-  };
-};
 export default UserEdit;

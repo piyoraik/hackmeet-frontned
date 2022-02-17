@@ -1,7 +1,6 @@
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { fetchGraphql } from "@/lib/graphqlFetch";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
-import { useUser } from "@auth0/nextjs-auth0";
 import {
   Box,
   chakra,
@@ -23,10 +22,11 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { GrUpdate } from "react-icons/gr";
 import { useRecoilState } from "recoil";
 import Link from "next/link";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // eslint-disable-next-line react/display-name
 export const HeaderMenu = memo(() => {
-  const { user, error, isLoading } = useUser();
+  const { isLoading, loginWithRedirect, logout, user } = useAuth0();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
 
   useEffect(() => {
@@ -45,6 +45,10 @@ export const HeaderMenu = memo(() => {
     };
     fetchUser();
   }, [user]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -78,19 +82,22 @@ export const HeaderMenu = memo(() => {
               <Link href={`/user/edit`} passHref>
                 <MenuItem icon={<GrUpdate />}>Update</MenuItem>
               </Link>
-              <CLink href="/api/auth/logout">
-                <MenuItem icon={<RiLogoutBoxRLine />}>Log out</MenuItem>
-              </CLink>
+              <MenuItem onClick={() => logout()} icon={<RiLogoutBoxRLine />}>
+                Log out
+              </MenuItem>
             </MenuList>
           </Menu>
         </>
       ) : (
         <>
-          <CLink href="/api/auth/login">
-            <Button leftIcon={<FiLogIn />} colorScheme="blue" variant="outline">
-              Login
-            </Button>
-          </CLink>
+          <Button
+            onClick={() => loginWithRedirect()}
+            leftIcon={<FiLogIn />}
+            colorScheme="blue"
+            variant="outline"
+          >
+            Login
+          </Button>
         </>
       )}
     </>

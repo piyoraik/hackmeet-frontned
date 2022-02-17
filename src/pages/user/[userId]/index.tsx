@@ -5,9 +5,6 @@ import { fetchGraphql } from "@/lib/graphqlFetch";
 import { User } from "@/types/user.type";
 import { Box } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
-import { useEffect } from "react";
-import axios from "axios";
-import { GetSession } from "@/lib/getSession";
 
 interface Props {
   user: User;
