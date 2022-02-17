@@ -39,8 +39,7 @@ import FeatureCard from "@/components/modules/card/FeatureCard";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
-import { getAccessToken, Session } from "@auth0/nextjs-auth0";
-import { GetSession } from "@/lib/getSession";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Props {
   languages: Language[];
@@ -50,6 +49,7 @@ interface Props {
 
 const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const router = useRouter();
+  const { getAccessTokenSilently } = useAuth0();
 
   const [title, setTitle] = useState("");
   const [contentHTML, setContentHTML] = useState("");
@@ -70,8 +70,8 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
 
   const submitHandler = async () => {
     try {
-      const getSession = await GetSession();
-      const link = httpHeader(getSession.session.accessToken);
+      const accessToken = await getAccessTokenSilently({});
+      const link = httpHeader(accessToken);
       const languageIds = useLanguageList.map((language) => {
         return language.id;
       });

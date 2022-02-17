@@ -13,22 +13,13 @@ import { markdownIt } from "@/lib/markdownIt";
 import { useRecoilState } from "recoil";
 import { fetchGraphql } from "@/lib/graphqlFetch";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
-import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
-import { getAccessToken } from "@auth0/nextjs-auth0";
 
 interface Props {
-  status: string;
-  token: string;
   data: Recruit;
 }
 
-const Wanted: NextPage<Props> = ({ status, token, data }) => {
+const Wanted: NextPage<Props> = ({ data }) => {
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
-  const [loginToken, setLoginToken] = useRecoilState(tokenStateSelector);
-
-  useEffect(() => {
-    setLoginToken(token);
-  }, []);
 
   useEffect(() => {
     setRecruit({
@@ -58,38 +49,22 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
 }) => {
-  try {
-    const id = params?.id;
-    if (id === undefined) throw new Error("Not Found");
-    const accessToken = await getAccessToken(req, res);
+  const id = params?.id;
+  if (id === undefined) throw new Error("Not Found");
 
-    const recruit = await fetchGraphql<findOneIdRecruitType>(
-      FINDONE_WANTED,
-      "network-only",
-      {
-        id,
-      }
-    );
-
-    return {
-      props: {
-        stats: "ok",
-        token: accessToken.accessToken,
-        data: recruit.data.findOneIdRecruit,
-      },
-    };
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        props: {
-          status: err.message,
-          token: null,
-          data: null,
-        },
-      };
+  const recruit = await fetchGraphql<findOneIdRecruitType>(
+    FINDONE_WANTED,
+    "network-only",
+    {
+      id,
     }
-    throw err;
-  }
+  );
+
+  return {
+    props: {
+      data: recruit.data.findOneIdRecruit,
+    },
+  };
 };
 
 export default Wanted;

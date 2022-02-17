@@ -2,21 +2,21 @@ import { Card } from "@/components/atoms/Card";
 import { CreateJoinType, CREATE_JOIN } from "@/graphql/join.graphql";
 import { client, httpHeader } from "@/lib/client";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
-import { tokenStateSelector } from "@/recoil/selector/tokenState.selector";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import { useRecoilState } from "recoil";
 
 export const JoinCard: React.VFC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [loginToken, setLoginToken] = useRecoilState(tokenStateSelector);
+  const { getAccessTokenSilently } = useAuth0();
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
 
   const joinHandler = async () => {
     try {
-      const link = httpHeader(loginToken);
+      const accessToken = await getAccessTokenSilently({});
+      const link = httpHeader(accessToken);
       const res = await client(link).mutate<CreateJoinType>({
         mutation: CREATE_JOIN,
         variables: {
