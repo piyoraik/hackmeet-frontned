@@ -37,6 +37,7 @@ import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
 import { useAuth0 } from "@auth0/auth0-react";
+import { SectionItem } from "@/types/sectionItem.type";
 
 interface Props {
   languages: Language[];
@@ -52,9 +53,9 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
-  const [useFrameworkList, setUseFrameworkList] = useState<Framework[]>([]);
-  const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
+  const [useLanguageList, setUseLanguageList] = useState<SectionItem[]>([]);
+  const [useFrameworkList, setUseFrameworkList] = useState<SectionItem[]>([]);
+  const [useFeatureList, setUseFeatureList] = useState<SectionItem[]>([]);
   const [peoples, setPeoples] = useState("");
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {

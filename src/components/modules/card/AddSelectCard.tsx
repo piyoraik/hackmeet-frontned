@@ -1,27 +1,20 @@
-import {
-  Box,
-  Flex,
-  Icon,
-  List,
-  ListItem,
-  Select,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Flex, Icon, List, ListItem, Select } from "@chakra-ui/react";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Card } from "@/components/atoms/Card";
 import { TechIcon } from "@/components/atoms/TechIcon";
 import { MdDelete } from "react-icons/md";
+import { SectionItem } from "@/types/sectionItem.type";
 
 interface Props {
-  useLists: any[];
-  setFn: Dispatch<SetStateAction<any[]>>;
-  lists: any[];
+  useLists: SectionItem[];
+  setFn: Dispatch<SetStateAction<SectionItem[]>>;
+  lists: SectionItem[];
 }
 
 const AddSelectCard: React.VFC<Props> = ({ useLists, setFn, lists }) => {
   const addHandler = (
     e: ChangeEvent<HTMLSelectElement>,
-    setFn: Dispatch<SetStateAction<any[]>>
+    setFn: Dispatch<SetStateAction<SectionItem[]>>
   ) => {
     const id = e.target.value;
     if (useLists.some((l) => l.id === id || useLists.length >= 5)) return;

@@ -11,11 +11,11 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 import { TechIcon } from "@/components/atoms/TechIcon";
-import { SideBarIndex } from "@/types/sideBar";
+import { SectionItem } from "@/types/sectionItem.type";
 import { IconType } from "react-icons";
 
 interface Props {
-  lists: SideBarIndex[];
+  lists: SectionItem[];
   title: string;
   icon: IconType;
   color: string;
@@ -33,7 +33,7 @@ export const IndexSideSection: React.FC<Props> = ({
         <AccordionButton>
           <Flex>
             <Icon as={icon} color={color} />
-            <Text ml='2'>{title}</Text>
+            <Text ml="2">{title}</Text>
           </Flex>
           <AccordionIcon />
         </AccordionButton>

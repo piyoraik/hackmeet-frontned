@@ -4,7 +4,7 @@ import { Title } from "@/components/modules/Title";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { IndexSideSection } from "../modules/section/IndexSideSection";
+import { IndexSideSection } from "../modules/IndexSideSection";
 import { FaCode } from "react-icons/fa";
 import { MdContentPaste, MdOutlineFeaturedPlayList } from "react-icons/md";
 
