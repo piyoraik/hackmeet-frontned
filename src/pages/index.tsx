@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Languages } from "prismjs";
-import { Flex } from "@chakra-ui/react";
-import { fetchGraphql } from "@/lib/graphqlFetch";
+import { Box, Center, Divider, Flex } from "@chakra-ui/react";
+import { fetchGraphql } from "@/lib/graphql";
 import { HeaderContent } from "@/components/modules/HeaderContent";
 import { ContentList } from "@/components/organisms/ContentList";
 import { Footer } from "@/components/organisms/Footer";
@@ -14,6 +14,11 @@ import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
+import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { useRecoilState } from "recoil";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
+import { useEffect } from "react";
 
 interface Props {
   status: string;
@@ -29,20 +34,41 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
+  const { user } = useAuth0();
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  useEffect(() => {
+    if (user === undefined) return;
+    const fetchUser = async () => {
+      const res = await fetchGraphql<FIND_USER>(FIND_USERID, "network-only", {
+        userId: user.sub,
+      })
+        .then((res) => {
+          setLoginUser(res.data.findUserId);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return res;
+    };
+    fetchUser();
+  }, [user]);
+
   return (
     <>
-      <Flex direction="row" justify="center">
+      <Flex direction="row" justify="center" gap="6">
         <SideNavIndex
           languages={languages}
           frameworks={frameworks}
           features={features}
         />
-        <Flex direction="column" w="75%">
-          <Flex justify="flex-end">
-            <HeaderContent />
-          </Flex>
+        <Center my="10">
+          <Divider orientation="vertical" />
+        </Center>
+        <Box flex="1">
+          <HeaderContent />
           <ContentList recruits={recruits} />
-        </Flex>
+        </Box>
       </Flex>
       <Footer />
     </>

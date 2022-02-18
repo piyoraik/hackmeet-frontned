@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { FIND_USER, FIND_USERID, UPDATE_USER } from "@/graphql/user.grpahql";
+import { UPDATE_USER, UPDATE_USER_TYPE } from "@/graphql/user.grpahql";
 import { User } from "@/types/user.type";
 import { Header } from "@/components/organisms/Header";
 import {
@@ -14,12 +14,12 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { S3Upload } from "@/lib/s3Upload";
-import { httpHeader, client } from "@/lib/client";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { useRecoilState } from "recoil";
+import { mutationGraphql } from "@/lib/graphql";
 
 interface Props {
   user: User;
@@ -57,20 +57,20 @@ const UserEdit: NextPage<Props> = () => {
       }
 
       const accessToken = await getAccessTokenSilently({});
-      const link = httpHeader(accessToken);
-      const res = await client(link).mutate({
-        mutation: UPDATE_USER,
-        variables: {
-          param: {
-            nickname: nickName,
-            picture:
-              fileName !== ""
-                ? `${process.env.NEXT_PUBLIC_S3_URL}${fileName}`
-                : loginUser?.picture,
-          },
+      const pamras = {
+        param: {
+          nickname: nickName,
+          picture:
+            fileName !== ""
+              ? `${process.env.NEXT_PUBLIC_S3_URL}${fileName}`
+              : loginUser?.picture,
         },
-      });
-      if (res == undefined) throw Error("Error");
+      };
+      const res = await mutationGraphql<UPDATE_USER_TYPE>(
+        UPDATE_USER,
+        pamras,
+        accessToken
+      );
       router.push("/");
     } catch (err) {
       console.error(err);

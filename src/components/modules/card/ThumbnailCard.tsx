@@ -1,6 +1,6 @@
 import {
+  Box,
   Button,
-  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -26,40 +26,33 @@ const ThumbnailCard: NextPage<Props> = ({ name, setFn }) => {
 
   return (
     <Card title="Thumbnail">
-      <Flex direction="column" width="100%">
-        <Flex
-          width="80%"
-          mx="auto"
-          boxShadow="md"
-          rounded="xl"
-          border="1px"
-          borderColor="gray.50"
-          justify="center"
-          justifyItems="center"
-          p="3"
-        >
-          <Emoji emoji={name} size={52} />
-        </Flex>
-        <Flex width="80%" mx="auto" mt="4">
+      <Box width="100%" textAlign="center">
+        <Emoji emoji={name} size={52} />
+        <Box width="80%" mx="auto" mt="4">
           <Button width="100%" onClick={onOpen}>
             Select Thumbnail
           </Button>
-        </Flex>
-      </Flex>
+        </Box>
+      </Box>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Select Thumbnail</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Picker onClick={(emoji) => setFn(emoji.id!)} />
+          <ModalBody mx="auto">
+            <Picker
+              title="Select Thumbnail"
+              emojiTooltip={true}
+              enableFrequentEmojiSort={true}
+              showPreview={true}
+              onClick={(emoji) => setFn(emoji.id!)}
+            />
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button w="100%" colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
