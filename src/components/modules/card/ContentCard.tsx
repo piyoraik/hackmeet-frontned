@@ -12,25 +12,25 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
   return (
-    <Box
+    <Flex
       p="6"
-      // maxW='32%'
-      // minW='350px'
       onClick={() => router.push(`/wanted/${recruit.id}`)}
-      boxShadow='xl'
-      rounded='xl'
-
+      boxShadow="xl"
+      rounded="xl"
+      align="center"
+      gap={6}
     >
-        <Box
-          p="6"
-          my="4"
-          border="1px"
-          rounded="md"
-          borderColor="gray.200"
-          textAlign="center"
-        >
-          <Emoji emoji={recruit.thumbnail} size={52} />
-        </Box>
+      <Box
+        p="6"
+        my="4"
+        border="1px"
+        rounded="md"
+        borderColor="gray.200"
+        textAlign="center"
+      >
+        <Emoji emoji={recruit.thumbnail} size={52} />
+      </Box>
+      <Box>
         <Heading color="gray.700" fontSize="lg" fontFamily="body" mb="2">
           {recruit.title}
         </Heading>
@@ -39,18 +39,19 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
           gives you the building blocks you need to build your React
           applications.
         </Text>
-        <Flex mt="6" gap={2} align="center">
-          <Image
-            borderRadius="full"
-            boxSize="50px"
-            src={recruit.user.picture}
-            alt={recruit.user.nickname}
-          />
-          <Box fontSize="sm">
-            <Text fontWeight="bold">{recruit.user.nickname}</Text>
-            <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
-          </Box>
-        </Flex>
-    </Box>
+      </Box>
+      <Flex w='400px' gap={2} align="center">
+        <Image
+          borderRadius="full"
+          boxSize="50px"
+          src={recruit.user.picture}
+          alt={recruit.user.nickname}
+        />
+        <Box fontSize="sm" whiteSpace="nowrap">
+          <Text fontWeight="bold">{recruit.user.nickname}</Text>
+          <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
+        </Box>
+      </Flex>
+    </Flex>
   );
 };

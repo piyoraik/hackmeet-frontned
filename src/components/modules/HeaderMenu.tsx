@@ -1,5 +1,3 @@
-import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
-import { fetchGraphql } from "@/lib/graphql";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import {
   Box,

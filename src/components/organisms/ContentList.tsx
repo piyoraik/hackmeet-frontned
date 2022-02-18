@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { Recruits } from "@/graphql/wanted.graphql";
 import { ContentCard } from "@/components/modules/card/ContentCard";
