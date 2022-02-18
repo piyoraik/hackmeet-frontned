@@ -9,7 +9,7 @@ export const ContentList: NextPage<Recruits> = ({ recruits }) => {
       <Heading mt="2" mb="5" fontSize="2xl">
         Wanted List
       </Heading>
-      <Flex gap={(3, 6)} wrap="wrap">
+      <Flex gap={6} wrap="wrap">
         {recruits?.map((recruit, idx) => (
           <ContentCard key={idx} recruit={recruit} />
         ))}
