@@ -14,6 +14,11 @@ import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { Recruit } from "@/types/wanted.type";
+import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { useRecoilState } from "recoil";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
+import { useEffect } from "react";
 
 interface Props {
   status: string;
@@ -29,6 +34,26 @@ const Home: NextPage<Props> = ({
   frameworks,
   features,
 }) => {
+  const { user } = useAuth0();
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  useEffect(() => {
+    if (user === undefined) return;
+    const fetchUser = async () => {
+      const res = await fetchGraphql<FIND_USER>(FIND_USERID, "network-only", {
+        userId: user.sub,
+      })
+        .then((res) => {
+          setLoginUser(res.data.findUserId);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return res;
+    };
+    fetchUser();
+  }, [user]);
+
   return (
     <>
       <Flex direction="row" justify="center">

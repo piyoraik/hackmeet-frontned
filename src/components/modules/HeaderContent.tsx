@@ -1,7 +1,6 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { SearchBox } from "@/components/modules/SearchBox";
-import { ThreeDots } from "@agney/react-loading";
 import { HeaderMenu } from "./HeaderMenu";
 
 export const HeaderContent: NextPage = () => {

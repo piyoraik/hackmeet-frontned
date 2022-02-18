@@ -25,16 +25,14 @@ import { CreateRecruitsDTOType, CREATE_WANTED } from "@/graphql/wanted.graphql";
 import { markdownIt } from "@/lib/markdownIt";
 import { useRouter } from "next/router";
 import ThumbnailCard from "@/components/modules/card/ThumbnailCard";
-import LanguageCard from "@/components/modules/card/LanguageCard";
+import AddSelectCard from "@/components/modules/card/AddSelectCard";
 import { ALL_LANGUAGE, Languages } from "@/graphql/language.graphql";
 import { Language } from "@/types/language.type";
 import { fetchGraphql, mutationGraphql } from "@/lib/graphql";
 import { ALL_FRAMEWORK, Frameworks } from "@/graphql/framework.graphql";
 import { Framework } from "@/types/framework.type";
-import FrameworkCard from "@/components/modules/card/FrameworkCard";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
-import FeatureCard from "@/components/modules/card/FeatureCard";
 import { Footer } from "@/components/organisms/Footer";
 import { InputSelectType } from "@/types/addWanted.type";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
@@ -54,10 +52,8 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [useLanguageList, setUseLanguageList] = useState<InputSelectType[]>([]);
-  const [useFrameworkList, setUseFrameworkList] = useState<InputSelectType[]>(
-    []
-  );
+  const [useLanguageList, setUseLanguageList] = useState<Language[]>([]);
+  const [useFrameworkList, setUseFrameworkList] = useState<Framework[]>([]);
   const [useFeatureList, setUseFeatureList] = useState<InputSelectType[]>([]);
   const [peoples, setPeoples] = useState("");
 
@@ -116,25 +112,25 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
           New Wanted
         </Heading>
         <Flex>
-          <Flex w="33%" direction="column" align="center">
+          <Box w="33%">
             <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
             <PeoplesCard peoples={peoples} setFn={setPeoples} />
-            <LanguageCard
-              useLanguageList={useLanguageList}
+            <AddSelectCard
+              useLists={useLanguageList}
               setFn={setUseLanguageList}
-              languages={languages}
+              lists={languages}
             />
-            <FrameworkCard
-              useFrameworkList={useFrameworkList}
+            <AddSelectCard
+              useLists={useFrameworkList}
               setFn={setUseFrameworkList}
-              frameworks={frameworks}
+              lists={frameworks}
             />
-            <FeatureCard
-              useFeatureList={useFeatureList}
+            <AddSelectCard
+              useLists={useFeatureList}
               setFn={setUseFeatureList}
-              features={features}
+              lists={features}
             />
-          </Flex>
+          </Box>
           <Flex
             direction="column"
             justify="flex-start"
@@ -234,7 +230,7 @@ export const getStaticProps: GetStaticProps = async () => {
     ALL_FRAMEWORK,
     "network-only"
   );
-  const features = await fetchGraphql<Features>(ALL_FEATURE, "cache-first");
+  const features = await fetchGraphql<Features>(ALL_FEATURE, "network-only");
   return {
     props: {
       languages: languages.data.languages,

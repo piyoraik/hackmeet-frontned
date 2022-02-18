@@ -15,7 +15,7 @@ import {
   Link as CLink,
 } from "@chakra-ui/react";
 import router from "next/router";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
@@ -23,31 +23,15 @@ import { GrUpdate } from "react-icons/gr";
 import { useRecoilState } from "recoil";
 import Link from "next/link";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ThreeDots } from "@agney/react-loading";
 
 // eslint-disable-next-line react/display-name
 export const HeaderMenu = memo(() => {
   const { isLoading, loginWithRedirect, logout, user } = useAuth0();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
 
-  useEffect(() => {
-    if (user === undefined) return;
-    const fetchUser = async () => {
-      const res = await fetchGraphql<FIND_USER>(FIND_USERID, "network-only", {
-        userId: user.sub,
-      })
-        .then((res) => {
-          setLoginUser(res.data.findUserId);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      return res;
-    };
-    fetchUser();
-  }, [user]);
-
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <ThreeDots height={64} width={64} />;
   }
 
   return (
