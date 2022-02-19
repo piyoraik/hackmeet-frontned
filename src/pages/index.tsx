@@ -20,6 +20,7 @@ import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect } from "react";
 import { DrawerMenu } from "@/components/modules/DrawerMenu";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
+import { Header } from "@/components/organisms/Header";
 
 interface Props {
   status: string;
@@ -64,6 +65,7 @@ const Home: NextPage<Props> = ({
           features={features}
         />
       </DrawerMenu>
+      <Header />
       <Flex direction="row" justify="center" gap="6" w="100%">
         <SideNavIndex
           languages={languages}
@@ -74,7 +76,6 @@ const Home: NextPage<Props> = ({
           <Divider orientation="vertical" />
         </Center>
         <Box flex="1" w="100%">
-          <HeaderContent />
           <ContentList recruits={recruits} />
         </Box>
       </Flex>

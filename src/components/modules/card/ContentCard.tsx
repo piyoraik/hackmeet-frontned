@@ -1,4 +1,12 @@
-import { Stack, Flex, Text, Image, Heading, Box } from "@chakra-ui/react";
+import {
+  Stack,
+  Flex,
+  Text,
+  Image,
+  Heading,
+  Box,
+  WrapItem,
+} from "@chakra-ui/react";
 import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -12,13 +20,13 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
   return (
-    <Flex
+    <Box
       p="6"
       onClick={() => router.push(`/wanted/${recruit.id}`)}
       boxShadow="xl"
       rounded="xl"
-      align="center"
       gap={3}
+      w={{ base: "100%", md: "47%" }}
     >
       <Box
         p="6"
@@ -49,6 +57,6 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
           </Box>
         </Flex>
       </Box>
-    </Flex>
+    </Box>
   );
 };

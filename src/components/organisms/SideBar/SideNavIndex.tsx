@@ -18,7 +18,6 @@ export const SideNavIndex: React.VFC<Props> = ({
 }) => {
   return (
     <Box w="300px" display={{ base: "none", md: "block" }}>
-      <Title />
       <AccordionSectionMenu
         languages={languages}
         frameworks={frameworks}

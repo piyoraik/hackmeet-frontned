@@ -35,7 +35,7 @@ export const DrawerMenu: React.FC<Props> = ({ children }) => {
       <Drawer
         isOpen={isOpen}
         onClose={onClose}
-        placement="right"
+        placement="left"
         finalFocusRef={btnRef}
       >
         <DrawerOverlay>
