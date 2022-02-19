@@ -1,11 +1,10 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import { Languages } from "prismjs";
 import { Box, Center, Divider, Flex } from "@chakra-ui/react";
 import { fetchGraphql } from "@/lib/graphql";
 import { HeaderContent } from "@/components/modules/HeaderContent";
 import { ContentList } from "@/components/organisms/ContentList";
-import { Footer } from "@/components/organisms/Footer";
-import { SideNavIndex } from "@/components/organisms/SideNavIndex";
+import { SideNavIndex } from "@/components/organisms/SideBar/SideNavIndex";
 import { Features, ALL_FEATURE } from "@/graphql/feature.graphql";
 import { Frameworks, ALL_FRAMEWORK } from "@/graphql/framework.graphql";
 import { ALL_LANGUAGE } from "@/graphql/language.graphql";
@@ -19,6 +18,7 @@ import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect } from "react";
+import { DrawerMenu } from "@/components/organisms/SideBar/DrawerMenu";
 
 interface Props {
   status: string;
@@ -56,57 +56,49 @@ const Home: NextPage<Props> = ({
 
   return (
     <>
-      <Flex direction="row" justify="center" gap="6">
+      <Box display={{ base: "block", md: "none" }}>
+        <DrawerMenu
+          languages={languages}
+          frameworks={frameworks}
+          features={features}
+        />
+      </Box>
+      <Flex direction="row" justify="center" gap="6" w="100%">
         <SideNavIndex
           languages={languages}
           frameworks={frameworks}
           features={features}
         />
-        <Center my="10">
+        <Center my="10" display={{ base: "none", md: "block" }}>
           <Divider orientation="vertical" />
         </Center>
-        <Box flex="1">
+        <Box flex="1" w="100%">
           <HeaderContent />
           <ContentList recruits={recruits} />
         </Box>
       </Flex>
-      <Footer />
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const recruits = await fetchGraphql<Recruits>(ALL_WANTED, "network-only");
-    const languages = await fetchGraphql<Languages>(
-      ALL_LANGUAGE,
-      "network-only"
-    );
-    const frameworks = await fetchGraphql<Frameworks>(
-      ALL_FRAMEWORK,
-      "network-only"
-    );
-    const features = await fetchGraphql<Features>(ALL_FEATURE, "network-only");
+export const getStaticProps: GetStaticProps = async () => {
+  const recruits = await fetchGraphql<Recruits>(ALL_WANTED, "network-only");
+  const languages = await fetchGraphql<Languages>(ALL_LANGUAGE, "network-only");
+  const frameworks = await fetchGraphql<Frameworks>(
+    ALL_FRAMEWORK,
+    "network-only"
+  );
+  const features = await fetchGraphql<Features>(ALL_FEATURE, "network-only");
 
-    return {
-      props: {
-        recruits: recruits.data.recruits,
-        languages: languages.data.languages,
-        frameworks: frameworks.data.frameworks,
-        features: features.data.features,
-      },
-    };
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        props: {
-          status: err.message,
-          recruits: null,
-        },
-      };
-    }
-    throw err;
-  }
+  return {
+    props: {
+      recruits: recruits.data.recruits,
+      languages: languages.data.languages,
+      frameworks: frameworks.data.frameworks,
+      features: features.data.features,
+    },
+    revalidate: 30,
+  };
 };
 
 export default Home;

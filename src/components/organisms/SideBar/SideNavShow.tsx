@@ -1,11 +1,10 @@
 import { Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
-import { MdCheckCircle } from "react-icons/md";
 import { CardDetail } from "@/components/modules/CardDetail";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { useRecoilState } from "recoil";
-import { JoinCard } from "../modules/card/JoinCard";
+import { JoinCard } from "../../modules/card/JoinCard";
 import { memo } from "react";
-import { TechIcon } from "../atoms/TechIcon";
+import { TechIcon } from "../../atoms/TechIcon";
 
 // eslint-disable-next-line react/display-name
 export const SideNavShow: React.VFC = memo(() => {

@@ -18,7 +18,7 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
       boxShadow="xl"
       rounded="xl"
       align="center"
-      gap={6}
+      gap={3}
     >
       <Box
         p="6"
@@ -31,27 +31,24 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
         <Emoji emoji={recruit.thumbnail} size={52} />
       </Box>
       <Box>
-        <Heading color="gray.700" fontSize="lg" fontFamily="body" mb="2">
-          {recruit.title}
-        </Heading>
-        <Text color="gray.500" fontSize="sm">
-          Chakra UI is a simple, modular and accessible component library that
-          gives you the building blocks you need to build your React
-          applications.
-        </Text>
-      </Box>
-      <Flex w='400px' gap={2} align="center">
-        <Image
-          borderRadius="full"
-          boxSize="50px"
-          src={recruit.user.picture}
-          alt={recruit.user.nickname}
-        />
-        <Box fontSize="sm" whiteSpace="nowrap">
-          <Text fontWeight="bold">{recruit.user.nickname}</Text>
-          <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
+        <Box>
+          <Heading color="gray.700" fontSize="lg" fontFamily="body" mb="2">
+            {recruit.title}
+          </Heading>
         </Box>
-      </Flex>
+        <Flex gap={2} align="center">
+          <Image
+            borderRadius="full"
+            boxSize="50px"
+            src={recruit.user.picture}
+            alt={recruit.user.nickname}
+          />
+          <Box fontSize="sm" whiteSpace="nowrap">
+            <Text fontWeight="bold">{recruit.user.nickname}</Text>
+            <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
+          </Box>
+        </Flex>
+      </Box>
     </Flex>
   );
 };

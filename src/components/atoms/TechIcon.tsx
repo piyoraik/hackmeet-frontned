@@ -7,7 +7,7 @@ interface Props {
 
 export const TechIcon: React.VFC<Props> = ({ svg, setColor }) => {
   return (
-    <Icon viewBox="0 0 24 24" m={2} color={setColor} boxSize='6'>
+    <Icon viewBox="0 0 24 24" m={2} color={setColor} boxSize="5">
       <path fill="currentColor" d={svg} />
     </Icon>
   );

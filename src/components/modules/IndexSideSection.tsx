@@ -3,7 +3,6 @@ import {
   List,
   ListItem,
   Box,
-  Flex,
   Text,
   AccordionButton,
   AccordionPanel,
@@ -30,19 +29,19 @@ export const IndexSideSection: React.FC<Props> = ({
   return (
     <Box mb="8">
       <AccordionItem>
-        <AccordionButton>
-          <Flex>
-            <Icon as={icon} color={color} />
-            <Text ml="2">{title}</Text>
-          </Flex>
+        <AccordionButton display="flex" flexDirection="row">
+          <Icon as={icon} color={color} boxSize="6" />
+          <Text ml="4" fontSize="xl">
+            {title}
+          </Text>
           <AccordionIcon />
         </AccordionButton>
         <AccordionPanel>
           <List spacing={3} pl="5" fontSize="xl" mt="3">
             {lists.map((list, idx) => (
-              <ListItem key={idx}>
+              <ListItem display="flex" key={idx}>
                 <TechIcon svg={list.icon} setColor={list.color} />
-                {list.name}
+                <Box ml="4">{list.name}</Box>
               </ListItem>
             ))}
           </List>
