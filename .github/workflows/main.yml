@@ -20,8 +20,19 @@ jobs:
           tags: latest
           image: hackmeet-frontent
           registry: 933345684592.dkr.ecr.ap-northeast-1.amazonaws.com
-          buildArgs: NEXT_PUBLIC_BACKEND
+          buildArgs: NEXT_PUBLIC_BASE_URL, NEXT_PUBLIC_IDENTIFIRE, NEXT_PUBLIC_AUTH0_DOMAIN, NEXT_PUBLIC_AUTH0_CLIENT_ID |
+                     NEXT_PUBLIC_BACKEND, NEXT_PUBLIC_REGION, NEXT_PUBLIC_BUCKET_NAME, NEXT_PUBLIC_ACCESS_KEY, NEXT_PUBLIC_SECRET_KEY |
+                     NEXT_PUBLIC_SECRET_KEY
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_IDENTIFIRE: ${{ secrets.NEXT_PUBLIC_IDENTIFIRE }}
+          NEXT_PUBLIC_AUTH0_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH0_DOMAIN }}
+          NEXT_PUBLIC_AUTH0_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AUTH0_CLIENT_ID }}
           NEXT_PUBLIC_BACKEND: ${{ secrets.NEXT_PUBLIC_BACKEND }}
+          NEXT_PUBLIC_REGION: ${{ secrets.NEXT_PUBLIC_REGION }}
+          NEXT_PUBLIC_BUCKET_NAME: ${{ secrets.NEXT_PUBLIC_BUCKET_NAME }}
+          NEXT_PUBLIC_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_ACCESS_KEY }}
+          NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
+          NEXT_PUBLIC_S3_URL: ${{ secrets.NEXT_PUBLIC_S3_URL }}
