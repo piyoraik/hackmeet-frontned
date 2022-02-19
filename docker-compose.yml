@@ -5,9 +5,9 @@ services:
     build:
       context: ./
       target: runner
-      args:
-        - NEXT_PUBLIC_BACKEND=https://portfolio-backend-ruaudzasaq-an.a.run.app
     ports:
       - 3000:3000
+    volumes:
+      - ./:/app
     env_file:
       - .env.local
