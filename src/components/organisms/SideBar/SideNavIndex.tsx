@@ -3,7 +3,7 @@ import { Title } from "@/components/modules/Title";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { AccordionMenu } from "@/components/modules/AccordionMenu";
+import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
 
 interface Props {
   languages: Language[];
@@ -19,7 +19,7 @@ export const SideNavIndex: React.VFC<Props> = ({
   return (
     <Box w="300px" display={{ base: "none", md: "block" }}>
       <Title />
-      <AccordionMenu
+      <AccordionSectionMenu
         languages={languages}
         frameworks={frameworks}
         features={features}

@@ -13,6 +13,7 @@ import { markdownIt } from "@/lib/markdownIt";
 import { useRecoilState } from "recoil";
 import { fetchGraphql } from "@/lib/graphql";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
+import { DrawerMenu } from "@/components/modules/DrawerMenu";
 
 interface Props {
   data: Recruit;
@@ -30,25 +31,27 @@ const Wanted: NextPage<Props> = ({ data }) => {
   }, []);
 
   return (
-    <Box width="80%" mx="auto">
-      <Header />
-      <Flex direction="row" justify="center">
+    <>
+      <DrawerMenu>
         <SideNavShow />
-        <Flex direction="column" w="60%">
-          <UserCard user={data.user} />
-          <ContentDetail data={recruit} />
+      </DrawerMenu>
+      <Box w={{ base: "100%", md: "80%" }} mx="auto">
+        <Header />
+        <Flex direction="row" justify="center">
+          <Box display={{ base: "none", md: "block" }} w={{ md: "30%" }}>
+            <SideNavShow />
+          </Box>
+          <Flex direction="column" w={{ base: "100%", md: "70%" }}>
+            <UserCard user={data.user} />
+            <ContentDetail data={recruit} />
+          </Flex>
         </Flex>
-      </Flex>
-      <Footer />
-    </Box>
+      </Box>
+    </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  req,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id;
   if (id === undefined) throw new Error("Not Found");
 

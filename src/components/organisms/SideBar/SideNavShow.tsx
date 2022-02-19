@@ -12,7 +12,7 @@ export const SideNavShow: React.VFC = memo(() => {
 
   return (
     <>
-      <Flex w="33%" direction="column" align="center">
+      <Flex direction="column" align="center">
         <JoinCard />
         <CardDetail title="Language">
           <List spacing={3}>

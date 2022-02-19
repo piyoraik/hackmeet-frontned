@@ -18,7 +18,8 @@ import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect } from "react";
-import { DrawerMenu } from "@/components/organisms/SideBar/DrawerMenu";
+import { DrawerMenu } from "@/components/modules/DrawerMenu";
+import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
 
 interface Props {
   status: string;
@@ -56,13 +57,13 @@ const Home: NextPage<Props> = ({
 
   return (
     <>
-      <Box display={{ base: "block", md: "none" }}>
-        <DrawerMenu
+      <DrawerMenu>
+        <AccordionSectionMenu
           languages={languages}
           frameworks={frameworks}
           features={features}
         />
-      </Box>
+      </DrawerMenu>
       <Flex direction="row" justify="center" gap="6" w="100%">
         <SideNavIndex
           languages={languages}
@@ -97,7 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
       frameworks: frameworks.data.frameworks,
       features: features.data.features,
     },
-    revalidate: 30,
+    revalidate: 15,
   };
 };
 

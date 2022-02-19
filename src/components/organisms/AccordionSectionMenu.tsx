@@ -4,7 +4,7 @@ import { Language } from "@/types/language.type";
 import { Accordion } from "@chakra-ui/react";
 import { FaCode } from "react-icons/fa";
 import { MdContentPaste, MdOutlineFeaturedPlayList } from "react-icons/md";
-import { IndexSideSection } from "./IndexSideSection";
+import { IndexSideSection } from "../modules/IndexSideSection";
 
 interface Props {
   languages: Language[];
@@ -12,7 +12,7 @@ interface Props {
   features: Feature[];
 }
 
-export const AccordionMenu: React.VFC<Props> = ({
+export const AccordionSectionMenu: React.VFC<Props> = ({
   languages,
   frameworks,
   features,
