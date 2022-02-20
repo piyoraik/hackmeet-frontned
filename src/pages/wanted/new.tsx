@@ -15,7 +15,6 @@ import {
 import { GetStaticProps, NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
-import { Header } from "@/components/organisms/Header";
 import { VscDebugStart } from "react-icons/vsc";
 import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
@@ -34,10 +33,11 @@ import { Framework } from "@/types/framework.type";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
 import { Footer } from "@/components/organisms/Footer";
-import { InputSelectType } from "@/types/addWanted.type";
 import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SectionItem } from "@/types/sectionItem.type";
+import { RecruitAddMenu } from "@/components/modules/RecruitAddMenu";
+import { DrawerMenu } from "@/components/modules/DrawerMenu";
 
 interface Props {
   languages: Language[];
@@ -106,30 +106,46 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   }, [contentMD]);
 
   return (
-    <Box width="80%" mx="auto">
-      <Header />
+    <>
+      <DrawerMenu>
+        <Box>
+          <RecruitAddMenu
+            thumbnailName={thumbnailName}
+            setThumbnailName={setThumbnailName}
+            peoples={peoples}
+            setPeoples={setPeoples}
+            useLanguageList={useLanguageList}
+            setUseLanguageList={setUseLanguageList}
+            useFrameworkList={useFeatureList}
+            setUseFrameworkList={setUseFrameworkList}
+            useFeatureList={useFeatureList}
+            setUseFeatureList={setUseFeatureList}
+            languages={languages}
+            frameworks={frameworks}
+            features={features}
+          />
+        </Box>
+      </DrawerMenu>
       <Flex direction="column" justify="center">
         <Heading mt="2" mb="5" mx="3" fontSize="2xl">
           New Wanted
         </Heading>
         <Flex>
-          <Box w="33%">
-            <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
-            <PeoplesCard peoples={peoples} setFn={setPeoples} />
-            <AddSelectCard
-              useLists={useLanguageList}
-              setFn={setUseLanguageList}
-              lists={languages}
-            />
-            <AddSelectCard
-              useLists={useFrameworkList}
-              setFn={setUseFrameworkList}
-              lists={frameworks}
-            />
-            <AddSelectCard
-              useLists={useFeatureList}
-              setFn={setUseFeatureList}
-              lists={features}
+          <Box display={{ base: "none", md: "block" }} w={{ md: "35%" }}>
+            <RecruitAddMenu
+              thumbnailName={thumbnailName}
+              setThumbnailName={setThumbnailName}
+              peoples={peoples}
+              setPeoples={setPeoples}
+              useLanguageList={useLanguageList}
+              setUseLanguageList={setUseLanguageList}
+              useFrameworkList={useFeatureList}
+              setUseFrameworkList={setUseFrameworkList}
+              useFeatureList={useFeatureList}
+              setUseFeatureList={setUseFeatureList}
+              languages={languages}
+              frameworks={frameworks}
+              features={features}
             />
           </Box>
           <Flex
@@ -138,7 +154,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
             rounded="xl"
             boxShadow="md"
             m=""
-            width="60%"
+            w={{ base: "100%", md: "80%" }}
           >
             <Box p="4">
               <Heading fontSize="2xl" p="2">
@@ -221,7 +237,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
         </Flex>
         <Footer />
       </Flex>
-    </Box>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import UserCard from "@/components/modules/card/UserCard";
-import { Header } from "@/components/organisms/Header";
+import { DrawerMenu } from "@/components/modules/DrawerMenu";
 import { FIND_USER_PRIMAERY, FIND_USER_PRIMARY } from "@/graphql/user.grpahql";
 import { fetchGraphql } from "@/lib/graphql";
 import { User } from "@/types/user.type";
@@ -12,10 +12,9 @@ interface Props {
 
 const UserShow: NextPage<Props> = ({ user }) => {
   return (
-    <Box width="80%" mx="auto">
-      <Header />
+    <>
       <UserCard user={user} />
-    </Box>
+    </>
   );
 };
 

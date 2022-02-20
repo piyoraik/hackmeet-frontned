@@ -29,6 +29,7 @@ export const DrawerMenu: React.FC<Props> = ({ children }) => {
         position="fixed"
         right="50px"
         bottom="50px"
+        zIndex={"sticky"}
       >
         <HamburgerIcon />
       </Button>

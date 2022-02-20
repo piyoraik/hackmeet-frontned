@@ -78,53 +78,50 @@ const UserEdit: NextPage<Props> = () => {
   };
 
   return (
-    <Box width="80%" mx="auto">
-      <Header />
-      <Flex direction="column">
-        <Heading mt="2" mb="5" mx="3" fontSize="2xl">
-          {loginUser?.nickname} is Update
-        </Heading>
-        <form onSubmit={submitHandler}>
-          <Stack spacing={4}>
-            <FormControl>
-              <FormLabel htmlFor="nickname">NickName</FormLabel>
-              <Input
-                type="text"
-                id="nickname"
-                value={nickName}
-                onChange={(e) => setNickName(e.target.value)}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="picture">Picture</FormLabel>
-              <Flex>
-                <Box>
-                  {preview ? (
-                    <Image src={preview} alt="プレビュー" boxSize="80px" />
-                  ) : (
-                    <Image
-                      src={loginUser?.picture}
-                      alt="プレビュー"
-                      boxSize="80px"
-                    />
-                  )}
-                </Box>
-                <Box>
-                  <Input
-                    type="file"
-                    id="picture"
-                    onChange={(e) => handleChangeFile(e)}
+    <Flex direction="column">
+      <Heading mt="2" mb="5" mx="3" fontSize="2xl">
+        {loginUser?.nickname} is Update
+      </Heading>
+      <form onSubmit={submitHandler}>
+        <Stack spacing={4}>
+          <FormControl>
+            <FormLabel htmlFor="nickname">NickName</FormLabel>
+            <Input
+              type="text"
+              id="nickname"
+              value={nickName}
+              onChange={(e) => setNickName(e.target.value)}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="picture">Picture</FormLabel>
+            <Flex>
+              <Box>
+                {preview ? (
+                  <Image src={preview} alt="プレビュー" boxSize="80px" />
+                ) : (
+                  <Image
+                    src={loginUser?.picture}
+                    alt="プレビュー"
+                    boxSize="80px"
                   />
-                </Box>
-              </Flex>
-            </FormControl>
-            <Button mt={4} colorScheme="teal" type="submit">
-              Update User
-            </Button>
-          </Stack>
-        </form>
-      </Flex>
-    </Box>
+                )}
+              </Box>
+              <Box>
+                <Input
+                  type="file"
+                  id="picture"
+                  onChange={(e) => handleChangeFile(e)}
+                />
+              </Box>
+            </Flex>
+          </FormControl>
+          <Button mt={4} colorScheme="teal" type="submit">
+            Update User
+          </Button>
+        </Stack>
+      </form>
+    </Flex>
   );
 };
 

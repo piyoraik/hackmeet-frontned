@@ -1,9 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Header } from "@/components/organisms/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -24,7 +25,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             />
           </Head>
           <Box maxWidth="1656px" mx="auto">
-            <Component {...pageProps} />
+            <Header />
+            <Box w={{ base: "100%", md: "80%" }} mx="auto">
+              <Component {...pageProps} />
+            </Box>
           </Box>
         </ChakraProvider>
       </Auth0Provider>

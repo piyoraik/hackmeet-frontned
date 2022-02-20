@@ -10,7 +10,8 @@ interface Props {
 export const Card: NextPage<Props> = ({ children, title }) => {
   return (
     <Box
-      w="80%"
+      w="90%"
+      mx="auto"
       mb="6"
       p="6"
       boxShadow="md"

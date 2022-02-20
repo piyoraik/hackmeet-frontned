@@ -2,8 +2,6 @@ import { Flex, Box } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import UserCard from "@/components/modules/card/UserCard";
 import ContentDetail from "@/components/organisms/ContentDetail";
-import { Footer } from "@/components/organisms/Footer";
-import { Header } from "@/components/organisms/Header";
 import { SideNavShow } from "@/components/organisms/SideBar/SideNavShow";
 import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/wanted.graphql";
 import { Recruit } from "@/types/wanted.type";
@@ -35,18 +33,15 @@ const Wanted: NextPage<Props> = ({ data }) => {
       <DrawerMenu>
         <SideNavShow />
       </DrawerMenu>
-      <Box w={{ base: "100%", md: "80%" }} mx="auto">
-        <Header />
-        <Flex direction="row" justify="center">
-          <Box display={{ base: "none", md: "block" }} w={{ md: "30%" }}>
-            <SideNavShow />
-          </Box>
-          <Flex direction="column" w={{ base: "100%", md: "70%" }}>
-            <UserCard user={data.user} />
-            <ContentDetail data={recruit} />
-          </Flex>
+      <Flex direction="row" justify="center">
+        <Box display={{ base: "none", md: "block" }} w={{ md: "30%" }}>
+          <SideNavShow />
+        </Box>
+        <Flex direction="column" w={{ base: "100%", md: "70%" }}>
+          <UserCard user={data.user} />
+          <ContentDetail data={recruit} />
         </Flex>
-      </Box>
+      </Flex>
     </>
   );
 };

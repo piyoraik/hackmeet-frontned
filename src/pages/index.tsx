@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from "next";
+import { useRouter } from "next/router";
 import { Languages } from "prismjs";
 import { Box, Center, Divider, Flex } from "@chakra-ui/react";
 import { fetchGraphql } from "@/lib/graphql";
-import { HeaderContent } from "@/components/modules/HeaderContent";
 import { ContentList } from "@/components/organisms/ContentList";
 import { SideNavIndex } from "@/components/organisms/SideBar/SideNavIndex";
 import { Features, ALL_FEATURE } from "@/graphql/feature.graphql";
@@ -20,10 +20,8 @@ import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect } from "react";
 import { DrawerMenu } from "@/components/modules/DrawerMenu";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
-import { Header } from "@/components/organisms/Header";
 
 interface Props {
-  status: string;
   recruits: Recruit[];
   languages: Language[];
   frameworks: Framework[];
@@ -37,7 +35,10 @@ const Home: NextPage<Props> = ({
   features,
 }) => {
   const { user } = useAuth0();
+  const router = useRouter();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  console.log(router.query);
 
   useEffect(() => {
     if (user === undefined) return;
@@ -65,8 +66,7 @@ const Home: NextPage<Props> = ({
           features={features}
         />
       </DrawerMenu>
-      <Header />
-      <Flex direction="row" justify="center" gap="6" w="100%">
+      <Flex direction="row" justify="center" gap="6">
         <SideNavIndex
           languages={languages}
           frameworks={frameworks}
