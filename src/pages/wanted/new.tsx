@@ -116,7 +116,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
             setPeoples={setPeoples}
             useLanguageList={useLanguageList}
             setUseLanguageList={setUseLanguageList}
-            useFrameworkList={useFeatureList}
+            useFrameworkList={useFrameworkList}
             setUseFrameworkList={setUseFrameworkList}
             useFeatureList={useFeatureList}
             setUseFeatureList={setUseFeatureList}
@@ -139,7 +139,7 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
               setPeoples={setPeoples}
               useLanguageList={useLanguageList}
               setUseLanguageList={setUseLanguageList}
-              useFrameworkList={useFeatureList}
+              useFrameworkList={useFrameworkList}
               setUseFrameworkList={setUseFrameworkList}
               useFeatureList={useFeatureList}
               setUseFeatureList={setUseFeatureList}
