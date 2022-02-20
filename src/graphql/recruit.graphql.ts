@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import { Feature } from "../types/feature.type";
 import { Framework } from "../types/framework.type";
 import { Language } from "../types/language.type";
-import { Recruit } from "../types/wanted.type";
+import { Recruit } from "../types/recruit.type";
 
 // ALL_WANTED
 export const ALL_WANTED = gql`
@@ -22,7 +22,7 @@ export const ALL_WANTED = gql`
 `;
 
 export interface Recruits {
-  recruits: Recruit[] | null;
+  recruits: Recruit[];
 }
 
 // CREATE_WANTED
@@ -118,4 +118,50 @@ export interface findOneIdRecruitType {
     frameworks: Framework[];
     features: Feature[];
   };
+}
+
+export const SEARCH_WANTED = gql`
+  query ($params: SearchRecruitsDTO!) {
+    searchRecruit(searchRecruit: $params) {
+      id
+      title
+      thumbnail
+      content
+      peoples
+      languages {
+        id
+        name
+        icon
+        color
+      }
+      frameworks {
+        id
+        name
+        icon
+        color
+      }
+      features {
+        id
+        name
+        icon
+        color
+      }
+      user {
+        id
+        nickname
+        picture
+      }
+      joins {
+        user {
+          id
+          nickname
+          picture
+        }
+      }
+    }
+  }
+`;
+
+export interface searchRecruitType {
+  searchRecruit: Recruit[];
 }

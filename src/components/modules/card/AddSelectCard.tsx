@@ -3,18 +3,26 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Card } from "@/components/atoms/Card";
 import { TechIcon } from "@/components/atoms/TechIcon";
 import { MdDelete } from "react-icons/md";
-import { SectionItem } from "@/types/sectionItem.type";
+import { SectionItemType } from "@/types/sectionItem.type";
 
 interface Props {
-  useLists: SectionItem[];
-  setFn: Dispatch<SetStateAction<SectionItem[]>>;
-  lists: SectionItem[];
+  useLists: SectionItemType[];
+  setFn: Dispatch<SetStateAction<SectionItemType[]>>;
+  lists: SectionItemType[];
+  title: string;
+  placeholder: string;
 }
 
-const AddSelectCard: React.VFC<Props> = ({ useLists, setFn, lists }) => {
+const AddSelectCard: React.VFC<Props> = ({
+  useLists,
+  setFn,
+  lists,
+  title,
+  placeholder,
+}) => {
   const addHandler = (
     e: ChangeEvent<HTMLSelectElement>,
-    setFn: Dispatch<SetStateAction<SectionItem[]>>
+    setFn: Dispatch<SetStateAction<SectionItemType[]>>
   ) => {
     const id = e.target.value;
     if (useLists.some((l) => l.id === id || useLists.length >= 5)) return;
@@ -28,7 +36,7 @@ const AddSelectCard: React.VFC<Props> = ({ useLists, setFn, lists }) => {
   };
 
   return (
-    <Card title="Language">
+    <Card title={title}>
       <Flex direction="column" width="100%">
         <Flex
           width="80%"
@@ -59,7 +67,7 @@ const AddSelectCard: React.VFC<Props> = ({ useLists, setFn, lists }) => {
         </Flex>
         <Flex width="80%" mx="auto" mt="4">
           <Select
-            placeholder="Select Language"
+            placeholder={placeholder}
             size="md"
             onChange={(e) => addHandler(e, setFn)}
           >

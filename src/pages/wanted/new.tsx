@@ -20,11 +20,12 @@ import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { MdSend } from "react-icons/md";
 import { RiDraftLine } from "react-icons/ri";
-import { CreateRecruitsDTOType, CREATE_WANTED } from "@/graphql/wanted.graphql";
+import {
+  CreateRecruitsDTOType,
+  CREATE_WANTED,
+} from "@/graphql/recruit.graphql";
 import { markdownIt } from "@/lib/markdownIt";
 import { useRouter } from "next/router";
-import ThumbnailCard from "@/components/modules/card/ThumbnailCard";
-import AddSelectCard from "@/components/modules/card/AddSelectCard";
 import { ALL_LANGUAGE, Languages } from "@/graphql/language.graphql";
 import { Language } from "@/types/language.type";
 import { fetchGraphql, mutationGraphql } from "@/lib/graphql";
@@ -33,9 +34,8 @@ import { Framework } from "@/types/framework.type";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
 import { Footer } from "@/components/organisms/Footer";
-import { PeoplesCard } from "@/components/modules/card/PeoplesCard";
 import { useAuth0 } from "@auth0/auth0-react";
-import { SectionItem } from "@/types/sectionItem.type";
+import { SectionItemType } from "@/types/sectionItem.type";
 import { RecruitAddMenu } from "@/components/modules/RecruitAddMenu";
 import { DrawerMenu } from "@/components/modules/DrawerMenu";
 
@@ -53,9 +53,11 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
   const [contentHTML, setContentHTML] = useState("");
   const [contentMD, setContentMD] = useState("");
   const [thumbnailName, setThumbnailName] = useState("partying_face");
-  const [useLanguageList, setUseLanguageList] = useState<SectionItem[]>([]);
-  const [useFrameworkList, setUseFrameworkList] = useState<SectionItem[]>([]);
-  const [useFeatureList, setUseFeatureList] = useState<SectionItem[]>([]);
+  const [useLanguageList, setUseLanguageList] = useState<SectionItemType[]>([]);
+  const [useFrameworkList, setUseFrameworkList] = useState<SectionItemType[]>(
+    []
+  );
+  const [useFeatureList, setUseFeatureList] = useState<SectionItemType[]>([]);
   const [peoples, setPeoples] = useState("");
 
   const changeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {

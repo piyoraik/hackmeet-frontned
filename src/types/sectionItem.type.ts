@@ -1,4 +1,4 @@
-export interface SectionItem {
+export interface SectionItemType {
   id: string;
   name: string;
   icon: string;

@@ -8,18 +8,24 @@ import { SideNavIndex } from "@/components/organisms/SideBar/SideNavIndex";
 import { Features, ALL_FEATURE } from "@/graphql/feature.graphql";
 import { Frameworks, ALL_FRAMEWORK } from "@/graphql/framework.graphql";
 import { ALL_LANGUAGE } from "@/graphql/language.graphql";
-import { ALL_WANTED, Recruits } from "@/graphql/wanted.graphql";
+import {
+  ALL_WANTED,
+  Recruits,
+  searchRecruitType,
+  SEARCH_WANTED,
+} from "@/graphql/recruit.graphql";
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/recruit.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DrawerMenu } from "@/components/modules/DrawerMenu";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
+import { recruitUseSelectStateSelector } from "@/recoil/selector/recruitUseSelectState.selector";
 
 interface Props {
   recruits: Recruit[];
@@ -37,8 +43,8 @@ const Home: NextPage<Props> = ({
   const { user } = useAuth0();
   const router = useRouter();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
-
-  console.log(router.query);
+  const [selector, setSelector] = useRecoilState(recruitUseSelectStateSelector);
+  const [recruitList, setRecruitList] = useState<Recruit[]>(recruits);
 
   useEffect(() => {
     if (user === undefined) return;
@@ -56,6 +62,53 @@ const Home: NextPage<Props> = ({
     };
     fetchUser();
   }, [user]);
+
+  useEffect(() => {
+    if (Object.keys(router.query).length === 0) {
+      fetchGraphql<Recruits>(ALL_WANTED, "network-only").then((res) => {
+        setRecruitList(res.data.recruits);
+      });
+      return;
+    }
+    const searchRecruit = async () => {
+      if (!router.query.language) router.query.language = [];
+      if (!router.query.framework) router.query.framework = [];
+      if (!router.query.feature) router.query.feature = [];
+      const l =
+        typeof router.query.language === "string"
+          ? [router.query.language]
+          : router.query.language;
+      const f =
+        typeof router.query.framework === "string"
+          ? [router.query.framework]
+          : router.query.framework;
+      const fe =
+        typeof router.query.feature === "string"
+          ? [router.query.feature]
+          : router.query.feature;
+
+      const params = {
+        params: {
+          title: "",
+          languages: l,
+          frameworks: f,
+          features: fe,
+        },
+      };
+      await fetchGraphql<searchRecruitType>(
+        SEARCH_WANTED,
+        "network-only",
+        params
+      )
+        .then((res) => {
+          setRecruitList(res.data.searchRecruit);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    searchRecruit();
+  }, [router.query]);
 
   return (
     <>
@@ -76,7 +129,7 @@ const Home: NextPage<Props> = ({
           <Divider orientation="vertical" />
         </Center>
         <Box flex="1" w="100%">
-          <ContentList recruits={recruits} />
+          <ContentList recruits={recruitList} />
         </Box>
       </Flex>
     </>

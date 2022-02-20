@@ -1,5 +1,5 @@
 import { User } from "@auth0/auth0-react";
-import { Recruit } from "./wanted.type";
+import { Recruit } from "./recruit.type";
 
 export interface Join {
   id: string;

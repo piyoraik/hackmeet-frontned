@@ -1,4 +1,4 @@
-import { Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/recruit.type";
 import { selector } from "recoil";
 import { recruitDetailStateAtom } from "../atom/recruitDetailState.atom";
 

@@ -24,18 +24,21 @@ export const SectionList: React.VFC<Props> = ({
         title="Language"
         icon={FaCode}
         color="green.400"
+        query="language"
       />
       <IndexSideSection
         lists={frameworks}
         title="Framework"
         icon={MdContentPaste}
         color="orange.400"
+        query="framework"
       />
       <IndexSideSection
         lists={features}
         title="Features"
         icon={MdOutlineFeaturedPlayList}
         color="purple.400"
+        query="feature"
       />
     </Accordion>
   );

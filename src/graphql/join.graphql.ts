@@ -1,5 +1,5 @@
 import { Join } from "@/types/join.type";
-import { Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/recruit.type";
 import { gql } from "@apollo/client";
 
 export const ALL_JOIN = gql`

@@ -10,7 +10,7 @@ import {
 import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/recruit.type";
 
 interface Props {
   recruit: Recruit;

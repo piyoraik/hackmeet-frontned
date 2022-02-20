@@ -6,9 +6,9 @@ import { HeaderMenu } from "./HeaderMenu";
 export const HeaderContent: NextPage = () => {
   return (
     <Flex justify="end" gap="6" my="10" align="center">
-      <Box>
+      {/* <Box>
         <SearchBox />
-      </Box>
+      </Box> */}
       <HeaderMenu />
     </Flex>
   );

@@ -1,4 +1,4 @@
-import { Recruit } from "@/types/wanted.type";
+import { Recruit } from "@/types/recruit.type";
 import { atom } from "recoil";
 
 export const recruitDetailStateAtom = atom<Recruit>({

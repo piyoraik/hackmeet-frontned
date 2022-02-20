@@ -1,8 +1,7 @@
 import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
-import { SectionItem } from "@/types/sectionItem.type";
-import { Box } from "@chakra-ui/react";
+import { SectionItemType } from "@/types/sectionItem.type";
 import { Dispatch, SetStateAction } from "react";
 import AddSelectCard from "./card/AddSelectCard";
 import { PeoplesCard } from "./card/PeoplesCard";
@@ -13,12 +12,12 @@ interface Props {
   setThumbnailName: Dispatch<SetStateAction<string>>;
   peoples: string;
   setPeoples: Dispatch<SetStateAction<string>>;
-  useLanguageList: SectionItem[];
-  setUseLanguageList: Dispatch<SetStateAction<SectionItem[]>>;
-  useFrameworkList: SectionItem[];
-  setUseFrameworkList: Dispatch<SetStateAction<SectionItem[]>>;
-  useFeatureList: SectionItem[];
-  setUseFeatureList: Dispatch<SetStateAction<SectionItem[]>>;
+  useLanguageList: SectionItemType[];
+  setUseLanguageList: Dispatch<SetStateAction<SectionItemType[]>>;
+  useFrameworkList: SectionItemType[];
+  setUseFrameworkList: Dispatch<SetStateAction<SectionItemType[]>>;
+  useFeatureList: SectionItemType[];
+  setUseFeatureList: Dispatch<SetStateAction<SectionItemType[]>>;
   languages: Language[];
   frameworks: Framework[];
   features: Feature[];
@@ -47,16 +46,22 @@ export const RecruitAddMenu: React.VFC<Props> = ({
         useLists={useLanguageList}
         setFn={setUseLanguageList}
         lists={languages}
+        title="Language"
+        placeholder="Select Language"
       />
       <AddSelectCard
         useLists={useFrameworkList}
         setFn={setUseFrameworkList}
         lists={frameworks}
+        title="Framework"
+        placeholder="Select Framework"
       />
       <AddSelectCard
         useLists={useFeatureList}
         setFn={setUseFeatureList}
         lists={features}
+        title="Feature"
+        placeholder="Select Feature"
       />
     </>
   );
