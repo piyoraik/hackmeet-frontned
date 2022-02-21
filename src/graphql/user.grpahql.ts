@@ -7,6 +7,7 @@ export const FIND_USERID = gql`
       id
       nickname
       picture
+      userId
     }
   }
 `;

@@ -25,7 +25,6 @@ import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect, useState } from "react";
 import { DrawerMenu } from "@/components/modules/DrawerMenu";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
-import { recruitUseSelectStateSelector } from "@/recoil/selector/recruitUseSelectState.selector";
 
 interface Props {
   recruits: Recruit[];
@@ -43,7 +42,6 @@ const Home: NextPage<Props> = ({
   const { user } = useAuth0();
   const router = useRouter();
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
-  const [selector, setSelector] = useRecoilState(recruitUseSelectStateSelector);
   const [recruitList, setRecruitList] = useState<Recruit[]>(recruits);
 
   useEffect(() => {

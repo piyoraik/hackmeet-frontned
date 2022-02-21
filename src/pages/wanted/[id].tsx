@@ -3,7 +3,10 @@ import { GetServerSideProps, NextPage } from "next";
 import UserCard from "@/components/modules/card/UserCard";
 import ContentDetail from "@/components/organisms/ContentDetail";
 import { SideNavShow } from "@/components/organisms/SideBar/SideNavShow";
-import { findOneIdRecruitType, FINDONE_WANTED } from "@/graphql/recruit.graphql";
+import {
+  findOneIdRecruitType,
+  FINDONE_WANTED,
+} from "@/graphql/recruit.graphql";
 import { Recruit } from "@/types/recruit.type";
 import Prism from "prismjs";
 import { useEffect } from "react";

@@ -49,6 +49,7 @@ export const CREATE_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
       joins {
         user {
@@ -96,6 +97,7 @@ export const FINDONE_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
       joins {
         user {

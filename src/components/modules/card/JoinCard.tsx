@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 export const JoinCard: React.VFC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
 
   const joinHandler = async () => {
@@ -47,9 +47,11 @@ export const JoinCard: React.VFC = () => {
             {recruit.joins.length}人 / {recruit.peoples}人
           </Text>
         </Box>
-        <Button colorScheme="blue" width="80%" onClick={() => joinHandler()}>
-          Join
-        </Button>
+        {isAuthenticated && (
+          <Button colorScheme="blue" width="80%" onClick={() => joinHandler()}>
+            Join
+          </Button>
+        )}
       </Flex>
     </Card>
   );
