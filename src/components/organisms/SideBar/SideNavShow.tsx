@@ -13,10 +13,6 @@ export const SideNavShow: React.VFC = memo(() => {
   const [recruit] = useRecoilState(recruitDetailStateSelector);
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
 
-  console.log(recruit.user.userId);
-
-  console.log(loginUser?.userId);
-
   return (
     <>
       <Flex direction="column" align="center">
