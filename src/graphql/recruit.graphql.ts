@@ -50,6 +50,7 @@ export const CREATE_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
       workspace {
         id
@@ -100,6 +101,7 @@ export const FINDONE_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
       workspace {
         id

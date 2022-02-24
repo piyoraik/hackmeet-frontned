@@ -1,19 +1,30 @@
-import { Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
+import { Flex, List, ListItem } from "@chakra-ui/react";
 import { CardDetail } from "@/components/modules/CardDetail";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { useRecoilState } from "recoil";
 import { JoinCard } from "../../modules/card/JoinCard";
 import { memo } from "react";
 import { TechIcon } from "../../atoms/TechIcon";
+import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { JoinMemberCard } from "@/components/modules/card/JoinMember";
 
 // eslint-disable-next-line react/display-name
 export const SideNavShow: React.VFC = memo(() => {
   const [recruit] = useRecoilState(recruitDetailStateSelector);
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  console.log(recruit.user.userId);
+
+  console.log(loginUser?.userId);
 
   return (
     <>
       <Flex direction="column" align="center">
-        <JoinCard />
+        {recruit.user.userId === loginUser?.userId ? (
+          <JoinMemberCard />
+        ) : (
+          <JoinCard />
+        )}
         <CardDetail title="Language">
           <List spacing={3}>
             {recruit.languages.map((language, idx) => (

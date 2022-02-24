@@ -6,6 +6,7 @@ import {
   Heading,
   Box,
   WrapItem,
+  chakra,
 } from "@chakra-ui/react";
 import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
@@ -20,7 +21,7 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
   const router = useRouter();
 
   return (
-    <Box
+    <chakra.button
       p="6"
       onClick={() => router.push(`/wanted/${recruit.id}`)}
       boxShadow="xl"
@@ -39,11 +40,11 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
         <Emoji emoji={recruit.thumbnail} size={52} />
       </Box>
       <Box>
-        <Box>
+        <Flex>
           <Heading color="gray.700" fontSize="lg" fontFamily="body" mb="2">
             {recruit.title}
           </Heading>
-        </Box>
+        </Flex>
         <Flex gap={2} align="center">
           <Image
             borderRadius="full"
@@ -52,11 +53,13 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
             alt={recruit.user.nickname}
           />
           <Box fontSize="sm" whiteSpace="nowrap">
-            <Text fontWeight="bold">{recruit.user.nickname}</Text>
+            <Text textAlign="left" fontWeight="bold">
+              {recruit.user.nickname}
+            </Text>
             <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
           </Box>
         </Flex>
       </Box>
-    </Box>
+    </chakra.button>
   );
 };

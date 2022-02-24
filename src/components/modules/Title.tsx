@@ -1,18 +1,20 @@
-import { Flex, Heading, Icon, Center } from "@chakra-ui/react";
+import { recruitUseSelectStateSelector } from "@/recoil/selector/recruitUseSelectState.selector";
+import { Flex, Heading, Icon, Center, Image, chakra } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { DiReact } from "react-icons/di";
+import { useRecoilState } from "recoil";
 
 export const Title: React.VFC = () => {
+  const [selector, setSelector] = useRecoilState(recruitUseSelectStateSelector);
   const router = useRouter();
 
+  const routerPushHandler = () => {
+    setSelector([]);
+    router.push("/");
+  };
+
   return (
-    <Flex my="10" onClick={() => router.push("/")}>
-      <Icon as={DiReact} boxSize="24" />
-      <Center>
-        <Heading ml="3" fontWeight="800" fontSize="xl" alignItems="center">
-          HackMeet
-        </Heading>
-      </Center>
-    </Flex>
+    <chakra.button my="10" onClick={() => routerPushHandler()}>
+      <Image src="/logo.png" alt="HackMeet" boxSize="90%" />
+    </chakra.button>
   );
 };
