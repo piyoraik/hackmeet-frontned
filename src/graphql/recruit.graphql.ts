@@ -17,6 +17,7 @@ export const ALL_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
     }
   }
@@ -31,37 +32,6 @@ export const CREATE_WANTED = gql`
   mutation ($param: CreateRecruitsDTO!) {
     createRecruit(createRecruit: $param) {
       id
-      title
-      thumbnail
-      content
-      languages {
-        id
-        name
-      }
-      frameworks {
-        id
-        name
-      }
-      features {
-        id
-        name
-      }
-      user {
-        id
-        nickname
-        picture
-        userId
-      }
-      workspace {
-        id
-        joins {
-          id
-          user {
-            id
-            nickname
-          }
-        }
-      }
     }
   }
 `;
@@ -126,7 +96,7 @@ export interface findOneIdRecruitType {
     languages: Language[];
     frameworks: Framework[];
     features: Feature[];
-    workspace: Workspace
+    workspace: Workspace;
   };
 }
 
@@ -160,6 +130,7 @@ export const SEARCH_WANTED = gql`
         id
         nickname
         picture
+        userId
       }
       workspace {
         id

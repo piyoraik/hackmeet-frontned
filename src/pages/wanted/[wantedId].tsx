@@ -50,7 +50,7 @@ const Wanted: NextPage<Props> = ({ data }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const id = params?.id;
+  const id = params?.wantedId;
   if (id === undefined) throw new Error("Not Found");
 
   const recruit = await fetchGraphql<findOneIdRecruitType>(

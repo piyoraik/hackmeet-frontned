@@ -118,11 +118,13 @@ const Home: NextPage<Props> = ({
         />
       </DrawerMenu>
       <Flex direction="row" justify="center" gap="6">
-        <SideNavIndex
-          languages={languages}
-          frameworks={frameworks}
-          features={features}
-        />
+        <SideNavIndex>
+          <AccordionSectionMenu
+            languages={languages}
+            frameworks={frameworks}
+            features={features}
+          />
+        </SideNavIndex>
         <Center my="10" display={{ base: "none", md: "block" }}>
           <Divider orientation="vertical" />
         </Center>

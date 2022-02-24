@@ -4,25 +4,16 @@ import { Feature } from "@/types/feature.type";
 import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
+import { ReactNode } from "react";
 
 interface Props {
-  languages: Language[];
-  frameworks: Framework[];
-  features: Feature[];
+  children: ReactNode;
 }
 
-export const SideNavIndex: React.VFC<Props> = ({
-  languages,
-  frameworks,
-  features,
-}) => {
+export const SideNavIndex: React.VFC<Props> = ({ children }) => {
   return (
     <Box w="300px" display={{ base: "none", md: "block" }}>
-      <AccordionSectionMenu
-        languages={languages}
-        frameworks={frameworks}
-        features={features}
-      />
+      {children}
     </Box>
   );
 };

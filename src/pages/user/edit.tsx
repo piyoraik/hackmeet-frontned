@@ -78,7 +78,7 @@ const UserEdit: NextPage<Props> = () => {
   };
 
   return (
-    <Flex direction="column">
+    <Box gap="6">
       <Heading mt="2" mb="5" mx="3" fontSize="2xl">
         {loginUser?.nickname} is Update
       </Heading>
@@ -121,7 +121,7 @@ const UserEdit: NextPage<Props> = () => {
           </Button>
         </Stack>
       </form>
-    </Flex>
+    </Box>
   );
 };
 

@@ -5,6 +5,8 @@ const Workspace: NextPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = ({ params }) => {
+  console.log(params);
+
   return {
     props: {},
   };

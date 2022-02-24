@@ -6,7 +6,6 @@ import { JoinCard } from "../../modules/card/JoinCard";
 import { memo } from "react";
 import { TechIcon } from "../../atoms/TechIcon";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
-import { JoinMemberCard } from "@/components/modules/card/JoinMember";
 
 // eslint-disable-next-line react/display-name
 export const SideNavShow: React.VFC = memo(() => {
@@ -16,11 +15,7 @@ export const SideNavShow: React.VFC = memo(() => {
   return (
     <>
       <Flex direction="column" align="center">
-        {recruit.user.userId === loginUser?.userId ? (
-          <JoinMemberCard />
-        ) : (
-          <JoinCard />
-        )}
+        <JoinCard />
         <CardDetail title="Language">
           <List spacing={3}>
             {recruit.languages.map((language, idx) => (
