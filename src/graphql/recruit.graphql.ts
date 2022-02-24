@@ -50,11 +50,14 @@ export const CREATE_WANTED = gql`
         nickname
         picture
       }
-      joins {
-        user {
+      workspace {
+        id
+        joins {
           id
-          nickname
-          picture
+          user {
+            id
+            nickname
+          }
         }
       }
     }
@@ -97,11 +100,14 @@ export const FINDONE_WANTED = gql`
         nickname
         picture
       }
-      joins {
-        user {
+      workspace {
+        id
+        joins {
           id
-          nickname
-          picture
+          user {
+            id
+            nickname
+          }
         }
       }
     }
@@ -151,11 +157,14 @@ export const SEARCH_WANTED = gql`
         nickname
         picture
       }
-      joins {
-        user {
+      workspace {
+        id
+        joins {
           id
-          nickname
-          picture
+          user {
+            id
+            nickname
+          }
         }
       }
     }

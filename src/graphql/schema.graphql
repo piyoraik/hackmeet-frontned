@@ -1,0 +1,132 @@
+type Feature {
+  id: ID!
+  name: String!
+  icon: String!
+  color: String!
+}
+
+type Language {
+  id: ID!
+  name: String!
+  icon: String!
+  color: String!
+  users: User!
+  recruits: [Recruit!]!
+}
+
+type Join {
+  id: ID!
+  workspace: Workspace
+  user: User
+}
+
+type Workspace {
+  id: ID!
+  recruit: Recruit!
+  channels: [Channel!]!
+  joins: [Join!]
+}
+
+type Recruit {
+  id: ID!
+  title: String!
+  thumbnail: String!
+  content: String!
+  peoples: Int!
+  languages: [Language!]!
+  frameworks: [FrameWork!]!
+  features: [Feature!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  user: User!
+  workspace: Workspace!
+}
+
+# A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+scalar DateTime
+
+type FrameWork {
+  id: ID!
+  name: String!
+  icon: String!
+  color: String!
+  users: User!
+}
+
+type User {
+  id: ID!
+  nickname: String
+  userId: String!
+  picture: String
+  language: Language!
+  framework: FrameWork!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  recruits: [Recruit!]!
+  joins: [Join!]!
+  channels: [Channel!]!
+}
+
+type Channel {
+  id: ID!
+  workspace: Workspace!
+  user: User!
+  name: String!
+}
+
+type Query {
+  recruits: [Recruit!]!
+  findOneIdRecruit(id: String!): Recruit!
+  searchRecruit(searchRecruit: SearchRecruitsDTO!): [Recruit!]
+  languages: [Language!]!
+  frameworks: [FrameWork!]!
+  features: [Feature!]!
+  users: [User!]!
+  findUserId(userId: String!): User!
+  findUserPrimaryId(id: String!): User!
+  joins: [Join!]!
+}
+
+input SearchRecruitsDTO {
+  title: String
+  languages: [String!]
+  frameworks: [String!]
+  features: [String!]
+}
+
+type Mutation {
+  createRecruit(createRecruit: CreateRecruitsDTO!): Recruit!
+  deleteRecruit(id: String!): Recruit!
+  createUser(createUser: CreateUserDTO!): User!
+  updateUser(updateUser: UpdateUserDTO!): User!
+  createJoin(createJoin: InputJoinDTO!): Join!
+}
+
+input CreateRecruitsDTO {
+  title: String!
+  thumbnail: String!
+  content: String!
+  peoples: Int!
+  languages: [ID!]!
+  frameworks: [ID!]!
+  features: [ID!]!
+}
+
+input CreateUserDTO {
+  nickname: String
+  description: String
+  userId: String!
+  picture: String
+}
+
+input UpdateUserDTO {
+  nickname: String
+  description: String
+  picture: String
+}
+
+input InputJoinDTO {
+  workspace: ID!
+}
