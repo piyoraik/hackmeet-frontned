@@ -1,3 +1,4 @@
+import { Workspace } from "@/generated/graphql";
 import gql from "graphql-tag";
 import { Feature } from "../types/feature.type";
 import { Framework } from "../types/framework.type";
@@ -123,6 +124,7 @@ export interface findOneIdRecruitType {
     languages: Language[];
     frameworks: Framework[];
     features: Feature[];
+    workspace: Workspace
   };
 }
 

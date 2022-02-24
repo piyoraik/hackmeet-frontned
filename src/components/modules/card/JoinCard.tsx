@@ -4,12 +4,9 @@ import { mutationGraphql } from "@/lib/graphql";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 
 export const JoinCard: React.VFC = () => {
-  const router = useRouter();
-  const { id } = router.query;
   const { getAccessTokenSilently } = useAuth0();
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
 
@@ -19,7 +16,7 @@ export const JoinCard: React.VFC = () => {
 
       const params = {
         param: {
-          recruit: id,
+          workspace: recruit.workspace.id,
         },
       };
 
@@ -31,7 +28,7 @@ export const JoinCard: React.VFC = () => {
 
       if (res !== undefined) {
         const { joins, ...r } = recruit;
-        const joinMember = res.createJoin.recruit.joins!;
+        const joinMember = res.createJoin.workspace.joins!;
         setRecruit({ ...r, joins: joinMember });
       }
     } catch (err) {

@@ -19,5 +19,9 @@ export const recruitDetailStateAtom = atom<Recruit>({
       userId: "hoge",
     },
     joins: [],
+    workspace: {
+      id: "hoge",
+      joins: [],
+    },
   },
 });
