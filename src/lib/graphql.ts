@@ -3,13 +3,15 @@ import {
   OperationVariables,
   ApolloClient,
   ApolloLink,
-  createHttpLink,
   InMemoryCache,
+  HttpLink,
 } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 import { DocumentNode } from "graphql";
 
-export const httpHeader = (token?: string) => {
-  return createHttpLink({
+const createHttpLink = (token?: string) => {
+  return new HttpLink({
     uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
     headers: {
       authorization: token ? `Bearer ${token}` : null,
@@ -17,9 +19,30 @@ export const httpHeader = (token?: string) => {
   });
 };
 
-export const client = (link: ApolloLink) => {
+const createWSLink = () => {
+  return new WebSocketLink(
+    new SubscriptionClient("ws://localhost:9000/graphql", {
+      lazy: true,
+      reconnect: true,
+    })
+  );
+};
+
+export const client = (isHTTP: boolean, token?: string) => {
+  const ssrMode = typeof window === "undefined";
+  let link;
+  console.log(ssrMode, isHTTP);
+  if (ssrMode || isHTTP) {
+    console.log("=========");
+    link = createHttpLink(token);
+  } else {
+    console.log("---------");
+    link = createWSLink();
+  }
+
   return new ApolloClient({
-    link: link,
+    ssrMode,
+    link,
     cache: new InMemoryCache(),
   });
 };
@@ -30,8 +53,7 @@ export const fetchGraphql = async <T>(
   variables?: OperationVariables,
   token?: string
 ) => {
-  const link = httpHeader(token);
-  const { data, error, loading } = await client(link).query<T>({
+  const { data, error, loading } = await client(true, token).query<T>({
     query,
     fetchPolicy,
     variables,
@@ -50,8 +72,7 @@ export const mutationGraphql = async <T>(
   token?: string
 ) => {
   try {
-    const link = httpHeader(token);
-    const { data } = await client(link).mutate<T>({
+    const { data } = await client(true, token).mutate<T>({
       mutation,
       variables,
     });

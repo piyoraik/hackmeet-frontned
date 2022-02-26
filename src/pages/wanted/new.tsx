@@ -36,8 +36,8 @@ import { Feature } from "@/types/feature.type";
 import { Footer } from "@/components/organisms/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SectionItemType } from "@/types/sectionItem.type";
-import { RecruitAddMenu } from "@/components/modules/RecruitAddMenu";
-import { DrawerMenu } from "@/components/modules/DrawerMenu";
+import { RecruitAddMenu } from "@/components/modules/menu/RecruitAddMenu";
+import { DrawerMenu } from "@/components/modules/menu/DrawerMenu";
 
 interface Props {
   languages: Language[];

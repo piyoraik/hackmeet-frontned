@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ReactNode, useRef } from "react";
-import { Title } from "./Title";
+import { Title } from "../Title";
 
 interface Props {
   children: ReactNode;

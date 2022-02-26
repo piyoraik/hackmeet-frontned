@@ -14,7 +14,7 @@ import { markdownIt } from "@/lib/markdownIt";
 import { useRecoilState } from "recoil";
 import { fetchGraphql } from "@/lib/graphql";
 import { recruitDetailStateSelector } from "@/recoil/selector/recruitDetailState.selector";
-import { DrawerMenu } from "@/components/modules/DrawerMenu";
+import { DrawerMenu } from "@/components/modules/menu/DrawerMenu";
 
 interface Props {
   data: Recruit;

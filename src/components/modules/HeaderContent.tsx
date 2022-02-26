@@ -1,7 +1,7 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { SearchBox } from "@/components/modules/SearchBox";
-import { HeaderMenu } from "./HeaderMenu";
+import { HeaderMenu } from "./menu/HeaderMenu";
 
 export const HeaderContent: NextPage = () => {
   return (

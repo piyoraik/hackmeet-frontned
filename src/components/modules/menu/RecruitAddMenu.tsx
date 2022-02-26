@@ -3,9 +3,9 @@ import { Framework } from "@/types/framework.type";
 import { Language } from "@/types/language.type";
 import { SectionItemType } from "@/types/sectionItem.type";
 import { Dispatch, SetStateAction } from "react";
-import AddSelectCard from "./card/AddSelectCard";
-import { PeoplesCard } from "./card/PeoplesCard";
-import ThumbnailCard from "./card/ThumbnailCard";
+import AddSelectCard from "../card/AddSelectCard";
+import { PeoplesCard } from "../card/PeoplesCard";
+import ThumbnailCard from "../card/ThumbnailCard";
 
 interface Props {
   thumbnailName: string;

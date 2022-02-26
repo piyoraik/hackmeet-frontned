@@ -23,7 +23,7 @@ import { useRecoilState } from "recoil";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FIND_USER, FIND_USERID } from "@/graphql/user.grpahql";
 import { useEffect, useState } from "react";
-import { DrawerMenu } from "@/components/modules/DrawerMenu";
+import { DrawerMenu } from "@/components/modules/menu/DrawerMenu";
 import { AccordionSectionMenu } from "@/components/organisms/AccordionSectionMenu";
 
 interface Props {

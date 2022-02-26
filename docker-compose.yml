@@ -5,6 +5,8 @@ services:
     build:
       context: ./
       target: runner
+      args:
+        - aaaaaa
     ports:
       - 3000:3000
     volumes:
