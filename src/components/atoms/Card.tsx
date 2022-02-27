@@ -22,7 +22,7 @@ export const Card: NextPage<Props> = ({ children, title }) => {
       <Heading mt="2" mb="5" fontSize="xl">
         {title}
       </Heading>
-      <Center>{children}</Center>
+      <Box>{children}</Box>
     </Box>
   );
 };

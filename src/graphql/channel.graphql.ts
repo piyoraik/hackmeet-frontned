@@ -38,3 +38,25 @@ export const CHANNEL_FINDONE_QUERY = gql`
 export interface CHANNEL_FINDONE_QUERY {
   findOneChannel: Channel;
 }
+
+export const CREATE_CHANNEL = gql`
+  mutation ($params: InputChannelDTO!) {
+    createChannel(createChannel: $params) {
+      id
+      workspace {
+        id
+      }
+      name
+      user {
+        id
+        nickname
+        picture
+        userId
+      }
+    }
+  }
+`;
+
+export interface CREATE_CHANNEL {
+  createChannel: Channel;
+}
