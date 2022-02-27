@@ -80,6 +80,7 @@ export const FINDONE_WANTED = gql`
           user {
             id
             nickname
+            userId
           }
         }
       }

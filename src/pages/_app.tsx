@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Box, ChakraProvider, Heading } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import { Auth0Provider } from "@auth0/auth0-react";

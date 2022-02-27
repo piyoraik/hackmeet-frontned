@@ -18,11 +18,15 @@ import {
   FormControl,
   Input,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSubscription } from "@apollo/client";
 import { HiOutlinePaperAirplane } from "react-icons/hi";
+import { ChannelMessage } from "@/types/channelMessage.type";
+import { userStateSelector } from "@/recoil/selector/userState.selector";
+import { useRecoilState } from "recoil";
 
 interface Props {
   channel: Channel;
@@ -30,28 +34,32 @@ interface Props {
 }
 
 const ChannelIndex: NextPage<Props> = ({ channel, workspace }) => {
-  const [message, setMessage] = useState("");
-  const { getAccessTokenSilently } = useAuth0();
-  const { data, error, loading } = useSubscription(SUBSCRIPTION_MESSAGE);
-  console.log(data, error, loading);
+  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState<ChannelMessage[]>(
+    channel.channelMessages
+  );
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { data, error, loading } =
+    useSubscription<SUBSCRIPTION_MESSAGE>(SUBSCRIPTION_MESSAGE);
+
+  useEffect(() => {
+    if (!data?.createChannelMessage) return;
+    setMessages([...messages, data.createChannelMessage]);
+  }, [data]);
 
   const submitHandler = useCallback(
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
       const accessToken = await getAccessTokenSilently({});
       const params = {
-        params: { channelId: channel.id, message },
+        params: { channelId: channel.id, message: inputMessage },
       };
 
-      const res = await mutationGraphql(
-        CREATE_CHANNEL_MESSAGE,
-        params,
-        accessToken
-      );
-
-      console.log(res);
+      await mutationGraphql(CREATE_CHANNEL_MESSAGE, params, accessToken);
+      setInputMessage("");
     },
-    [channel.id, getAccessTokenSilently, message]
+    [channel.id, getAccessTokenSilently, inputMessage]
   );
 
   return (
@@ -68,44 +76,43 @@ const ChannelIndex: NextPage<Props> = ({ channel, workspace }) => {
         border="1px"
         borderColor="gray.50"
       >
-        <Heading>aaaaa</Heading>
+        <Heading fontSize="2xl">{channel.name}</Heading>
         <Box>
-          {channel.channelMessages.map((message, idx) => (
-            <Flex justify="flex-end" key={idx}>
-              <Box>
-                <Image
-                  src={message.user.picture}
-                  alt={message.user.nickname}
-                  boxSize="40px"
-                />
-              </Box>
-              <Box>
-                <Box>{message.user.nickname}</Box>
-                <Box>{message.message}</Box>
-              </Box>
-            </Flex>
+          {messages.map((message, idx) => (
+            <>
+              {loginUser?.userId === message.user.userId ? (
+                <Flex justify="flex-end" key={idx}>
+                  <Box p="2">
+                    <Text bg="blue.400" color="white" rounded="md">
+                      {message.message}
+                    </Text>
+                  </Box>
+                </Flex>
+              ) : (
+                <Flex key={idx}>
+                  <Image
+                    src={message.user.picture}
+                    alt={message.user.nickname}
+                    boxSize="40px"
+                  />
+                  <Box>
+                    <Text>{message.user.nickname}</Text>
+                    <Text bg="gray.400" color="white" rounded="md">
+                      {message.message}
+                    </Text>
+                  </Box>
+                </Flex>
+              )}
+            </>
           ))}
-          <Flex>
-            <Box>
-              <Image
-                src="https://hackmeet.s3.ap-northeast-1.amazonaws.com/twitter%7C1097467888758214656-20220224130249.png"
-                alt="test"
-                boxSize="80px"
-              />
-            </Box>
-            <Box>
-              <Box>aaaa</Box>
-              <Box>bbbb</Box>
-            </Box>
-          </Flex>
         </Box>
         <Box mt="10">
           <form onSubmit={submitHandler}>
             <FormControl isRequired display="flex">
               <Input
                 placeholder={`${channel.name}へメッセージ`}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
                 w="95%"
               />
               <Button

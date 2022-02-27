@@ -7,12 +7,23 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export const JoinCard: React.VFC = () => {
   const router = useRouter();
   const { getAccessTokenSilently, user } = useAuth0();
   const [recruit, setRecruit] = useRecoilState(recruitDetailStateSelector);
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+  const [isJoin, setIsJoin] = useState(false);
+
+  useEffect(() => {
+    if (loginUser === null) return;
+    const test = recruit.workspace.joins.filter((join) => {
+      if (join.user.userId === loginUser.userId) {
+        setIsJoin(true);
+      }
+    });
+  }, [loginUser, recruit.workspace.joins]);
 
   const joinHandler = async () => {
     try {
@@ -29,19 +40,14 @@ export const JoinCard: React.VFC = () => {
         params,
         accessToken
       );
-
-      if (res !== undefined) {
-        const { joins, ...r } = recruit;
-        const joinMember = res.createJoin.workspace.joins!;
-        setRecruit({ ...r, joins: joinMember });
-      }
+      router.push(`/workspace/${res.createJoin.workspace.id}`)
     } catch (err) {
       console.log(err);
     }
   };
 
   const button = () => {
-    if (loginUser?.userId === recruit.user.userId) {
+    if (loginUser?.userId === recruit.user.userId || isJoin) {
       return (
         <Button
           colorScheme="blue"

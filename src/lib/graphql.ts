@@ -2,7 +2,6 @@ import {
   FetchPolicy,
   OperationVariables,
   ApolloClient,
-  ApolloLink,
   InMemoryCache,
   HttpLink,
 } from "@apollo/client";
@@ -31,12 +30,9 @@ const createWSLink = () => {
 export const client = (isHTTP: boolean, token?: string) => {
   const ssrMode = typeof window === "undefined";
   let link;
-  console.log(ssrMode, isHTTP);
   if (ssrMode || isHTTP) {
-    console.log("=========");
     link = createHttpLink(token);
   } else {
-    console.log("---------");
     link = createWSLink();
   }
 
