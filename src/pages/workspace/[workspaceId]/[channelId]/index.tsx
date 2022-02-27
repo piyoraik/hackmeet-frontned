@@ -77,35 +77,33 @@ const ChannelIndex: NextPage<Props> = ({ channel, workspace }) => {
         borderColor="gray.50"
       >
         <Heading fontSize="2xl">{channel.name}</Heading>
-        <Box>
-          {messages.map((message, idx) => (
-            <>
-              {loginUser?.userId === message.user.userId ? (
-                <Flex justify="flex-end" key={idx}>
-                  <Box p="2">
-                    <Text bg="blue.400" color="white" rounded="md">
-                      {message.message}
-                    </Text>
-                  </Box>
-                </Flex>
-              ) : (
-                <Flex key={idx}>
-                  <Image
-                    src={message.user.picture}
-                    alt={message.user.nickname}
-                    boxSize="40px"
-                  />
-                  <Box>
-                    <Text>{message.user.nickname}</Text>
-                    <Text bg="gray.400" color="white" rounded="md">
-                      {message.message}
-                    </Text>
-                  </Box>
-                </Flex>
-              )}
-            </>
-          ))}
-        </Box>
+        {messages.map((message, idx) => (
+          <Box key={idx}>
+            {loginUser?.userId === message.user.userId ? (
+              <Flex justify="flex-end">
+                <Box p="2">
+                  <Text bg="blue.400" color="white" rounded="md">
+                    {message.message}
+                  </Text>
+                </Box>
+              </Flex>
+            ) : (
+              <Flex>
+                <Image
+                  src={message.user.picture}
+                  alt={message.user.nickname}
+                  boxSize="40px"
+                />
+                <Box>
+                  <Text>{message.user.nickname}</Text>
+                  <Text bg="gray.400" color="white" rounded="md">
+                    {message.message}
+                  </Text>
+                </Box>
+              </Flex>
+            )}
+          </Box>
+        ))}
         <Box mt="10">
           <form onSubmit={submitHandler}>
             <FormControl isRequired display="flex">

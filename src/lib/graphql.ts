@@ -20,7 +20,7 @@ const createHttpLink = (token?: string) => {
 
 const createWSLink = () => {
   return new WebSocketLink(
-    new SubscriptionClient("ws://localhost:9000/graphql", {
+    new SubscriptionClient(`${process.env.NEXT_PUBLIC_GRAPHQL}/graphql`, {
       lazy: true,
       reconnect: true,
     })
