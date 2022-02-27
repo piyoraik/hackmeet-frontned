@@ -28,6 +28,7 @@ export const CHANNEL_FINDONE_QUERY = gql`
           picture
           userId
         }
+        createdAt
       }
       isPublic
     }

@@ -6,4 +6,5 @@ export interface ChannelMessage {
   channel: Channel;
   user: User;
   message: string;
+  createdAt: string;
 }

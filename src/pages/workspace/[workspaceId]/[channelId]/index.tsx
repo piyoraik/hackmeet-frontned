@@ -31,14 +31,17 @@ import { useRecoilState } from "recoil";
 interface Props {
   channel: Channel;
   workspace: Workspace;
+  channelMessages: ChannelMessage[];
 }
 
-const ChannelIndex: NextPage<Props> = ({ channel, workspace }) => {
+const ChannelIndex: NextPage<Props> = ({
+  channel,
+  workspace,
+  channelMessages,
+}) => {
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
   const [inputMessage, setInputMessage] = useState("");
-  const [messages, setMessages] = useState<ChannelMessage[]>(
-    channel.channelMessages
-  );
+  const [messages, setMessages] = useState<ChannelMessage[]>(channelMessages);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { data, error, loading } =
     useSubscription<SUBSCRIPTION_MESSAGE>(SUBSCRIPTION_MESSAGE);
@@ -61,7 +64,6 @@ const ChannelIndex: NextPage<Props> = ({ channel, workspace }) => {
     },
     [channel.id, getAccessTokenSilently, inputMessage]
   );
-
   return (
     <Flex direction="row" justify="center">
       <SideNavIndex>
@@ -148,10 +150,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   );
 
+  const messages = channel.data.findOneChannel.channelMessages.slice();
+  messages.sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+
   return {
     props: {
       workspace: workspace.data.findOneWorkspace,
       channel: channel.data.findOneChannel,
+      channelMessages: messages,
     },
   };
 };
