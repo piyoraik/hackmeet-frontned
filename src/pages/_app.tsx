@@ -7,6 +7,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { Header } from "@/components/organisms/Header";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "@/lib/graphql";
+import { Footer } from "@/components/organisms/Footer";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -32,6 +33,7 @@ function App({ Component, pageProps }: AppProps) {
               <Box w={{ base: "100%", md: "80%" }} mx="auto">
                 <Component {...pageProps} />
               </Box>
+              <Footer />
             </Box>
           </ApolloProvider>
         </ChakraProvider>

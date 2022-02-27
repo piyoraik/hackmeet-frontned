@@ -27,6 +27,7 @@ import { HiOutlinePaperAirplane } from "react-icons/hi";
 import { ChannelMessage } from "@/types/channelMessage.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 
 interface Props {
   channel: Channel;
@@ -39,6 +40,8 @@ const ChannelIndex: NextPage<Props> = ({
   workspace,
   channelMessages,
 }) => {
+  const router = useRouter();
+  const channelId = router.query.channelId;
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState<ChannelMessage[]>(channelMessages);
@@ -50,6 +53,24 @@ const ChannelIndex: NextPage<Props> = ({
     if (!data?.createChannelMessage) return;
     setMessages([...messages, data.createChannelMessage]);
   }, [data]);
+
+  useEffect(() => {
+    console.log(channelId);
+    const fetchChannelMessage = async () => {
+      const channel = await fetchGraphql<CHANNEL_FINDONE_QUERY>(
+        CHANNEL_FINDONE_QUERY,
+        "network-only",
+        {
+          id: channelId,
+        }
+      ).then((res) => {
+        return res.data.findOneChannel;
+      });
+      const { channelMessages, ...list } = channel;
+      setMessages(channelMessages);
+    };
+    fetchChannelMessage();
+  }, [channelId]);
 
   const submitHandler = useCallback(
     async (e: React.SyntheticEvent) => {

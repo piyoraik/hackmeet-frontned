@@ -33,7 +33,6 @@ import { ALL_FRAMEWORK, Frameworks } from "@/graphql/framework.graphql";
 import { Framework } from "@/types/framework.type";
 import { ALL_FEATURE, Features } from "@/graphql/feature.graphql";
 import { Feature } from "@/types/feature.type";
-import { Footer } from "@/components/organisms/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SectionItemType } from "@/types/sectionItem.type";
 import { RecruitAddMenu } from "@/components/modules/menu/RecruitAddMenu";
@@ -237,7 +236,6 @@ const NewWanted: NextPage<Props> = ({ languages, frameworks, features }) => {
             </Box>
           </Flex>
         </Flex>
-        <Footer />
       </Flex>
     </>
   );

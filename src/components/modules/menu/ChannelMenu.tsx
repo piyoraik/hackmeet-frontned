@@ -1,10 +1,17 @@
 import { Card } from "@/components/atoms/Card";
+import { CREATE_CHANNEL } from "@/graphql/channel.graphql";
+import { mutationGraphql } from "@/lib/graphql";
 import { Channel } from "@/types/channel.type";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
+  Button,
   chakra,
   Flex,
+  FormControl,
+  FormLabel,
   Icon,
+  Input,
   List,
   ListIcon,
   ListItem,
@@ -18,7 +25,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { useState } from "react";
+import { IoIosAdd, IoIosAddCircleOutline } from "react-icons/io";
 import { MdCable } from "react-icons/md";
 
 interface Props {
@@ -28,10 +36,29 @@ interface Props {
 
 export const ChannelMenu: React.VFC<Props> = ({ channels, workspaceId }) => {
   const router = useRouter();
+  const [inputChannel, setInputChannel] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { getAccessTokenSilently } = useAuth0();
 
-  const addHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const addHandler = async (e: React.SyntheticEvent) => {
+    console.log("====");
+    e.preventDefault();
+    const accessToken = await getAccessTokenSilently({});
+    const params = {
+      params: {
+        workspaceId,
+        name: inputChannel,
+        isPublic: false,
+      },
+    };
+    const res = await mutationGraphql<CREATE_CHANNEL>(
+      CREATE_CHANNEL,
+      params,
+      accessToken
+    );
+    onClose();
+    setInputChannel("");
+    router.push(`/workspace/${workspaceId}/${res.createChannel.id}`);
   };
 
   return (
@@ -68,7 +95,29 @@ export const ChannelMenu: React.VFC<Props> = ({ channels, workspaceId }) => {
         <ModalContent pb={5}>
           <ModalHeader>Add Channel</ModalHeader>
           <ModalCloseButton />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            <form onSubmit={addHandler}>
+              <FormControl>
+                <FormLabel htmlFor="channel">Input Channel Name</FormLabel>
+                <Input
+                  id="channel"
+                  type="text"
+                  value={inputChannel}
+                  onChange={(e) => setInputChannel(e.target.value)}
+                />
+              </FormControl>
+              <Button
+                mt="2"
+                w="full"
+                leftIcon={<IoIosAdd />}
+                colorScheme="blue"
+                variant="solid"
+                type="submit"
+              >
+                Add Channel
+              </Button>
+            </form>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

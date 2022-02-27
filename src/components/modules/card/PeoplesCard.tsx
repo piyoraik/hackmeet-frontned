@@ -23,7 +23,7 @@ export const PeoplesCard: React.VFC<Props> = ({ peoples, setFn }) => {
           p="3"
         >
           <Input
-            placeholder="Basic usage"
+            placeholder="People"
             type="number"
             textAlign="center"
             _focus={{
