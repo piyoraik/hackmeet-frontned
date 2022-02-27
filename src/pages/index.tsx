@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { Languages } from "prismjs";
 import { Box, Center, Divider, Flex } from "@chakra-ui/react";
@@ -136,7 +136,7 @@ const Home: NextPage<Props> = ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const recruits = await fetchGraphql<Recruits>(ALL_WANTED, "network-only");
   const languages = await fetchGraphql<Languages>(ALL_LANGUAGE, "network-only");
   const frameworks = await fetchGraphql<Frameworks>(
@@ -152,7 +152,6 @@ export const getStaticProps: GetStaticProps = async () => {
       frameworks: frameworks.data.frameworks,
       features: features.data.features,
     },
-    revalidate: 15,
   };
 };
 
