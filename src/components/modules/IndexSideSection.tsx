@@ -126,7 +126,7 @@ export const IndexSideSection: React.FC<Props> = ({
                   <Box>
                     <TechIcon svg={list.icon} setColor={list.color} />
                   </Box>
-                  <Box ml="4">{list.name}</Box>
+                  <Box ml="3">{list.name}</Box>
                   {selector.includes(list.name) && (
                     <Box m="1">
                       <Icon as={BsCheck2} color="green.600" />
