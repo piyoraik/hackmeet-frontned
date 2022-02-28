@@ -16,5 +16,6 @@ export interface Recruit {
   features: Feature[];
   user: User;
   joins: Join[];
-  workspace: Workspace
+  workspace: Workspace;
+  createdAt: string;
 }

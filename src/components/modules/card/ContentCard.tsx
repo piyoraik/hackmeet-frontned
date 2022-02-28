@@ -5,13 +5,13 @@ import {
   Image,
   Heading,
   Box,
-  WrapItem,
   chakra,
 } from "@chakra-ui/react";
 import { Emoji } from "emoji-mart";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Recruit } from "@/types/recruit.type";
+import moment from "moment";
 
 interface Props {
   recruit: Recruit;
@@ -56,7 +56,9 @@ export const ContentCard: NextPage<Props> = ({ recruit }) => {
             <Text textAlign="left" fontWeight="bold">
               {recruit.user.nickname}
             </Text>
-            <Text color="gray.500">Aug 12, 2021 · 15min read</Text>
+            <Text color="gray.500">
+              {moment(recruit.createdAt).format("YYYY-MM-DD HH:mm")}
+            </Text>
           </Box>
         </Flex>
       </Box>

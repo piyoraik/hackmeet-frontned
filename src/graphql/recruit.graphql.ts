@@ -13,6 +13,7 @@ export const ALL_WANTED = gql`
       title
       thumbnail
       content
+      createdAt
       user {
         id
         nickname
