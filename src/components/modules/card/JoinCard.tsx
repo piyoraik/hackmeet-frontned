@@ -71,7 +71,7 @@ export const JoinCard: React.VFC = () => {
       <Flex direction="column" alignItems="center" w="100%">
         <Box m="4">
           <Text fontSize="xl">
-            {recruit.workspace.joins.length}人 / {recruit.peoples}人
+            {recruit.workspace.joins.length+1} People Join!
           </Text>
         </Box>
         {button()}

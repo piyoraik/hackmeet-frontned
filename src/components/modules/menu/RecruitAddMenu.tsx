@@ -41,7 +41,7 @@ export const RecruitAddMenu: React.VFC<Props> = ({
   return (
     <>
       <ThumbnailCard name={thumbnailName} setFn={setThumbnailName} />
-      <PeoplesCard peoples={peoples} setFn={setPeoples} />
+      {/* <PeoplesCard peoples={peoples} setFn={setPeoples} /> */}
       <AddSelectCard
         useLists={useLanguageList}
         setFn={setUseLanguageList}
