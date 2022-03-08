@@ -111,6 +111,7 @@ const UserEdit: NextPage<Props> = () => {
                 <Input
                   type="file"
                   id="picture"
+                  accept="image/*"
                   onChange={(e) => handleChangeFile(e)}
                 />
               </Box>
