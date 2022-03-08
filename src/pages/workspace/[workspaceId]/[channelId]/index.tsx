@@ -45,7 +45,7 @@ const ChannelIndex: NextPage<Props> = ({
   const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState<ChannelMessage[]>(channelMessages);
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
   const { data, error, loading } =
     useSubscription<SUBSCRIPTION_MESSAGE>(SUBSCRIPTION_MESSAGE);
 
@@ -102,7 +102,7 @@ const ChannelIndex: NextPage<Props> = ({
         <Heading fontSize="2xl">{channel.name}</Heading>
         {messages.map((message, idx) => (
           <Box key={idx}>
-            {loginUser?.userId === message.user.userId ? (
+            {user?.userId === message.user.userId ? (
               <Flex justify="flex-end">
                 <Box p="2">
                   <Text bg="blue.400" color="white" rounded="md">

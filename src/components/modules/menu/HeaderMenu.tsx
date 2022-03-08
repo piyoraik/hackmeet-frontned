@@ -13,7 +13,7 @@ import {
   Link as CLink,
 } from "@chakra-ui/react";
 import router from "next/router";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
@@ -26,7 +26,10 @@ import { ThreeDots } from "@agney/react-loading";
 // eslint-disable-next-line react/display-name
 export const HeaderMenu = memo(() => {
   const { isLoading, loginWithRedirect, logout, user } = useAuth0();
-  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
+
+  useEffect(() => {
+    
+  }, [])
 
   if (isLoading) {
     return <ThreeDots height={64} width={64} />;
@@ -34,7 +37,7 @@ export const HeaderMenu = memo(() => {
 
   return (
     <>
-      {user && !!loginUser ? (
+      {user ? (
         <>
           <Box boxSize="40px" onClick={() => router.push("/wanted/new")}>
             <chakra.button>
@@ -48,8 +51,8 @@ export const HeaderMenu = memo(() => {
               icon={
                 <Image
                   boxSize="40px"
-                  src={loginUser.picture}
-                  alt={loginUser.nickname}
+                  src={user.picture}
+                  alt={user.nickname}
                   border="1px"
                   borderRadius="md"
                   borderColor="gray.600"
@@ -58,8 +61,8 @@ export const HeaderMenu = memo(() => {
               variant="outline"
             />
             <MenuList>
-              <Link href={`/user/${loginUser.id}`} passHref>
-                <MenuItem>{loginUser.nickname}</MenuItem>
+              <Link href={`/user/${user.sub}`} passHref>
+                <MenuItem>{user.nickname}</MenuItem>
               </Link>
               <Link href={`/user/edit`} passHref>
                 <MenuItem icon={<GrUpdate />}>Update</MenuItem>

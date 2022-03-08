@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { UPDATE_USER, UPDATE_USER_TYPE } from "@/graphql/user.grpahql";
 import { User } from "@/types/user.type";
-import { Header } from "@/components/organisms/Header";
 import {
   Box,
   Flex,
@@ -15,10 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { S3Upload } from "@/lib/s3Upload";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { userStateSelector } from "@/recoil/selector/userState.selector";
-import { useRecoilState } from "recoil";
 import { mutationGraphql } from "@/lib/graphql";
 
 interface Props {
@@ -28,11 +25,15 @@ interface Props {
 const UserEdit: NextPage<Props> = () => {
   const router = useRouter();
 
-  const { getAccessTokenSilently } = useAuth0();
-  const [loginUser, setLoginUser] = useRecoilState(userStateSelector);
-  const [nickName, setNickName] = useState(loginUser?.nickname);
+  const { getAccessTokenSilently, user } = useAuth0();
+  const [nickName, setNickName] = useState("");
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState("");
+
+  useEffect(() => {
+    if (!user?.nickname) return;
+    setNickName(user.nickname);
+  }, [user]);
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -52,18 +53,18 @@ const UserEdit: NextPage<Props> = () => {
           .toISOString()
           .replace(/[^\d]/g, "")
           .slice(0, 14);
-        fileName = `${loginUser?.userId}-${today}.${fileType}`;
+        fileName = `${user?.sub}-${today}.${fileType}`;
         await S3Upload(image, fileName);
       }
 
       const accessToken = await getAccessTokenSilently({});
       const pamras = {
         param: {
-          nickname: nickName,
+          nickname: user?.nickname,
           picture:
             fileName !== ""
               ? `${process.env.NEXT_PUBLIC_S3_URL}${fileName}`
-              : loginUser?.picture,
+              : user?.picture,
         },
       };
       const res = await mutationGraphql<UPDATE_USER_TYPE>(
@@ -80,7 +81,7 @@ const UserEdit: NextPage<Props> = () => {
   return (
     <Box gap="6">
       <Heading mt="2" mb="5" mx="3" fontSize="2xl">
-        {loginUser?.nickname} is Update
+        {user?.nickname} is Update
       </Heading>
       <form onSubmit={submitHandler}>
         <Stack spacing={4}>
@@ -100,11 +101,7 @@ const UserEdit: NextPage<Props> = () => {
                 {preview ? (
                   <Image src={preview} alt="プレビュー" boxSize="80px" />
                 ) : (
-                  <Image
-                    src={loginUser?.picture}
-                    alt="プレビュー"
-                    boxSize="80px"
-                  />
+                  <Image src={user?.picture} alt="プレビュー" boxSize="80px" />
                 )}
               </Box>
               <Box>
