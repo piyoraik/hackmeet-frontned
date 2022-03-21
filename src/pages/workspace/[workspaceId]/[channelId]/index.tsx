@@ -28,6 +28,7 @@ import { ChannelMessage } from "@/types/channelMessage.type";
 import { userStateSelector } from "@/recoil/selector/userState.selector";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 interface Props {
   channel: Channel;
@@ -55,7 +56,6 @@ const ChannelIndex: NextPage<Props> = ({
   }, [data]);
 
   useEffect(() => {
-    console.log(channelId);
     const fetchChannelMessage = async () => {
       const channel = await fetchGraphql<CHANNEL_FINDONE_QUERY>(
         CHANNEL_FINDONE_QUERY,
@@ -87,26 +87,30 @@ const ChannelIndex: NextPage<Props> = ({
   );
   return (
     <Flex direction="row" justify="center">
-      <SideNavIndex>
+      <Flex direction="column" align="center" w="30%">
         <ChannelMenu channels={workspace.channels} workspaceId={workspace.id} />
-      </SideNavIndex>
+      </Flex>
       <Box
-        flex="1"
-        w="100%"
+        w={{ base: "100%", md: "70%" }}
         h="calc(100vh - 300px)"
         boxShadow="lg"
         rounded="xl"
         border="1px"
         borderColor="gray.50"
+        position="relative"
+        p="6"
       >
         <Heading fontSize="2xl">{channel.name}</Heading>
         {messages.map((message, idx) => (
-          <Box key={idx}>
+          <Box key={idx} p="10px">
             {loginUser?.userId === message.user.userId ? (
               <Flex justify="flex-end">
                 <Box p="2">
-                  <Text bg="blue.400" color="white" rounded="md">
+                  <Text bg="blue.400" color="white" rounded="md" padding="10px">
                     {message.message}
+                  </Text>
+                  <Text>
+                    {moment(message.createdAt).format("YYYY-MM-DD HH:mm")}
                   </Text>
                 </Box>
               </Flex>
@@ -122,19 +126,22 @@ const ChannelIndex: NextPage<Props> = ({
                   <Text bg="gray.400" color="white" rounded="md">
                     {message.message}
                   </Text>
+                  <Text>
+                    {moment(message.createdAt).format("YYYY-MM-DD HH:mm")}
+                  </Text>
                 </Box>
               </Flex>
             )}
           </Box>
         ))}
-        <Box mt="10">
+        <Box mt="10" position="absolute" bottom="3%" w="100%">
           <form onSubmit={submitHandler}>
             <FormControl isRequired display="flex">
               <Input
                 placeholder={`${channel.name}へメッセージ`}
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                w="95%"
+                w="85%"
               />
               <Button
                 colorScheme="teal"

@@ -6,6 +6,7 @@ export const CREATE_CHANNEL_MESSAGE = gql`
     createChannelMessage(createChannelMessage: $params) {
       id
       message
+      createdAt
       channel {
         id
         name
@@ -29,6 +30,7 @@ export const SUBSCRIPTION_MESSAGE = gql`
     createChannelMessage {
       id
       message
+      createdAt
       channel {
         id
         name

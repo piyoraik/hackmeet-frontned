@@ -37,13 +37,13 @@ const Wanted: NextPage<Props> = ({ data }) => {
         <SideNavShow />
       </DrawerMenu>
       <Flex direction="row" justify="center">
-        <Box display={{ base: "none", md: "block" }} w={{ md: "30%" }}>
+        <Box display={{ base: "none", md: "block" }} w="30%">
           <SideNavShow />
         </Box>
-        <Flex direction="column" w={{ base: "100%", md: "70%" }}>
+        <Box w={{ base: "100%", md: "70%" }}>
           <UserCard user={data.user} />
           <ContentDetail data={recruit} />
-        </Flex>
+        </Box>
       </Flex>
     </>
   );

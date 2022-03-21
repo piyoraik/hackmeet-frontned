@@ -8,6 +8,44 @@ export const WORKSPACE_FINDID_QUERY = gql`
       recruit {
         id
         title
+        thumbnail
+        content
+        createdAt
+        languages {
+          id
+          name
+          icon
+          color
+        }
+        frameworks {
+          id
+          name
+          icon
+          color
+        }
+        features {
+          id
+          name
+          icon
+          color
+        }
+        user {
+          id
+          nickname
+          picture
+          userId
+        }
+        workspace {
+          id
+          joins {
+            id
+            user {
+              id
+              nickname
+              userId
+            }
+          }
+        }
       }
       channels {
         id

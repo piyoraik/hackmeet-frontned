@@ -1,6 +1,6 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
-import {Recruit} from "@/types/recruit.type"
+import { Recruit } from "@/types/recruit.type";
 import style from "@/styles/github.module.scss";
 import Prism from "prismjs";
 import { useEffect } from "react";
@@ -18,7 +18,6 @@ const ContentDetail: NextPage<Props> = ({ data }) => {
   return (
     <Box
       w="full"
-      h="1000px"
       mt="6"
       p="6"
       boxShadow="md"
